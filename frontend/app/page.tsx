@@ -7,8 +7,10 @@ import { toProfile, useApp } from "@/components/AppProvider";
 import { ServerError } from "@/components/Header";
 import { api } from "@/lib/api";
 import { listAssessments } from "@/lib/supabase";
-import type { Assessment, CareerResult } from "@/lib/types";
+import type { Assessment, CareerGroup, CareerResult } from "@/lib/types";
 import { reqLabel } from "@/lib/reference";
+
+const HOME_PAGE_SIZE = 24;
 
 export default function Home() {
   const { user, authReady } = useApp();
@@ -19,8 +21,16 @@ export default function Home() {
 /* ------------------------------------------------------------------ landing (logged out) */
 
 function Landing() {
-  const { t, model, careerName } = useApp();
+  const { t, lang, model, careerName } = useApp();
+  const [query, setQuery] = useState("");
+  const [group, setGroup] = useState<"all" | CareerGroup>("all");
+  const [limit, setLimit] = useState(HOME_PAGE_SIZE);
   const careers = model?.careers ?? [];
+  const groups: ("all" | CareerGroup)[] = ["all", "primary", "alternative", "non_it"];
+  const filtered = careers.filter(c =>
+    (group === "all" || c.group === group) &&
+    `${c.name_id} ${c.name_en} ${c.field_id ?? ""}`.toLowerCase().includes(query.trim().toLowerCase())
+  );
   return (
     <div className="landing">
       <section className="hero">
@@ -67,11 +77,42 @@ function Landing() {
       {careers.length > 0 && (
         <section className="band" aria-labelledby="band-h">
           <h2 id="band-h">{t.band_h}</h2>
-          <div className="career-cloud">
-            {careers.map(c => (
+          <div className="ex-tools">
+            <input type="search" value={query} aria-label={t.ex_search} placeholder={t.ex_search}
+              onChange={e => { setQuery(e.target.value); setLimit(HOME_PAGE_SIZE); }} />
+            <div className="cats" role="tablist" aria-label={t.band_h}>
+              {groups.filter(g => g === "all" || careers.some(c => c.group === g)).map(g => (
+                <button key={g} role="tab" aria-selected={group === g}
+                  onClick={() => { setGroup(g); setLimit(HOME_PAGE_SIZE); }}>{t.ex_groups[g]}</button>
+              ))}
+            </div>
+          </div>
+          <p className="picked">{t.ex_count(filtered.length)}</p>
+          <div className="career-cloud" id="home-careers">
+            {filtered.slice(0, limit).map(c => (
               <Link key={c.id} href={`/karier#${c.id}`} className={"cc " + c.group}>{careerName(c)}</Link>
             ))}
           </div>
+          {filtered.length === 0 && <p className="hint">{t.ex_none}</p>}
+          {filtered.length > HOME_PAGE_SIZE && (
+            <div className="ex-more">
+              <p className="hint small">{lang === "id"
+                ? `Menampilkan ${Math.min(limit, filtered.length)} dari ${filtered.length} karir.`
+                : `Showing ${Math.min(limit, filtered.length)} of ${filtered.length} careers.`}</p>
+              {limit < filtered.length && (
+                <>
+                  <button className="btn ghost" aria-controls="home-careers"
+                    onClick={() => setLimit(n => n + HOME_PAGE_SIZE)}>{lang === "id" ? "Tampilkan lebih banyak" : "Show more"}</button>
+                  <button className="btn ghost" aria-controls="home-careers"
+                    onClick={() => setLimit(filtered.length)}>{lang === "id" ? "Tampilkan semua" : "Show all"}</button>
+                </>
+              )}
+              {limit > HOME_PAGE_SIZE && (
+                <button className="btn ghost" aria-controls="home-careers"
+                  onClick={() => setLimit(HOME_PAGE_SIZE)}>{lang === "id" ? "Sembunyikan" : "Hide"}</button>
+              )}
+            </div>
+          )}
         </section>
       )}
 

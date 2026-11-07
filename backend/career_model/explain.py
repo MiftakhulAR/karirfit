@@ -15,7 +15,7 @@ def template_explanation(result: dict, names: dict, lang: str = "id", soft_names
     matched = sorted(result["matched"], key=lambda r: -r["weight"])
     gaps = result["gaps"]
     career = result["name_id"] if lang == "id" else result["name_en"]
-    note_id = (" Karier ini adalah profil acuan O*NET (Amerika Serikat) yang belum divalidasi untuk Indonesia;"
+    note_id = (" Karir ini adalah profil acuan O*NET (Amerika Serikat) yang belum divalidasi untuk Indonesia;"
                " kebutuhan kompetensinya tidak berasal dari lowongan." if ref else "")
     note_en = (" This career is an O*NET (United States) reference profile, not validated for Indonesia;"
                " its requirements do not come from job ads." if ref else "")
@@ -23,7 +23,7 @@ def template_explanation(result: dict, names: dict, lang: str = "id", soft_names
         parts = [
             f"1. Dasar kecocokan\nSkor kecocokan Anda untuk {career} adalah {result['fit']:.0f}/100: "
             f"kecocokan kompetensi {result['K']:.0%}"
-            + (" dan minat Anda termasuk bidang karier ini." if result["M"] else "; minat yang Anda pilih tidak termasuk bidang ini.") + note_id,
+            + (" dan minat Anda termasuk bidang karir ini." if result["M"] else "; minat yang Anda pilih tidak termasuk bidang ini.") + note_id,
             "2. Kompetensi yang sudah sesuai\n" + ("\n".join(
                 f"- {n(r)} ({d(r)})" for r in matched[:6]) or "- Belum ada keterampilan yang cocok."),
             "3. Kompetensi yang perlu ditingkatkan\n" + ("\n".join(
@@ -32,7 +32,7 @@ def template_explanation(result: dict, names: dict, lang: str = "id", soft_names
                 f"Mulailah dari {', '.join(n(r) for r in gaps[:3])}: keterampilan ini paling berbobot untuk {career}. "
                 "Buat satu proyek portofolio kecil yang memakainya, lalu tambahkan ke pengalaman Anda."
                 if gaps else "Perdalam keterampilan yang ada lewat proyek nyata dan sertifikasi.")
-            + (f" Soft skill yang sering diminta untuk karier ini dan masih bisa Anda kembangkan: {', '.join(soft_todo)}."
+            + (f" Keterampilan nonteknis yang sering diminta untuk karir ini dan masih bisa Anda kembangkan: {', '.join(soft_todo)}."
                if soft_todo else ""),
         ]
     else:
