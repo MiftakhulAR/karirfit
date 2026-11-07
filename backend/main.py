@@ -40,6 +40,7 @@ from pathlib import Path
 
 from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
 
 HERE = Path(__file__).resolve().parent
@@ -85,6 +86,7 @@ def log(kind: str, session: str, payload: dict):
 app = FastAPI(title="KarirFit API", version="1.0")
 ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(GZipMiddleware, minimum_size=2048)   # model.json and the 896 O*NET results compress ~10x
 
 
 class Profile(BaseModel):
@@ -205,6 +207,9 @@ def do_recommend(req: RecommendReq, x_admin_token: str = Header(default=""), use
     res = recommend(req.profile.model_dump(), MODEL, alpha=effective_alpha(req.alpha, x_admin_token))
     if not req.include_all:
         res.pop("all")
+    # 896 O*NET reference careers: all are returned (front end shows 5, "show all" for the rest),
+    # with the skill lists cut to the 10 heaviest; /api/explain recomputes the full result for one career.
+    res["non_it"] = [r | {"matched": r["matched"][:10], "gaps": r["gaps"][:10], "trimmed": True} for r in res["non_it"]]
     if consent:
         log("recommend", session, {"profile": req.profile.model_dump(),
                                    "ranking": [r["career"] for r in res["primary"] + res["alternative"]],

@@ -8,6 +8,7 @@ import { ServerError } from "@/components/Header";
 import { api } from "@/lib/api";
 import { listAssessments } from "@/lib/supabase";
 import type { Assessment, CareerResult } from "@/lib/types";
+import { reqLabel } from "@/lib/reference";
 
 export default function Home() {
   const { user, authReady } = useApp();
@@ -111,7 +112,7 @@ function SampleCard() {
 /* ------------------------------------------------------------------ dashboard (logged in) */
 
 function Dashboard() {
-  const { t, user, model, answers, update, careerName, skillName, setChatOpen, session } = useApp();
+  const { t, lang, user, model, answers, update, careerName, skillName, setChatOpen, session } = useApp();
   const router = useRouter();
   const [hist, setHist] = useState<Assessment[] | null>(null);
   const [top, setTop] = useState<CareerResult | null>(null);
@@ -179,10 +180,10 @@ function Dashboard() {
               <>
                 <p className="hint small">{t.dash_next_p(careerName(top))}</p>
                 <ul>
-                  {[...top.gaps].sort((a, b) => b.demand - a.demand).slice(0, 4).map(g => (
+                  {[...top.gaps].sort((a, b) => b.weight - a.weight).slice(0, 4).map(g => (
                     <li key={g.skill}>
                       <span>{skillName(g.skill)}</span>
-                      <span className="pctl">{Math.round(g.demand * 100)}%</span>
+                      <span className="pctl">{reqLabel(g, lang)}</span>
                     </li>
                   ))}
                 </ul>

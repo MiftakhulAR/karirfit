@@ -1,0 +1,90 @@
+name,name_id,type,kind,category
+Reading Comprehension,Pemahaman bacaan,skill,hard,Skill umum
+Active Listening,Mendengarkan aktif,skill,soft,Skill umum
+Writing,Menulis,skill,soft,Skill umum
+Speaking,Berbicara,skill,soft,Skill umum
+Mathematics,Matematika (keterampilan),skill,hard,Skill umum
+Science,Sains,skill,hard,Skill umum
+Critical Thinking,Berpikir kritis,skill,soft,Skill umum
+Active Learning,Belajar aktif,skill,soft,Skill umum
+Learning Strategies,Strategi belajar,skill,soft,Skill umum
+Monitoring,Pemantauan kinerja,skill,hard,Skill umum
+Social Perceptiveness,Kepekaan sosial,skill,soft,Skill umum
+Coordination,Koordinasi,skill,soft,Skill umum
+Persuasion,Persuasi,skill,soft,Skill umum
+Negotiation,Negosiasi,skill,soft,Skill umum
+Instructing,Mengajar/melatih,skill,soft,Skill umum
+Service Orientation,Orientasi pelayanan,skill,soft,Skill umum
+Complex Problem Solving,Pemecahan masalah kompleks,skill,soft,Skill umum
+Operations Analysis,Analisis kebutuhan operasional,skill,hard,Skill umum
+Technology Design,Perancangan teknologi,skill,hard,Skill umum
+Equipment Selection,Pemilihan peralatan,skill,hard,Skill umum
+Installation,Instalasi,skill,hard,Skill umum
+Programming,Pemrograman,skill,hard,Skill umum
+Operations Monitoring,Pemantauan operasi,skill,hard,Skill umum
+Operation and Control,Pengoperasian dan kendali,skill,hard,Skill umum
+Equipment Maintenance,Pemeliharaan peralatan,skill,hard,Skill umum
+Troubleshooting,Pemecahan gangguan teknis,skill,hard,Skill umum
+Repairing,Perbaikan,skill,hard,Skill umum
+Quality Control Analysis,Analisis kendali mutu,skill,hard,Skill umum
+Judgment and Decision Making,Penilaian dan pengambilan keputusan,skill,soft,Skill umum
+Systems Analysis,Analisis sistem (keterampilan),skill,hard,Skill umum
+Systems Evaluation,Evaluasi sistem,skill,hard,Skill umum
+Time Management,Manajemen waktu,skill,soft,Skill umum
+Management of Financial Resources,Manajemen sumber daya keuangan,skill,hard,Skill umum
+Management of Material Resources,Manajemen sumber daya material,skill,hard,Skill umum
+Management of Personnel Resources,Manajemen sumber daya manusia,skill,soft,Skill umum
+Administration and Management,Administrasi dan manajemen,knowledge,hard,Pengetahuan
+Administrative,Administrasi perkantoran,knowledge,hard,Pengetahuan
+Economics and Accounting,Ekonomi dan akuntansi,knowledge,hard,Pengetahuan
+Sales and Marketing,Penjualan dan pemasaran,knowledge,hard,Pengetahuan
+Customer and Personal Service,Layanan pelanggan,knowledge,hard,Pengetahuan
+Personnel and Human Resources,Kepegawaian dan SDM,knowledge,hard,Pengetahuan
+Production and Processing,Produksi dan pengolahan,knowledge,hard,Pengetahuan
+Food Production,Produksi pangan,knowledge,hard,Pengetahuan
+Computers and Electronics,Komputer dan elektronika,knowledge,hard,Pengetahuan
+Engineering and Technology,Teknik dan teknologi,knowledge,hard,Pengetahuan
+Design,Desain teknik,knowledge,hard,Pengetahuan
+Building and Construction,Bangunan dan konstruksi,knowledge,hard,Pengetahuan
+Mechanical,Mekanika,knowledge,hard,Pengetahuan
+Mathematics (knowledge),Matematika (pengetahuan),knowledge,hard,Pengetahuan
+Physics,Fisika,knowledge,hard,Pengetahuan
+Chemistry,Kimia,knowledge,hard,Pengetahuan
+Biology,Biologi,knowledge,hard,Pengetahuan
+Psychology,Psikologi,knowledge,hard,Pengetahuan
+Sociology and Anthropology,Sosiologi dan antropologi,knowledge,hard,Pengetahuan
+Geography,Geografi,knowledge,hard,Pengetahuan
+Medicine and Dentistry,Kedokteran dan kedokteran gigi,knowledge,hard,Pengetahuan
+Therapy and Counseling,Terapi dan konseling,knowledge,hard,Pengetahuan
+Education and Training,Pendidikan dan pelatihan,knowledge,hard,Pengetahuan
+English Language,Bahasa Inggris,knowledge,hard,Pengetahuan
+Foreign Language,Bahasa asing,knowledge,hard,Pengetahuan
+Fine Arts,Seni rupa dan pertunjukan,knowledge,hard,Pengetahuan
+History and Archeology,Sejarah dan arkeologi,knowledge,hard,Pengetahuan
+Philosophy and Theology,Filsafat dan teologi,knowledge,hard,Pengetahuan
+Public Safety and Security,Keselamatan dan keamanan publik,knowledge,hard,Pengetahuan
+Law and Government,Hukum dan pemerintahan,knowledge,hard,Pengetahuan
+Telecommunications,Telekomunikasi,knowledge,hard,Pengetahuan
+Communications and Media,Komunikasi dan media,knowledge,hard,Pengetahuan
+Transportation,Transportasi,knowledge,hard,Pengetahuan
+Innovation,Inovasi,style,soft,Gaya kerja
+Achievement Orientation,Orientasi prestasi,style,soft,Gaya kerja
+Intellectual Curiosity,Rasa ingin tahu intelektual,style,soft,Gaya kerja
+Tolerance for Ambiguity,Toleransi terhadap ketidakpastian,style,soft,Gaya kerja
+Initiative,Inisiatif,style,soft,Gaya kerja
+Adaptability,Kemampuan beradaptasi,style,soft,Gaya kerja
+Self-Confidence,Percaya diri,style,soft,Gaya kerja
+Perseverance,Ketekunan,style,soft,Gaya kerja
+Leadership Orientation,Orientasi kepemimpinan,style,soft,Gaya kerja
+Humility,Kerendahan hati,style,soft,Gaya kerja
+Sincerity,Ketulusan,style,soft,Gaya kerja
+Empathy,Empati,style,soft,Gaya kerja
+Cooperation,Kerja sama,style,soft,Gaya kerja
+Optimism,Optimisme,style,soft,Gaya kerja
+Social Orientation,Orientasi sosial,style,soft,Gaya kerja
+Cautiousness,Kehati-hatian,style,soft,Gaya kerja
+Attention to Detail,Ketelitian,style,soft,Gaya kerja
+Dependability,Dapat diandalkan,style,soft,Gaya kerja
+Integrity,Integritas,style,soft,Gaya kerja
+Stress Tolerance,Ketahanan terhadap tekanan,style,soft,Gaya kerja
+Self-Control,Pengendalian diri,style,soft,Gaya kerja

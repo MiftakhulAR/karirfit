@@ -110,12 +110,20 @@ def score(profile: dict, model: dict, alpha: float | None = None, use_interest: 
     """Rank all careers. Returns list of dicts sorted by fit (desc), ties broken by career order
     (repeatable: same input -> same ranking, NFR1)."""
     alpha = model["params"]["alpha"] if alpha is None else alpha
-    ev = evidence(profile, model)
+    ev_direct = ev = evidence(profile, model)
+    # O*NET reference careers (group non_it): an IT skill also counts for the general O*NET elements it is linked
+    # to (crosswalk), with the same value. IT careers keep direct evidence only, exactly as in the notebook.
+    ev_ref = dict(ev)
+    for s, cur in ev.items():
+        for el in model.get("crosswalk", {}).get(s, []):
+            if cur["value"] > ev_ref.get(el, {"value": -1})["value"]:
+                ev_ref[el] = cur | {"via": s}
     chosen = set(profile.get("interests") or [])
     linked = {c for i in model["interests"] if i["id"] in chosen for c in i["careers"]}
     results = []
     for order, c in enumerate(model["careers"]):
         reqs = c["requirements"]
+        ev = ev_ref if c["group"] == "non_it" and "crosswalk" in model else ev_direct
         tot = sum(r["weight"] for r in reqs) or 1.0
         k = sum(r["weight"] * ev.get(r["skill"], {"value": 0})["value"] for r in reqs) / tot
         m = 1.0 if c["id"] in linked else 0.0
@@ -127,6 +135,7 @@ def score(profile: dict, model: dict, alpha: float | None = None, use_interest: 
                 for r in c.get("soft_skills", [])]
         results.append({
             "career": c["id"], "name_en": c["name_en"], "name_id": c["name_id"], "group": c["group"],
+            **{k: c[k] for k in ("onet_soc", "job_zone", "field_id", "field_en") if k in c},
             "fit": round(fit, 2), "K": round(k, 4), "M": m,
             "matched": matched, "gaps": gaps, "soft": soft, "_order": order, "_key": (-fit, -k, c["name_en"]),
         })
@@ -146,7 +155,7 @@ def recommend(profile: dict, model: dict, alpha: float | None = None, n_alt: int
     ranked = score(profile, model, alpha)
     primary = [r for r in ranked if r["group"] == "primary"]
     alternative = [r for r in ranked if r["group"] == "alternative"][:n_alt]
-    non_it = [r for r in ranked if r["group"] == "non_it"][:n_alt]
+    non_it = [r for r in ranked if r["group"] == "non_it"]   # all; the API trims the details (see main.py)
     return {"top": ranked[:n_top], "primary": primary, "alternative": alternative, "non_it": non_it, "all": ranked}
 
 

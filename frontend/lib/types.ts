@@ -2,10 +2,12 @@ export type Lang = "id" | "en";
 export type Level = "beginner" | "intermediate" | "advanced";
 export type Grade = "A" | "A-" | "B+" | "B" | "B-" | "C+" | "C" | "D" | "E";
 
-export interface Requirement { skill: string; demand: number; weight: number }
+/** demand = share of Indonesian IT job ads; null for O*NET reference careers, which carry importance/scale instead. */
+export interface Requirement { skill: string; demand: number | null; weight: number; importance?: number; scale?: number }
 export type CareerGroup = "primary" | "alternative" | "non_it";
 export interface SoftRequirement { skill: string; demand: number }
-export interface Career { id: string; name_en: string; name_id: string; group: CareerGroup; requirements: Requirement[]; soft_skills?: SoftRequirement[] }
+export interface RefInfo { onet_soc?: string; job_zone?: number | null; field_id?: string; field_en?: string }
+export interface Career extends RefInfo { id: string; name_en: string; name_id: string; group: CareerGroup; requirements: Requirement[]; soft_skills?: SoftRequirement[] }
 export interface Interest { id: string; name_en: string; name_id: string; careers: string[] }
 export interface Skill { id: string; name: string; category: string; kind?: "hard" | "soft"; patterns: string[] }
 export interface Course { id: string; name_id: string; name_en: string; skills: string[]; category?: string }
@@ -17,6 +19,7 @@ export interface Model {
   demand_source?: string;
   data_label?: string;
   n_ads_train?: number;
+  reference_source?: string;
   params: { alpha: number; threshold: number; n_careers: number };
   careers: Career[];
   interests: Interest[];
@@ -37,8 +40,9 @@ export interface Profile {
   major: string | null;
 }
 
-export interface Evidence { value: number; source: "course" | "self" | "experience"; detail: string; course?: string }
-export interface CareerResult {
+export interface Evidence { value: number; source: "course" | "self" | "experience"; detail: string; course?: string; via?: string }
+export interface CareerResult extends RefInfo {
+  trimmed?: boolean;
   career: string; name_en: string; name_id: string; group: CareerGroup;
   fit: number; K: number; M: number; rank: number;
   matched: (Requirement & { evidence: Evidence })[];

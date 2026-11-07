@@ -46,7 +46,8 @@ def check_explanation(text: str, result: dict, model: dict, passages: list[dict]
                       profile: dict | None = None, extractor: SkillExtractor | None = None) -> dict:
     extractor = extractor or SkillExtractor(model["skills"])
     names = {s["id"]: s["name"] for s in model["skills"]}
-    demand = {r["skill"]: r["demand"] for r in result["matched"] + result["gaps"]}
+    demand = {r["skill"]: r["demand"] for r in result["matched"] + result["gaps"] if r.get("demand") is not None}
+    no_demand = {r["skill"] for r in result["matched"] + result["gaps"] if r.get("demand") is None}   # O*NET
     matched = {r["skill"] for r in result["matched"]}
     gaps = {r["skill"] for r in result["gaps"]}
     passage_ids = {p["id"] for p in passages}
@@ -111,7 +112,9 @@ def check_explanation(text: str, result: dict, model: dict, passages: list[dict]
                 pairs = list(zip(ordered, remaining)) if len(ordered) == len(remaining) else \
                         ([(ordered[0], remaining[0])] if len(ordered) == 1 or len(remaining) == 1 else [])
                 for sk, v in pairs:
-                    if sk in demand:
+                    if sk in no_demand:
+                        add("demand", f"{names.get(sk, sk)} {v:g}%", False, "O*NET reference career: no job-ad demand")
+                    elif sk in demand:
                         add("demand", f"{names.get(sk, sk)} {v:g}%", abs(v - demand[sk] * 100) <= 1,
                             f"data {demand[sk] * 100:.1f}%")
                     else:

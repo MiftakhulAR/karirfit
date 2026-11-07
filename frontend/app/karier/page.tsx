@@ -5,13 +5,17 @@ import { useEffect, useMemo, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { ServerError } from "@/components/Header";
 import type { CareerGroup } from "@/lib/types";
+import { refNote, reqBar, reqLabel } from "@/lib/reference";
+
+const PAGE = 24;   // O*NET has 896 occupations: render in pages so the catalogue stays light
 
 type Filter = "all" | CareerGroup;
 const FILTERS: Filter[] = ["all", "primary", "alternative", "non_it"];
 
 /** Public career catalogue: every career with its most requested skills (from model.json). */
 export default function CareersPage() {
-  const { t, model, careerName, skillName, softName, user } = useApp();
+  const { t, lang, model, careerName, skillName, softName, user } = useApp();
+  const [limit, setLimit] = useState(PAGE);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<string | null>(null);
@@ -24,7 +28,12 @@ export default function CareersPage() {
 
   const list = useMemo(() => (model?.careers ?? []).filter(c =>
     (filter === "all" || c.group === filter) &&
-    (!q || `${c.name_id} ${c.name_en}`.toLowerCase().includes(q.toLowerCase()))), [model, filter, q]);
+    (!q || `${c.name_id} ${c.name_en} ${c.field_id ?? ""}`.toLowerCase().includes(q.toLowerCase()))), [model, filter, q]);
+  useEffect(() => setLimit(PAGE), [filter, q]);
+  // IT careers always shown; O*NET occupations in pages ("Tampilkan lebih banyak" / "Sembunyikan")
+  const it = list.filter(c => c.group !== "non_it");
+  const ref = list.filter(c => c.group === "non_it");
+  const visible = [...it, ...ref.slice(0, limit)];
 
   if (!model) return <ServerError />;
 
@@ -46,9 +55,9 @@ export default function CareersPage() {
 
       {list.length === 0 ? <p className="hint">{t.ex_none}</p> : (
         <ul className="ex-grid">
-          {list.map(c => {
+          {visible.map(c => {
             const isOpen = open === c.id;
-            const reqs = [...c.requirements].sort((a, b) => b.demand - a.demand);
+            const reqs = [...c.requirements].sort((a, b) => b.weight - a.weight);
             return (
               <li key={c.id} id={c.id} className={"ex-card " + c.group + (isOpen ? " open" : "")}>
                 <button className="ex-top" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : c.id)}>
@@ -56,6 +65,7 @@ export default function CareersPage() {
                   <h2>{careerName(c)}</h2>
                   <span className="ex-preview">{reqs.slice(0, 3).map(r => skillName(r.skill)).join(" · ")}</span>
                   <span className="ex-n">{t.ex_n_skills(reqs.length)}</span>
+                  {c.group === "non_it" && <span className="ex-n">{refNote(c, lang)}</span>}
                 </button>
                 {isOpen && (
                   <div className="ex-body">
@@ -64,8 +74,8 @@ export default function CareersPage() {
                       {reqs.slice(0, 10).map(r => (
                         <li key={r.skill}>
                           <span>{skillName(r.skill)}</span>
-                          <span className="bar"><i style={{ width: `${r.demand * 100}%` }} /></span>
-                          <span className="pctl">{Math.round(r.demand * 100)}%</span>
+                          <span className="bar"><i style={{ width: `${reqBar(r)}%` }} /></span>
+                          <span className="pctl">{reqLabel(r, lang)}</span>
                         </li>
                       ))}
                     </ul>
@@ -84,6 +94,16 @@ export default function CareersPage() {
             );
           })}
         </ul>
+      )}
+      {ref.length > PAGE && (
+        <div className="ex-more">
+          <p className="hint small">{lang === "id"
+            ? `Menampilkan ${Math.min(limit, ref.length)} dari ${ref.length} okupasi O*NET 31.0 (profil acuan, belum divalidasi untuk Indonesia; sumber: O*NET 31.0 Database, U.S. DOL/ETA, CC BY 4.0).`
+            : `Showing ${Math.min(limit, ref.length)} of ${ref.length} O*NET 31.0 occupations (reference profiles, not validated for Indonesia; source: O*NET 31.0 Database, U.S. DOL/ETA, CC BY 4.0).`}</p>
+          {limit < ref.length && <button className="btn ghost" onClick={() => setLimit(l => l + 96)}>{lang === "id" ? "Tampilkan lebih banyak" : "Show more"}</button>}
+          {limit < ref.length && <button className="btn ghost" onClick={() => setLimit(ref.length)}>{lang === "id" ? `Tampilkan semua (${ref.length})` : `Show all (${ref.length})`}</button>}
+          {limit > PAGE && <button className="btn ghost" onClick={() => setLimit(PAGE)}>{lang === "id" ? "Sembunyikan" : "Hide"}</button>}
+        </div>
       )}
     </section>
   );

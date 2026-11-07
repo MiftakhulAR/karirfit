@@ -1,0 +1,24 @@
+code,name,name_id
+11,Management,Manajemen
+13,Business and Financial Operations,Bisnis dan keuangan
+15,Computer and Mathematical,Komputer dan matematika
+17,Architecture and Engineering,Arsitektur dan teknik
+19,"Life, Physical, and Social Science","Ilmu hayati, fisika, dan sosial"
+21,Community and Social Service,Layanan komunitas dan sosial
+23,Legal,Hukum
+25,Educational Instruction and Library,Pendidikan dan perpustakaan
+27,"Arts, Design, Entertainment, Sports, and Media","Seni, desain, hiburan, olahraga, dan media"
+29,Healthcare Practitioners and Technical,Tenaga kesehatan profesional dan teknis
+31,Healthcare Support,Pendukung layanan kesehatan
+33,Protective Service,Layanan perlindungan dan keamanan
+35,Food Preparation and Serving Related,Penyiapan dan penyajian makanan
+37,Building and Grounds Cleaning and Maintenance,Kebersihan dan perawatan gedung/taman
+39,Personal Care and Service,Perawatan dan layanan personal
+41,Sales and Related,Penjualan
+43,Office and Administrative Support,Perkantoran dan administrasi
+45,"Farming, Fishing, and Forestry","Pertanian, perikanan, dan kehutanan"
+47,Construction and Extraction,Konstruksi dan pertambangan
+49,"Installation, Maintenance, and Repair","Instalasi, pemeliharaan, dan perbaikan"
+51,Production,Produksi
+53,Transportation and Material Moving,Transportasi dan pemindahan barang
+55,Military Specific,Militer

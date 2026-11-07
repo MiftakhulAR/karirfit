@@ -18,7 +18,7 @@ import re
 import urllib.error
 import urllib.request
 
-PROMPT_VERSION = "v1.0"
+PROMPT_VERSION = "v1.1"   # v1.1: career source line (IT job ads vs O*NET reference)
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 GROQ_REASONING = os.getenv("GROQ_REASONING_EFFORT", "low")   # gpt-oss only: low | medium | high
@@ -121,8 +121,9 @@ If something is not supported by the facts or context, do not say it.
 
 FACTS (computed by the system, do not change them):
 - Fit score: {fit:.0f}/100 (competency fit {k:.0%}, interest match: {interest})
-- Matched skills (skill: demand in job ads, evidence): {matched}
-- Skill gaps ordered by importance (skill: demand in job ads): {gaps}
+- Career source: {career_source}
+- Matched skills (skill: demand in job ads or O*NET importance, evidence): {matched}
+- Skill gaps ordered by importance (skill: demand in job ads or O*NET importance): {gaps}
 - Soft skills often requested for this career that the person has not marked as strong (advice only): {soft}
 
 CONTEXT:
@@ -142,7 +143,8 @@ HEADINGS = {
 
 
 def explain(result: dict, names: dict, passages: list[dict], lang="id", soft_names: dict | None = None) -> tuple[str, str]:
-    fmt = lambda r: f"{names.get(r['skill'], r['skill'])}: {r['demand']:.0%}"
+    fmt = lambda r: (f"{names.get(r['skill'], r['skill'])}: {r['demand']:.0%}" if r.get("demand") is not None else
+                     f"{names.get(r['skill'], r['skill'])}: O*NET importance {r.get('importance', 0):.1f}/{r.get('scale', 5)}")
     matched = "; ".join(f"{fmt(r)}, {r['evidence']['source']}" for r in result["matched"]) or "none"
     gaps = "; ".join(fmt(r) for r in result["gaps"][:6]) or "none"
     soft_names = soft_names or {}
@@ -154,6 +156,9 @@ def explain(result: dict, names: dict, passages: list[dict], lang="id", soft_nam
         career=result["name_id"] if lang == "id" else result["name_en"],
         example_id=passages[0]["id"] if passages else "P1",
         fit=result["fit"], k=result["K"], interest="yes" if result["M"] else "no",
+        career_source=("O*NET 31.0 reference profile (United States), not validated for Indonesia; requirements are "
+                       "O*NET importance ratings, NOT job-ad demand - never state job-ad percentages for it"
+                       if result.get("group") == "non_it" else "Indonesian IT job ads (demand = share of job ads)"),
         matched=matched, gaps=gaps, soft=soft, context=context, h1=h[0], h2=h[1], h3=h[2], h4=h[3])
     return complete(prompt)
 

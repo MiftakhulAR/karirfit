@@ -1,0 +1,201 @@
+skill,element
+Python,Programming
+Python,Computers and Electronics
+Java,Programming
+Java,Computers and Electronics
+JavaScript,Programming
+JavaScript,Computers and Electronics
+TypeScript,Programming
+TypeScript,Computers and Electronics
+PHP,Programming
+PHP,Computers and Electronics
+Go,Programming
+Go,Computers and Electronics
+C#,Programming
+C#,Computers and Electronics
+C/C++,Programming
+C/C++,Computers and Electronics
+Kotlin,Programming
+Kotlin,Computers and Electronics
+Swift,Programming
+Swift,Computers and Electronics
+Dart,Programming
+Dart,Computers and Electronics
+R,Programming
+R,Computers and Electronics
+Ruby,Programming
+Ruby,Computers and Electronics
+Scala,Programming
+Scala,Computers and Electronics
+HTML/CSS,Programming
+HTML/CSS,Computers and Electronics
+Laravel,Programming
+Laravel,Computers and Electronics
+CodeIgniter,Programming
+CodeIgniter,Computers and Electronics
+React,Programming
+React,Computers and Electronics
+Vue.js,Programming
+Vue.js,Computers and Electronics
+Angular,Programming
+Angular,Computers and Electronics
+Node.js,Programming
+Node.js,Computers and Electronics
+Express.js,Programming
+Express.js,Computers and Electronics
+Spring Boot,Programming
+Spring Boot,Computers and Electronics
+Django/Flask,Programming
+Django/Flask,Computers and Electronics
+.NET,Programming
+.NET,Computers and Electronics
+Next.js,Programming
+Next.js,Computers and Electronics
+WordPress,Programming
+WordPress,Computers and Electronics
+REST API,Programming
+REST API,Computers and Electronics
+GraphQL,Programming
+GraphQL,Computers and Electronics
+Microservices,Programming
+Microservices,Computers and Electronics
+Flutter,Programming
+Flutter,Computers and Electronics
+React Native,Programming
+React Native,Computers and Electronics
+Android,Programming
+Android,Computers and Electronics
+iOS,Programming
+iOS,Computers and Electronics
+Firebase,Programming
+Firebase,Computers and Electronics
+SQL,Computers and Electronics
+MySQL,Computers and Electronics
+PostgreSQL,Computers and Electronics
+Oracle DB,Computers and Electronics
+SQL Server,Computers and Electronics
+MongoDB,Computers and Electronics
+NoSQL,Computers and Electronics
+Redis,Computers and Electronics
+Backup & Recovery,Computers and Electronics
+Database design,Computers and Electronics
+Git,Computers and Electronics
+Docker,Computers and Electronics
+Kubernetes,Computers and Electronics
+CI/CD,Computers and Electronics
+Linux,Computers and Electronics
+AWS,Computers and Electronics
+GCP,Computers and Electronics
+Azure,Computers and Electronics
+Terraform/Ansible,Computers and Electronics
+Machine Learning,Computers and Electronics
+Machine Learning,Mathematics (knowledge)
+Deep Learning,Computers and Electronics
+TensorFlow/PyTorch,Computers and Electronics
+Pandas/NumPy,Computers and Electronics
+Statistics,Computers and Electronics
+Statistics,Mathematics
+Statistics,Mathematics (knowledge)
+Data Visualization,Computers and Electronics
+Data Visualization,Communications and Media
+Tableau,Computers and Electronics
+Power BI,Computers and Electronics
+Excel,Computers and Electronics
+Excel,Administrative
+ETL,Computers and Electronics
+Spark/Hadoop,Computers and Electronics
+NLP,Computers and Electronics
+Computer Vision,Computers and Electronics
+Networking (TCP/IP),Computers and Electronics
+Networking (TCP/IP),Telecommunications
+Routing & Switching,Computers and Electronics
+Routing & Switching,Telecommunications
+Cisco (CCNA),Computers and Electronics
+Cisco (CCNA),Telecommunications
+Mikrotik,Computers and Electronics
+Mikrotik,Telecommunications
+Firewall,Computers and Electronics
+Firewall,Public Safety and Security
+VPN,Computers and Electronics
+VPN,Telecommunications
+Windows Server,Computers and Electronics
+Windows Server,Telecommunications
+Virtualization,Computers and Electronics
+Virtualization,Telecommunications
+Network Security,Computers and Electronics
+Network Security,Public Safety and Security
+Penetration Testing,Computers and Electronics
+Penetration Testing,Public Safety and Security
+SIEM/SOC,Computers and Electronics
+SIEM/SOC,Public Safety and Security
+ISO 27001,Computers and Electronics
+ISO 27001,Public Safety and Security
+ISO 27001,Law and Government
+Manual Testing,Quality Control Analysis
+Manual Testing,Computers and Electronics
+Automation Testing,Quality Control Analysis
+Automation Testing,Computers and Electronics
+API Testing,Quality Control Analysis
+API Testing,Computers and Electronics
+Performance Testing,Quality Control Analysis
+Performance Testing,Computers and Electronics
+Figma,Design
+Figma,Technology Design
+Figma,Fine Arts
+Adobe XD/Sketch,Design
+Adobe XD/Sketch,Technology Design
+Wireframe/Prototype,Design
+Wireframe/Prototype,Technology Design
+Wireframe/Prototype,Fine Arts
+User Research,Design
+User Research,Technology Design
+User Research,Psychology
+User Research,Social Perceptiveness
+Adobe Photoshop/Illustrator,Design
+Adobe Photoshop/Illustrator,Technology Design
+Adobe Photoshop/Illustrator,Fine Arts
+UML,Systems Analysis
+UML,Operations Analysis
+Requirement Analysis,Systems Analysis
+Requirement Analysis,Operations Analysis
+Requirement Analysis,Active Listening
+ERP/SAP,Systems Analysis
+ERP/SAP,Operations Analysis
+ERP/SAP,Economics and Accounting
+Hardware Troubleshooting,Computers and Electronics
+Hardware Troubleshooting,Troubleshooting
+Hardware Troubleshooting,Repairing
+Hardware Troubleshooting,Equipment Maintenance
+Helpdesk/Ticketing,Computers and Electronics
+Helpdesk/Ticketing,Troubleshooting
+Helpdesk/Ticketing,Customer and Personal Service
+Helpdesk/Ticketing,Service Orientation
+Windows OS,Computers and Electronics
+Windows OS,Troubleshooting
+Microsoft Office,Computers and Electronics
+Microsoft Office,Troubleshooting
+Microsoft Office,Administrative
+ITIL,Computers and Electronics
+ITIL,Troubleshooting
+Agile/Scrum,Coordination
+Agile/Scrum,Time Management
+SDLC,Systems Analysis
+OOP,Programming
+Design Pattern/Clean Code,Programming
+Project Management,Administration and Management
+Project Management,Time Management
+Project Management,Management of Personnel Resources
+Komunikasi,Speaking
+Komunikasi,Active Listening
+Komunikasi,Writing
+Kerja tim,Coordination
+Kerja tim,Cooperation
+Problem solving,Complex Problem Solving
+Problem solving,Critical Thinking
+Bahasa Inggris,Foreign Language
+Cloud computing (konsep),Computers and Electronics
+Information Security,Computers and Electronics
+Information Security,Public Safety and Security
+Data Mining,Computers and Electronics
+IoT,Computers and Electronics
+IoT,Telecommunications

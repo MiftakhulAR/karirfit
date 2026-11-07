@@ -4,20 +4,30 @@ the factual skeleton. Mirrors templateExplain() in web/app.js."""
 
 def template_explanation(result: dict, names: dict, lang: str = "id", soft_names: dict | None = None) -> str:
     n = lambda r: names.get(r["skill"], r["skill"])
+    ref = result.get("group") == "non_it"
+    def d(r, en=False):
+        if r.get("demand") is None:
+            return (f"O*NET importance {r.get('importance', 0):.1f}/{r.get('scale', 5)}" if en
+                    else f"tingkat kepentingan O*NET {r.get('importance', 0):.1f}/{r.get('scale', 5)}")
+        return f"requested in {r['demand']:.0%} of job ads" if en else f"diminta di {r['demand']:.0%} lowongan"
     soft_names = soft_names or {}
     soft_todo = [soft_names.get(r["skill"], r["skill"]) for r in result.get("soft", []) if not r.get("have")][:3]
     matched = sorted(result["matched"], key=lambda r: -r["weight"])
     gaps = result["gaps"]
     career = result["name_id"] if lang == "id" else result["name_en"]
+    note_id = (" Karier ini adalah profil acuan O*NET (Amerika Serikat) yang belum divalidasi untuk Indonesia;"
+               " kebutuhan kompetensinya tidak berasal dari lowongan." if ref else "")
+    note_en = (" This career is an O*NET (United States) reference profile, not validated for Indonesia;"
+               " its requirements do not come from job ads." if ref else "")
     if lang == "id":
         parts = [
             f"1. Dasar kecocokan\nSkor kecocokan Anda untuk {career} adalah {result['fit']:.0f}/100: "
             f"kecocokan kompetensi {result['K']:.0%}"
-            + (" dan minat Anda termasuk bidang karier ini." if result["M"] else "; minat yang Anda pilih tidak termasuk bidang ini."),
+            + (" dan minat Anda termasuk bidang karier ini." if result["M"] else "; minat yang Anda pilih tidak termasuk bidang ini.") + note_id,
             "2. Kompetensi yang sudah sesuai\n" + ("\n".join(
-                f"- {n(r)} (diminta di {r['demand']:.0%} lowongan)" for r in matched[:6]) or "- Belum ada keterampilan yang cocok."),
+                f"- {n(r)} ({d(r)})" for r in matched[:6]) or "- Belum ada keterampilan yang cocok."),
             "3. Kompetensi yang perlu ditingkatkan\n" + ("\n".join(
-                f"- {n(r)} (diminta di {r['demand']:.0%} lowongan)" for r in gaps[:5]) or "- Tidak ada kesenjangan utama."),
+                f"- {n(r)} ({d(r)})" for r in gaps[:5]) or "- Tidak ada kesenjangan utama."),
             "4. Saran pengembangan\n" + (
                 f"Mulailah dari {', '.join(n(r) for r in gaps[:3])}: keterampilan ini paling berbobot untuk {career}. "
                 "Buat satu proyek portofolio kecil yang memakainya, lalu tambahkan ke pengalaman Anda."
@@ -28,11 +38,11 @@ def template_explanation(result: dict, names: dict, lang: str = "id", soft_names
     else:
         parts = [
             f"1. Basis of fit\nYour fit score for {career} is {result['fit']:.0f}/100: competency fit {result['K']:.0%}"
-            + (" and your interests include this career area." if result["M"] else "; your selected interests do not include this area."),
+            + (" and your interests include this career area." if result["M"] else "; your selected interests do not include this area.") + note_en,
             "2. Matched competencies\n" + ("\n".join(
-                f"- {n(r)} (requested in {r['demand']:.0%} of job ads)" for r in matched[:6]) or "- No matching skills yet."),
+                f"- {n(r)} ({d(r, True)})" for r in matched[:6]) or "- No matching skills yet."),
             "3. Competencies to improve\n" + ("\n".join(
-                f"- {n(r)} (requested in {r['demand']:.0%} of job ads)" for r in gaps[:5]) or "- No major gaps."),
+                f"- {n(r)} ({d(r, True)})" for r in gaps[:5]) or "- No major gaps."),
             "4. Development advice\n" + (
                 f"Start with {', '.join(n(r) for r in gaps[:3])}: these carry the most weight for {career}. "
                 "Build one small portfolio project that uses them and add it to your experience."

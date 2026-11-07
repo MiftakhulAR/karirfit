@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { pct } from "@/lib/i18n";
+import { MIN_JOB_ZONE_D4, refNote, reqBar, reqLabel } from "@/lib/reference";
 import { saveAssessment } from "@/lib/supabase";
 import type { CareerResult, ExplainResponse, RecommendResponse } from "@/lib/types";
 import { useApp } from "./AppProvider";
@@ -93,7 +94,7 @@ export function Results() {
                 <summary>{t.r_groups}</summary>
                 <RankList title={t.r_primary} hint={t.r_primary_hint} items={data.primary} current={selected.career} onPick={pick} />
                 <RankList title={t.r_alt} hint={t.r_alt_hint} items={data.alternative} current={selected.career} onPick={pick} />
-                {(data.non_it?.length ?? 0) > 0 && <RankList title={t.r_nonit} hint={t.r_nonit_hint} items={data.non_it} current={selected.career} onPick={pick} />}
+                {(data.non_it?.length ?? 0) > 0 && <NonItList items={data.non_it} current={selected.career} onPick={pick} />}
               </details>
             </>
           )}
@@ -115,6 +116,25 @@ export function Results() {
             : t.demand_seed}</p>
       </details>
     </section>
+  );
+}
+
+/** 896 O*NET reference careers: 5 shown (Job Zone >= 4 for D4/S1), the rest behind a toggle so the page stays light. */
+function NonItList({ items, current, onPick }: { items: CareerResult[]; current: string; onPick: (id: string) => void }) {
+  const { t, lang } = useApp();
+  const [open, setOpen] = useState(false);
+  const fitting = items.filter(r => (r.job_zone ?? 0) >= MIN_JOB_ZONE_D4);
+  const shown = open ? items : (fitting.length ? fitting : items).slice(0, 5);
+  const hint = lang === "id"
+    ? (open ? `Semua ${items.length} okupasi O*NET (semua Job Zone).` : `Profil acuan O*NET 31.0 (AS), belum divalidasi untuk Indonesia; 5 teratas untuk jenjang D4/S1 (Job Zone ≥ ${MIN_JOB_ZONE_D4}).`)
+    : (open ? `All ${items.length} O*NET occupations (all Job Zones).` : `O*NET 31.0 reference profiles (US), not validated for Indonesia; top 5 for D4/bachelor level (Job Zone ≥ ${MIN_JOB_ZONE_D4}).`);
+  return (
+    <>
+      <RankList title={t.r_nonit} hint={hint} items={shown} current={current} onPick={onPick} />
+      <button className="btn ghost small" aria-expanded={open} onClick={() => setOpen(v => !v)}>
+        {open ? (lang === "id" ? "Sembunyikan" : "Hide") : (lang === "id" ? `Tampilkan semua (${items.length})` : `Show all (${items.length})`)}
+      </button>
+    </>
   );
 }
 
@@ -172,6 +192,8 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
     <article className="detail" id="career-detail" aria-live="polite">
       {answers.target === r.career && <p className="notice">{t.target_badge}</p>}
       <h3>{careerName(r)}</h3>
+      {r.group === "non_it" && <p className="hint small">{refNote(r, lang)}</p>}
+      {r.trimmed && <p className="hint small">{lang === "id" ? "Ditampilkan 10 kompetensi terberat yang cocok dan 10 yang belum." : "Showing the 10 heaviest matched and missing competencies."}</p>}
       <div className="bigscore">{Math.round(r.fit)}<small> / 100</small></div>
       <div className="score-line">
         <span>{t.comp}: <strong>{pct(r.K)}</strong></span>
@@ -190,12 +212,13 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
                 {x.evidence && (
                   <div className="ev">
                     {t.src[x.evidence.source]}
-                    {x.evidence.source === "self" ? `: ${t.lv[x.evidence.detail as keyof typeof t.lv] ?? x.evidence.detail}`
+                    {x.evidence.via ? ` (${lang === "id" ? "lewat" : "via"} ${skillName(x.evidence.via)})` : ""}
+                    {x.evidence.source === "self" ? `: ${t.lv[x.evidence.detail.split(" →")[0] as keyof typeof t.lv] ?? x.evidence.detail}`
                       : x.evidence.source === "course" ? `: ${courseLabel(x.evidence.course, x.evidence.detail)}` : ""}
                   </div>
                 )}
               </td>
-              <td className="dem"><span>{t.demand_of(pct(x.demand))}</span><div className="bar"><i style={{ width: `${x.demand * 100}%` }} /></div></td>
+              <td className="dem"><span>{x.demand == null ? reqLabel(x, lang) : t.demand_of(pct(x.demand))}</span><div className="bar"><i style={{ width: `${reqBar(x)}%` }} /></div></td>
               <td><span className={"tag " + (x.ok ? "ok" : "gap")}>{x.ok ? t.have : t.gap}</span></td>
             </tr>
           ))}
@@ -211,7 +234,7 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
             {r.soft.map(x => (
               <li key={x.skill}>
                 <span>{softName(x.skill)}</span>
-                <span className="ev">{t.demand_of(pct(x.demand))}</span>
+                <span className="ev">{x.demand == null ? "" : t.demand_of(pct(x.demand))}</span>
                 <span className={"tag " + (x.have ? "ok" : "gap")}>{x.have ? t.soft_have : t.soft_dev}</span>
               </li>
             ))}
