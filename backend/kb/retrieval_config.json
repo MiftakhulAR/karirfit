@@ -1,0 +1,16 @@
+{
+  "kb_versi": "v2",
+  "model_embedding": "intfloat/multilingual-e5-base",
+  "prefix_query": "query: ",
+  "prefix_passage": "passage: ",
+  "index": "FAISS IndexFlatIP (cosine, vektor dinormalisasi)",
+  "top_k": 5,
+  "tau": 0.8401,
+  "jenis_tidak_diambil": [
+    "roadmap"
+  ],
+  "akses_mode_publik": [
+    "publik"
+  ],
+  "kueri": "{karier}. Kompetensi yang dimiliki: {cocok}. Kompetensi yang perlu ditingkatkan: {gap[:3]}."
+}

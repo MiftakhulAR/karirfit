@@ -1,0 +1,63 @@
+kode,nama_mata_kuliah,semester,semester_source,skill
+TIK2103,Pengantar Teknologi Informasi & Komunikasi,1,rps,Networking (TCP/IP)
+TIK2103,Pengantar Teknologi Informasi & Komunikasi,1,rps,Backup & Recovery
+TIK2105,Algoritma & Pemrograman,1,rps,C/C++
+TI210201,Pemrograman Berorientasi Objek,2,rps,Java
+TI210201,Pemrograman Berorientasi Objek,2,rps,OOP
+TI210201,Pemrograman Berorientasi Objek,2,rps,UML
+TI210202,Pemrograman Web Dasar,2,rps,HTML/CSS
+TI210202,Pemrograman Web Dasar,2,rps,JavaScript
+TI210203,Rekayasa Perangkat Lunak,2,rps,Agile/Scrum
+TI210203,Rekayasa Perangkat Lunak,2,rps,Wireframe/Prototype
+TI210203,Rekayasa Perangkat Lunak,2,rps,Design Pattern/Clean Code
+TI210203,Rekayasa Perangkat Lunak,2,rps,Requirement Analysis
+TI210203,Rekayasa Perangkat Lunak,2,rps,User Research
+TI210205,Sistem Basis Data,2,rps,SQL
+TI210205,Sistem Basis Data,2,rps,Database design
+TI210205,Sistem Basis Data,2,rps,MySQL
+TI210205,Sistem Basis Data,2,rps,Oracle DB
+TI210205,Sistem Basis Data,2,rps,NoSQL
+TI210205,Sistem Basis Data,2,rps,MongoDB
+TI210207,Sistem Informasi Manajemen,2,rps,Requirement Analysis
+TI210207,Sistem Informasi Manajemen,2,rps,Project Management
+TIK2104,Jaringan Komputer,2,rps,Networking (TCP/IP)
+TIK2104,Jaringan Komputer,2,rps,Routing & Switching
+TI210303,Desain UI/UX,3,rps,Wireframe/Prototype
+TI210303,Desain UI/UX,3,rps,User Research
+TI210303,Desain UI/UX,3,rps,Requirement Analysis
+TI210306,Pemrograman Web Lanjut,3,rps,PHP
+TI210306,Pemrograman Web Lanjut,3,rps,MySQL
+TI210306,Pemrograman Web Lanjut,3,rps,HTML/CSS
+TI210306,Pemrograman Web Lanjut,3,rps,SQL
+TI210306,Pemrograman Web Lanjut,3,rps,JavaScript
+TI210308,Analisis dan Desain Sistem Informasi,3,rps,Agile/Scrum
+TI210310,Sistem Terdistribusi,3,rps,Cloud computing (konsep)
+TI210310,Sistem Terdistribusi,3,rps,Virtualization
+TI210310,Sistem Terdistribusi,3,rps,Docker
+TI210310,Sistem Terdistribusi,3,rps,Information Security
+TI210304,Keamanan Informasi,4,rps,Information Security
+TI210304,Keamanan Informasi,4,rps,Network Security
+TI210401,Framework Programming,4,rps,Laravel
+TI210401,Framework Programming,4,rps,REST API
+TI210401,Framework Programming,4,rps,PHP
+TI210401,Framework Programming,4,rps,OOP
+TI210401,Framework Programming,4,rps,HTML/CSS
+TI210402,Mobile Programming,4,rps,Android
+TI210404,Cloud Computing,4,rps,Cloud computing (konsep)
+TI210404,Cloud Computing,4,rps,Information Security
+TI210404,Cloud Computing,4,rps,Virtualization
+TI210405,Software Quality Assurance,4,rps,Manual Testing
+TI210405,Software Quality Assurance,4,rps,Performance Testing
+TI210601,Machine Learning,6,rps,Machine Learning
+TI210601,Machine Learning,6,rps,Deep Learning
+TI210602,Natural Language Processing,6,rps,NLP
+TI210602,Natural Language Processing,6,rps,Data Mining
+TI210602,Natural Language Processing,6,rps,Python
+TI210604,Data Mining & Big Data,6,rps,Data Mining
+TI210604,Data Mining & Big Data,6,rps,Spark/Hadoop
+TI210604,Data Mining & Big Data,6,rps,NoSQL
+TIK2108,Proyek sesuai kekhususan bidang Teknik Informatika,6,rps,Requirement Analysis
+TI210406,Statistika Probabilitas,4,inferred,Statistics
+TI210307,Pemrograman Basis Data,3,inferred,SQL
+TI210302,Manajemen Proyek TIK,3,inferred,Project Management
+TI210603,Internet of Things,6,inferred,IoT

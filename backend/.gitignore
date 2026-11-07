@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+.env
+karirfit.db
+*.pyc
+eval_rq5/
+# encoder weights are downloaded at build time (tools/unduh_e5.py), never committed
+e5_numpy/
+kb/chunks.jsonl

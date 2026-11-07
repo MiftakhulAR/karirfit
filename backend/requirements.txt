@@ -1,0 +1,12 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+python-dotenv>=1.0
+psycopg[binary]>=3.2      # used only when DATABASE_URL is set (Supabase Postgres)
+python-multipart>=0.0.9   # admin document upload (FR10)
+# retrieval (RAG) without torch: NumPy e5 encoder (e5_numpy.py) + Hugging Face tokenizer.
+# Weights are downloaded at build time: python tools/unduh_e5.py
+numpy>=1.26
+tokenizers>=0.19
+pypdf>=4.0                # admin upload: PDF text (imported only on rebuild)
+python-docx>=1.1          # admin upload: DOCX text (imported only on rebuild)

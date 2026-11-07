@@ -1,0 +1,4 @@
+# Not needed any more: requirements.txt already contains the NumPy retriever.
+# Only for re-embedding the whole KB with the reference implementation (Colab does this, Tahap 11):
+-r requirements.txt
+sentence-transformers>=2.7

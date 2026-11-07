@@ -1,0 +1,3814 @@
+{
+ "version": 2,
+ "data_label": "iklan lowongan TI Indonesia",
+ "demand_source": "Lowongan TI Indonesia: 5759 iklan latih (70 % dari 8.228 iklan), kamus skill v4",
+ "n_ads_train": 5759,
+ "params": {
+  "alpha": 0.5,
+  "threshold": 0.1,
+  "n_careers": 15,
+  "grade_points": {
+   "A": 1.0,
+   "A-": 0.925,
+   "B+": 0.825,
+   "B": 0.75,
+   "B-": 0.675,
+   "C+": 0.575,
+   "C": 0.5,
+   "D": 0.25,
+   "E": 0.0
+  },
+  "self_level": {
+   "advanced": 1.0,
+   "intermediate": 0.67,
+   "beginner": 0.33
+  }
+ },
+ "careers": [
+  {
+   "id": "senior_programmer",
+   "name_en": "Senior Programmer",
+   "name_id": "Senior Programmer",
+   "group": "primary",
+   "onet_soc": "15-1251.00",
+   "n_ads": 259,
+   "requirements": [
+    {
+     "skill": "javascript",
+     "demand": 0.4903,
+     "weight": 0.764
+    },
+    {
+     "skill": "react",
+     "demand": 0.2819,
+     "weight": 0.6032
+    },
+    {
+     "skill": "html_css",
+     "demand": 0.3436,
+     "weight": 0.5354
+    },
+    {
+     "skill": "java",
+     "demand": 0.471,
+     "weight": 0.4974
+    },
+    {
+     "skill": "rest_api",
+     "demand": 0.3012,
+     "weight": 0.4692
+    },
+    {
+     "skill": "nodejs",
+     "demand": 0.2317,
+     "weight": 0.4151
+    },
+    {
+     "skill": "oop",
+     "demand": 0.2278,
+     "weight": 0.4082
+    },
+    {
+     "skill": "angular",
+     "demand": 0.1467,
+     "weight": 0.4068
+    },
+    {
+     "skill": "csharp",
+     "demand": 0.1892,
+     "weight": 0.4049
+    },
+    {
+     "skill": "sql",
+     "demand": 0.4672,
+     "weight": 0.4019
+    },
+    {
+     "skill": "git",
+     "demand": 0.3089,
+     "weight": 0.387
+    },
+    {
+     "skill": "php",
+     "demand": 0.2355,
+     "weight": 0.367
+    },
+    {
+     "skill": "design_pattern_clean_code",
+     "demand": 0.1622,
+     "weight": 0.347
+    },
+    {
+     "skill": "dotnet",
+     "demand": 0.1931,
+     "weight": 0.3459
+    },
+    {
+     "skill": "vue_js",
+     "demand": 0.1197,
+     "weight": 0.3319
+    },
+    {
+     "skill": "postgresql",
+     "demand": 0.1815,
+     "weight": 0.2828
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.2664,
+     "weight": 0.2813
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.4015,
+     "weight": 0.2783
+    },
+    {
+     "skill": "laravel",
+     "demand": 0.1197,
+     "weight": 0.2561
+    },
+    {
+     "skill": "ci_cd",
+     "demand": 0.1506,
+     "weight": 0.2346
+    },
+    {
+     "skill": "aws",
+     "demand": 0.1622,
+     "weight": 0.2248
+    },
+    {
+     "skill": "microservices",
+     "demand": 0.1042,
+     "weight": 0.2231
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1429,
+     "weight": 0.2226
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2973,
+     "weight": 0.2061
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2896,
+     "weight": 0.2007
+    },
+    {
+     "skill": "docker",
+     "demand": 0.1081,
+     "weight": 0.1937
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1969,
+     "weight": 0.1931
+    },
+    {
+     "skill": "android",
+     "demand": 0.1042,
+     "weight": 0.1868
+    },
+    {
+     "skill": "sql_server",
+     "demand": 0.1197,
+     "weight": 0.1865
+    },
+    {
+     "skill": "linux",
+     "demand": 0.1467,
+     "weight": 0.1838
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1236,
+     "weight": 0.1713
+    },
+    {
+     "skill": "python",
+     "demand": 0.1351,
+     "weight": 0.1547
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2201,
+     "weight": 0.1525
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.4015
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1429
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2896
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1969
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1236
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2201
+    }
+   ]
+  },
+  {
+   "id": "software_developer",
+   "name_en": "Software Developer",
+   "name_id": "Software Developer",
+   "group": "primary",
+   "onet_soc": "15-1252.00",
+   "n_ads": 2496,
+   "requirements": [
+    {
+     "skill": "html_css",
+     "demand": 0.4091,
+     "weight": 0.6374
+    },
+    {
+     "skill": "javascript",
+     "demand": 0.4046,
+     "weight": 0.6305
+    },
+    {
+     "skill": "php",
+     "demand": 0.3666,
+     "weight": 0.5712
+    },
+    {
+     "skill": "rest_api",
+     "demand": 0.278,
+     "weight": 0.4332
+    },
+    {
+     "skill": "java",
+     "demand": 0.4099,
+     "weight": 0.4328
+    },
+    {
+     "skill": "sql",
+     "demand": 0.5004,
+     "weight": 0.4304
+    },
+    {
+     "skill": "laravel",
+     "demand": 0.1727,
+     "weight": 0.3695
+    },
+    {
+     "skill": "react",
+     "demand": 0.1482,
+     "weight": 0.3172
+    },
+    {
+     "skill": "oop",
+     "demand": 0.1603,
+     "weight": 0.2871
+    },
+    {
+     "skill": "git",
+     "demand": 0.2248,
+     "weight": 0.2816
+    },
+    {
+     "skill": "dotnet",
+     "demand": 0.153,
+     "weight": 0.2742
+    },
+    {
+     "skill": "csharp",
+     "demand": 0.1254,
+     "weight": 0.2684
+    },
+    {
+     "skill": "nodejs",
+     "demand": 0.1402,
+     "weight": 0.2512
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.349,
+     "weight": 0.2419
+    },
+    {
+     "skill": "sql_server",
+     "demand": 0.151,
+     "weight": 0.2353
+    },
+    {
+     "skill": "postgresql",
+     "demand": 0.1362,
+     "weight": 0.2122
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1218,
+     "weight": 0.1898
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1907,
+     "weight": 0.1322
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1887,
+     "weight": 0.1308
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.1142,
+     "weight": 0.1206
+    },
+    {
+     "skill": "python",
+     "demand": 0.1018,
+     "weight": 0.1165
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1567,
+     "weight": 0.1086
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.349
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1218
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1907
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1887
+    }
+   ]
+  },
+  {
+   "id": "system_analyst",
+   "name_en": "System Analyst",
+   "name_id": "System Analyst",
+   "group": "primary",
+   "onet_soc": "15-1211.00",
+   "n_ads": 218,
+   "requirements": [
+    {
+     "skill": "requirement_analysis",
+     "demand": 0.4679,
+     "weight": 0.8383
+    },
+    {
+     "skill": "sdlc",
+     "demand": 0.2339,
+     "weight": 0.5007
+    },
+    {
+     "skill": "uml",
+     "demand": 0.1697,
+     "weight": 0.4706
+    },
+    {
+     "skill": "erp_sap",
+     "demand": 0.1284,
+     "weight": 0.3561
+    },
+    {
+     "skill": "sql",
+     "demand": 0.3394,
+     "weight": 0.292
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.4037,
+     "weight": 0.2798
+    },
+    {
+     "skill": "coordination",
+     "demand": 0.1009,
+     "weight": 0.2798
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2706,
+     "weight": 0.2655
+    },
+    {
+     "skill": "database_design",
+     "demand": 0.1009,
+     "weight": 0.216
+    },
+    {
+     "skill": "dotnet",
+     "demand": 0.1101,
+     "weight": 0.1973
+    },
+    {
+     "skill": "sql_server",
+     "demand": 0.1193,
+     "weight": 0.1858
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.1743,
+     "weight": 0.1841
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2569,
+     "weight": 0.1781
+    },
+    {
+     "skill": "php",
+     "demand": 0.1101,
+     "weight": 0.1715
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2431,
+     "weight": 0.1685
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1055,
+     "weight": 0.1463
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1697,
+     "weight": 0.1176
+    },
+    {
+     "skill": "java",
+     "demand": 0.1101,
+     "weight": 0.1163
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "speaking",
+     "demand": 0.4037
+    },
+    {
+     "skill": "coordination",
+     "demand": 0.1009
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2706
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2431
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1055
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1697
+    }
+   ]
+  },
+  {
+   "id": "database_administrator",
+   "name_en": "Database Administrator",
+   "name_id": "Database Administrator",
+   "group": "primary",
+   "onet_soc": "15-1242.00",
+   "n_ads": 107,
+   "requirements": [
+    {
+     "skill": "backup_recovery",
+     "demand": 0.486,
+     "weight": 0.8708
+    },
+    {
+     "skill": "oracle_db",
+     "demand": 0.271,
+     "weight": 0.7514
+    },
+    {
+     "skill": "sql_server",
+     "demand": 0.4019,
+     "weight": 0.6262
+    },
+    {
+     "skill": "sql",
+     "demand": 0.6636,
+     "weight": 0.5708
+    },
+    {
+     "skill": "postgresql",
+     "demand": 0.271,
+     "weight": 0.4223
+    },
+    {
+     "skill": "linux",
+     "demand": 0.2336,
+     "weight": 0.2927
+    },
+    {
+     "skill": "database_design",
+     "demand": 0.1308,
+     "weight": 0.28
+    },
+    {
+     "skill": "statistics",
+     "demand": 0.1028,
+     "weight": 0.1602
+    },
+    {
+     "skill": "windows_os",
+     "demand": 0.1028,
+     "weight": 0.1602
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1121,
+     "weight": 0.1555
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1682,
+     "weight": 0.1166
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1682,
+     "weight": 0.1166
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.1589,
+     "weight": 0.1101
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1121,
+     "weight": 0.0777
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1121
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1682
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.1589
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1121
+    }
+   ]
+  },
+  {
+   "id": "mobile_developer",
+   "name_en": "Mobile Developer",
+   "name_id": "Mobile Developer",
+   "group": "alternative",
+   "onet_soc": "15-1252.00",
+   "n_ads": 486,
+   "requirements": [
+    {
+     "skill": "android",
+     "demand": 0.6626,
+     "weight": 1.1871
+    },
+    {
+     "skill": "rest_api",
+     "demand": 0.428,
+     "weight": 0.6669
+    },
+    {
+     "skill": "swift",
+     "demand": 0.2325,
+     "weight": 0.6447
+    },
+    {
+     "skill": "kotlin",
+     "demand": 0.2284,
+     "weight": 0.6332
+    },
+    {
+     "skill": "flutter",
+     "demand": 0.2181,
+     "weight": 0.6047
+    },
+    {
+     "skill": "java",
+     "demand": 0.4444,
+     "weight": 0.4694
+    },
+    {
+     "skill": "react_native",
+     "demand": 0.1687,
+     "weight": 0.4678
+    },
+    {
+     "skill": "ios",
+     "demand": 0.144,
+     "weight": 0.3993
+    },
+    {
+     "skill": "git",
+     "demand": 0.3107,
+     "weight": 0.3892
+    },
+    {
+     "skill": "oop",
+     "demand": 0.2058,
+     "weight": 0.3687
+    },
+    {
+     "skill": "design_pattern_clean_code",
+     "demand": 0.1296,
+     "weight": 0.2774
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3745,
+     "weight": 0.2596
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1235,
+     "weight": 0.1924
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.179,
+     "weight": 0.189
+    },
+    {
+     "skill": "html_css",
+     "demand": 0.1173,
+     "weight": 0.1827
+    },
+    {
+     "skill": "javascript",
+     "demand": 0.1132,
+     "weight": 0.1763
+    },
+    {
+     "skill": "sql",
+     "demand": 0.177,
+     "weight": 0.1522
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1728,
+     "weight": 0.1198
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1111,
+     "weight": 0.109
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1337,
+     "weight": 0.0927
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1214,
+     "weight": 0.0841
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.3745
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1235
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.1728
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1111
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1337
+    }
+   ]
+  },
+  {
+   "id": "qa_software_tester",
+   "name_en": "QA / Software Tester",
+   "name_id": "QA / Software Tester",
+   "group": "alternative",
+   "onet_soc": "15-1253.00",
+   "n_ads": 176,
+   "requirements": [
+    {
+     "skill": "manual_testing",
+     "demand": 0.5909,
+     "weight": 1.6383
+    },
+    {
+     "skill": "automation_testing",
+     "demand": 0.4943,
+     "weight": 1.3705
+    },
+    {
+     "skill": "performance_testing",
+     "demand": 0.2614,
+     "weight": 0.7247
+    },
+    {
+     "skill": "api_testing",
+     "demand": 0.2273,
+     "weight": 0.6301
+    },
+    {
+     "skill": "rest_api",
+     "demand": 0.2727,
+     "weight": 0.4249
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.3523,
+     "weight": 0.372
+    },
+    {
+     "skill": "sdlc",
+     "demand": 0.1364,
+     "weight": 0.2918
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.4148,
+     "weight": 0.2875
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3864,
+     "weight": 0.2678
+    },
+    {
+     "skill": "sql",
+     "demand": 0.3068,
+     "weight": 0.2639
+    },
+    {
+     "skill": "ci_cd",
+     "demand": 0.1534,
+     "weight": 0.239
+    },
+    {
+     "skill": "requirement_analysis",
+     "demand": 0.1193,
+     "weight": 0.2138
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1307,
+     "weight": 0.2036
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2045,
+     "weight": 0.2006
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.142,
+     "weight": 0.1969
+    },
+    {
+     "skill": "java",
+     "demand": 0.1705,
+     "weight": 0.18
+    },
+    {
+     "skill": "git",
+     "demand": 0.142,
+     "weight": 0.1779
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2557,
+     "weight": 0.1772
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.142,
+     "weight": 0.0985
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.4148
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3864
+    },
+    {
+     "skill": "active_learning",
+     "demand": 0.1307
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2045
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.142
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.142
+    }
+   ]
+  },
+  {
+   "id": "ui_ux_designer",
+   "name_en": "UI/UX Designer",
+   "name_id": "UI/UX Designer",
+   "group": "alternative",
+   "onet_soc": "15-1255.00",
+   "n_ads": 155,
+   "requirements": [
+    {
+     "skill": "wireframe_prototype",
+     "demand": 0.5935,
+     "weight": 1.6457
+    },
+    {
+     "skill": "figma",
+     "demand": 0.5161,
+     "weight": 1.431
+    },
+    {
+     "skill": "adobe_photoshop_illustrator",
+     "demand": 0.4387,
+     "weight": 1.2164
+    },
+    {
+     "skill": "adobe_xd_sketch",
+     "demand": 0.3742,
+     "weight": 1.0375
+    },
+    {
+     "skill": "innovation",
+     "demand": 0.3355,
+     "weight": 0.9302
+    },
+    {
+     "skill": "user_research",
+     "demand": 0.271,
+     "weight": 0.7513
+    },
+    {
+     "skill": "html_css",
+     "demand": 0.2387,
+     "weight": 0.3719
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.5097,
+     "weight": 0.3533
+    },
+    {
+     "skill": "android",
+     "demand": 0.1742,
+     "weight": 0.3121
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1613,
+     "weight": 0.2236
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2968,
+     "weight": 0.2057
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2258,
+     "weight": 0.1565
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2258,
+     "weight": 0.1565
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.1097,
+     "weight": 0.1158
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "innovation",
+     "demand": 0.3355
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.5097
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1613
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2968
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2258
+    }
+   ]
+  },
+  {
+   "id": "data_analyst_bi",
+   "name_en": "Data Analyst / BI",
+   "name_id": "Data Analyst / BI",
+   "group": "alternative",
+   "onet_soc": "15-2051.01",
+   "n_ads": 279,
+   "requirements": [
+    {
+     "skill": "excel",
+     "demand": 0.4086,
+     "weight": 1.1329
+    },
+    {
+     "skill": "statistics",
+     "demand": 0.5197,
+     "weight": 0.8098
+    },
+    {
+     "skill": "data_visualization",
+     "demand": 0.3835,
+     "weight": 0.6872
+    },
+    {
+     "skill": "tableau",
+     "demand": 0.2724,
+     "weight": 0.4881
+    },
+    {
+     "skill": "power_bi",
+     "demand": 0.2545,
+     "weight": 0.456
+    },
+    {
+     "skill": "sql",
+     "demand": 0.5054,
+     "weight": 0.4347
+    },
+    {
+     "skill": "microsoft_office",
+     "demand": 0.1075,
+     "weight": 0.2981
+    },
+    {
+     "skill": "python",
+     "demand": 0.2222,
+     "weight": 0.2545
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3262,
+     "weight": 0.2261
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2222,
+     "weight": 0.218
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3082,
+     "weight": 0.2137
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1434,
+     "weight": 0.1988
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.129,
+     "weight": 0.1789
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2437,
+     "weight": 0.1689
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1541,
+     "weight": 0.1068
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "speaking",
+     "demand": 0.3262
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.2222
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3082
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1434
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.129
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2437
+    }
+   ]
+  },
+  {
+   "id": "data_engineer",
+   "name_en": "Data Engineer",
+   "name_id": "Data Engineer",
+   "group": "alternative",
+   "onet_soc": "15-1243.01",
+   "n_ads": 143,
+   "requirements": [
+    {
+     "skill": "etl",
+     "demand": 0.7063,
+     "weight": 1.5115
+    },
+    {
+     "skill": "spark_hadoop",
+     "demand": 0.3846,
+     "weight": 0.8231
+    },
+    {
+     "skill": "python",
+     "demand": 0.6434,
+     "weight": 0.7367
+    },
+    {
+     "skill": "sql",
+     "demand": 0.7902,
+     "weight": 0.6797
+    },
+    {
+     "skill": "scala",
+     "demand": 0.1818,
+     "weight": 0.5041
+    },
+    {
+     "skill": "gcp",
+     "demand": 0.2517,
+     "weight": 0.4511
+    },
+    {
+     "skill": "aws",
+     "demand": 0.3007,
+     "weight": 0.4169
+    },
+    {
+     "skill": "azure",
+     "demand": 0.1888,
+     "weight": 0.3383
+    },
+    {
+     "skill": "data_visualization",
+     "demand": 0.1888,
+     "weight": 0.3383
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.4406,
+     "weight": 0.3054
+    },
+    {
+     "skill": "java",
+     "demand": 0.2797,
+     "weight": 0.2954
+    },
+    {
+     "skill": "postgresql",
+     "demand": 0.1888,
+     "weight": 0.2942
+    },
+    {
+     "skill": "machine_learning",
+     "demand": 0.1259,
+     "weight": 0.2694
+    },
+    {
+     "skill": "tableau",
+     "demand": 0.1259,
+     "weight": 0.2255
+    },
+    {
+     "skill": "power_bi",
+     "demand": 0.1259,
+     "weight": 0.2255
+    },
+    {
+     "skill": "statistics",
+     "demand": 0.1049,
+     "weight": 0.1634
+    },
+    {
+     "skill": "git",
+     "demand": 0.1189,
+     "weight": 0.1489
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2098,
+     "weight": 0.1454
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1469,
+     "weight": 0.144
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1608,
+     "weight": 0.1115
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1049,
+     "weight": 0.0727
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.4406
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2098
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1469
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1608
+    }
+   ]
+  },
+  {
+   "id": "data_scientist_ml_ai_engineer",
+   "name_en": "Data Scientist / ML / AI Engineer",
+   "name_id": "Data Scientist / ML / AI Engineer",
+   "group": "alternative",
+   "onet_soc": "15-2051.00",
+   "n_ads": 127,
+   "requirements": [
+    {
+     "skill": "machine_learning",
+     "demand": 0.6614,
+     "weight": 1.4155
+    },
+    {
+     "skill": "python",
+     "demand": 0.7953,
+     "weight": 0.9107
+    },
+    {
+     "skill": "statistics",
+     "demand": 0.5433,
+     "weight": 0.8466
+    },
+    {
+     "skill": "tensorflow_pytorch",
+     "demand": 0.2362,
+     "weight": 0.6549
+    },
+    {
+     "skill": "data_mining",
+     "demand": 0.2205,
+     "weight": 0.6113
+    },
+    {
+     "skill": "deep_learning",
+     "demand": 0.2126,
+     "weight": 0.5894
+    },
+    {
+     "skill": "spark_hadoop",
+     "demand": 0.2677,
+     "weight": 0.5729
+    },
+    {
+     "skill": "sql",
+     "demand": 0.5433,
+     "weight": 0.4674
+    },
+    {
+     "skill": "data_visualization",
+     "demand": 0.2441,
+     "weight": 0.4374
+    },
+    {
+     "skill": "nlp",
+     "demand": 0.1496,
+     "weight": 0.4148
+    },
+    {
+     "skill": "tableau",
+     "demand": 0.2126,
+     "weight": 0.3809
+    },
+    {
+     "skill": "gcp",
+     "demand": 0.1969,
+     "weight": 0.3527
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.4724,
+     "weight": 0.3275
+    },
+    {
+     "skill": "etl",
+     "demand": 0.1496,
+     "weight": 0.3202
+    },
+    {
+     "skill": "azure",
+     "demand": 0.1654,
+     "weight": 0.2963
+    },
+    {
+     "skill": "computer_vision",
+     "demand": 0.1024,
+     "weight": 0.2838
+    },
+    {
+     "skill": "power_bi",
+     "demand": 0.1575,
+     "weight": 0.2822
+    },
+    {
+     "skill": "aws",
+     "demand": 0.1969,
+     "weight": 0.2729
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3386,
+     "weight": 0.2347
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.3307,
+     "weight": 0.2292
+    },
+    {
+     "skill": "docker",
+     "demand": 0.126,
+     "weight": 0.2257
+    },
+    {
+     "skill": "leadership_orientation",
+     "demand": 0.1024,
+     "weight": 0.2191
+    },
+    {
+     "skill": "ci_cd",
+     "demand": 0.1024,
+     "weight": 0.1595
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2047,
+     "weight": 0.1419
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1417,
+     "weight": 0.139
+    },
+    {
+     "skill": "java",
+     "demand": 0.1181,
+     "weight": 0.1247
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.4724
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3386
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.3307
+    },
+    {
+     "skill": "leadership_orientation",
+     "demand": 0.1024
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1417
+    }
+   ]
+  },
+  {
+   "id": "devops_cloud_engineer",
+   "name_en": "DevOps / Cloud Engineer",
+   "name_id": "DevOps / Cloud Engineer",
+   "group": "alternative",
+   "onet_soc": "15-1299.08",
+   "n_ads": 102,
+   "requirements": [
+    {
+     "skill": "kubernetes",
+     "demand": 0.5294,
+     "weight": 1.4678
+    },
+    {
+     "skill": "terraform_ansible",
+     "demand": 0.2941,
+     "weight": 0.8155
+    },
+    {
+     "skill": "ci_cd",
+     "demand": 0.5,
+     "weight": 0.7791
+    },
+    {
+     "skill": "docker",
+     "demand": 0.4216,
+     "weight": 0.7553
+    },
+    {
+     "skill": "gcp",
+     "demand": 0.3922,
+     "weight": 0.7027
+    },
+    {
+     "skill": "linux",
+     "demand": 0.5392,
+     "weight": 0.6755
+    },
+    {
+     "skill": "aws",
+     "demand": 0.4118,
+     "weight": 0.5708
+    },
+    {
+     "skill": "networking_tcp_ip",
+     "demand": 0.2745,
+     "weight": 0.4277
+    },
+    {
+     "skill": "python",
+     "demand": 0.3137,
+     "weight": 0.3593
+    },
+    {
+     "skill": "git",
+     "demand": 0.2843,
+     "weight": 0.3562
+    },
+    {
+     "skill": "microservices",
+     "demand": 0.1569,
+     "weight": 0.3357
+    },
+    {
+     "skill": "cloud_computing_konsep",
+     "demand": 0.1176,
+     "weight": 0.3262
+    },
+    {
+     "skill": "virtualization",
+     "demand": 0.1471,
+     "weight": 0.3147
+    },
+    {
+     "skill": "backup_recovery",
+     "demand": 0.1569,
+     "weight": 0.2811
+    },
+    {
+     "skill": "azure",
+     "demand": 0.1569,
+     "weight": 0.2811
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3431,
+     "weight": 0.2378
+    },
+    {
+     "skill": "sql",
+     "demand": 0.2549,
+     "weight": 0.2193
+    },
+    {
+     "skill": "nodejs",
+     "demand": 0.1176,
+     "weight": 0.2108
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2843,
+     "weight": 0.1971
+    },
+    {
+     "skill": "javascript",
+     "demand": 0.1176,
+     "weight": 0.1833
+    },
+    {
+     "skill": "java",
+     "demand": 0.1667,
+     "weight": 0.176
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2451,
+     "weight": 0.1699
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2059,
+     "weight": 0.1427
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.1275,
+     "weight": 0.1346
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "cooperation",
+     "demand": 0.3431
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2843
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2451
+    }
+   ]
+  },
+  {
+   "id": "network_system_administrator",
+   "name_en": "Network / System Administrator",
+   "name_id": "Network / System Administrator",
+   "group": "alternative",
+   "onet_soc": "15-1244.00",
+   "n_ads": 281,
+   "requirements": [
+    {
+     "skill": "networking_tcp_ip",
+     "demand": 0.5089,
+     "weight": 0.7929
+    },
+    {
+     "skill": "cisco_ccna",
+     "demand": 0.331,
+     "weight": 0.7083
+    },
+    {
+     "skill": "routing_switching",
+     "demand": 0.3737,
+     "weight": 0.6695
+    },
+    {
+     "skill": "firewall",
+     "demand": 0.2883,
+     "weight": 0.6169
+    },
+    {
+     "skill": "hardware_troubleshooting",
+     "demand": 0.2883,
+     "weight": 0.5165
+    },
+    {
+     "skill": "windows_server",
+     "demand": 0.1744,
+     "weight": 0.4835
+    },
+    {
+     "skill": "virtualization",
+     "demand": 0.2242,
+     "weight": 0.4798
+    },
+    {
+     "skill": "linux",
+     "demand": 0.3737,
+     "weight": 0.4681
+    },
+    {
+     "skill": "backup_recovery",
+     "demand": 0.2064,
+     "weight": 0.3698
+    },
+    {
+     "skill": "mikrotik",
+     "demand": 0.1708,
+     "weight": 0.3656
+    },
+    {
+     "skill": "vpn",
+     "demand": 0.1317,
+     "weight": 0.2818
+    },
+    {
+     "skill": "windows_os",
+     "demand": 0.1708,
+     "weight": 0.2662
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1459,
+     "weight": 0.2023
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2847,
+     "weight": 0.1973
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2705,
+     "weight": 0.1875
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2349,
+     "weight": 0.1628
+    },
+    {
+     "skill": "aws",
+     "demand": 0.0996,
+     "weight": 0.1381
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1495,
+     "weight": 0.1036
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "initiative",
+     "demand": 0.1459
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2847
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2705
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1495
+    }
+   ]
+  },
+  {
+   "id": "cyber_security",
+   "name_en": "Cyber Security",
+   "name_id": "Cyber Security",
+   "group": "alternative",
+   "onet_soc": "15-1212.00",
+   "n_ads": 97,
+   "requirements": [
+    {
+     "skill": "network_security",
+     "demand": 0.2887,
+     "weight": 0.8003
+    },
+    {
+     "skill": "penetration_testing",
+     "demand": 0.2474,
+     "weight": 0.686
+    },
+    {
+     "skill": "information_security",
+     "demand": 0.2474,
+     "weight": 0.686
+    },
+    {
+     "skill": "firewall",
+     "demand": 0.3196,
+     "weight": 0.6839
+    },
+    {
+     "skill": "siem_soc",
+     "demand": 0.2165,
+     "weight": 0.6003
+    },
+    {
+     "skill": "networking_tcp_ip",
+     "demand": 0.3196,
+     "weight": 0.498
+    },
+    {
+     "skill": "iso_27001",
+     "demand": 0.1753,
+     "weight": 0.4859
+    },
+    {
+     "skill": "linux",
+     "demand": 0.268,
+     "weight": 0.3358
+    },
+    {
+     "skill": "cisco_ccna",
+     "demand": 0.1546,
+     "weight": 0.3309
+    },
+    {
+     "skill": "social_perceptiveness",
+     "demand": 0.1134,
+     "weight": 0.3144
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3711,
+     "weight": 0.2573
+    },
+    {
+     "skill": "vpn",
+     "demand": 0.1134,
+     "weight": 0.2427
+    },
+    {
+     "skill": "routing_switching",
+     "demand": 0.134,
+     "weight": 0.2401
+    },
+    {
+     "skill": "windows_os",
+     "demand": 0.1443,
+     "weight": 0.2249
+    },
+    {
+     "skill": "hardware_troubleshooting",
+     "demand": 0.1134,
+     "weight": 0.2032
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.2474,
+     "weight": 0.1715
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1134,
+     "weight": 0.1572
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.1959,
+     "weight": 0.1358
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.134,
+     "weight": 0.1315
+    },
+    {
+     "skill": "python",
+     "demand": 0.1134,
+     "weight": 0.1299
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1856,
+     "weight": 0.1286
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "social_perceptiveness",
+     "demand": 0.1134
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.3711
+    },
+    {
+     "skill": "initiative",
+     "demand": 0.1134
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.1959
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.134
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.1856
+    }
+   ]
+  },
+  {
+   "id": "it_support_helpdesk",
+   "name_en": "IT Support / Helpdesk",
+   "name_id": "IT Support / Helpdesk",
+   "group": "alternative",
+   "onet_soc": "15-1232.00",
+   "n_ads": 701,
+   "requirements": [
+    {
+     "skill": "hardware_troubleshooting",
+     "demand": 0.4608,
+     "weight": 0.8256
+    },
+    {
+     "skill": "networking_tcp_ip",
+     "demand": 0.398,
+     "weight": 0.6201
+    },
+    {
+     "skill": "dependability",
+     "demand": 0.1327,
+     "weight": 0.3678
+    },
+    {
+     "skill": "integrity",
+     "demand": 0.1284,
+     "weight": 0.356
+    },
+    {
+     "skill": "stress_tolerance",
+     "demand": 0.1141,
+     "weight": 0.3164
+    },
+    {
+     "skill": "windows_os",
+     "demand": 0.1669,
+     "weight": 0.2601
+    },
+    {
+     "skill": "mikrotik",
+     "demand": 0.107,
+     "weight": 0.229
+    },
+    {
+     "skill": "routing_switching",
+     "demand": 0.1184,
+     "weight": 0.2121
+    },
+    {
+     "skill": "linux",
+     "demand": 0.1341,
+     "weight": 0.168
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2325,
+     "weight": 0.1612
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2325,
+     "weight": 0.1612
+    },
+    {
+     "skill": "php",
+     "demand": 0.1027,
+     "weight": 0.16
+    },
+    {
+     "skill": "sql",
+     "demand": 0.1655,
+     "weight": 0.1423
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.1854,
+     "weight": 0.1285
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.107,
+     "weight": 0.0742
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "dependability",
+     "demand": 0.1327
+    },
+    {
+     "skill": "integrity",
+     "demand": 0.1284
+    },
+    {
+     "skill": "stress_tolerance",
+     "demand": 0.1141
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.2325
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.2325
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.107
+    }
+   ]
+  },
+  {
+   "id": "it_project_product_manager",
+   "name_en": "IT Project/Product Manager",
+   "name_id": "IT Project/Product Manager",
+   "group": "alternative",
+   "onet_soc": "15-1299.09",
+   "n_ads": 132,
+   "requirements": [
+    {
+     "skill": "project_management",
+     "demand": 0.4242,
+     "weight": 1.1762
+    },
+    {
+     "skill": "leadership_orientation",
+     "demand": 0.2652,
+     "weight": 0.5674
+    },
+    {
+     "skill": "agile_scrum",
+     "demand": 0.447,
+     "weight": 0.472
+    },
+    {
+     "skill": "time_management",
+     "demand": 0.1667,
+     "weight": 0.4621
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.5227,
+     "weight": 0.3623
+    },
+    {
+     "skill": "requirement_analysis",
+     "demand": 0.1742,
+     "weight": 0.3122
+    },
+    {
+     "skill": "writing",
+     "demand": 0.1061,
+     "weight": 0.2941
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3788,
+     "weight": 0.2626
+    },
+    {
+     "skill": "bahasa_inggris",
+     "demand": 0.3636,
+     "weight": 0.2521
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2955,
+     "weight": 0.2048
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1288,
+     "weight": 0.1785
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1515,
+     "weight": 0.1486
+    }
+   ],
+   "soft_skills": [
+    {
+     "skill": "leadership_orientation",
+     "demand": 0.2652
+    },
+    {
+     "skill": "time_management",
+     "demand": 0.1667
+    },
+    {
+     "skill": "speaking",
+     "demand": 0.5227
+    },
+    {
+     "skill": "writing",
+     "demand": 0.1061
+    },
+    {
+     "skill": "cooperation",
+     "demand": 0.3788
+    },
+    {
+     "skill": "complex_problem_solving",
+     "demand": 0.2955
+    },
+    {
+     "skill": "attention_to_detail",
+     "demand": 0.1288
+    },
+    {
+     "skill": "critical_thinking",
+     "demand": 0.1515
+    }
+   ]
+  }
+ ],
+ "interests": [
+  {
+   "id": "software_development",
+   "name_en": "Software development",
+   "name_id": "Pengembangan perangkat lunak",
+   "careers": [
+    "senior_programmer",
+    "software_developer",
+    "mobile_developer"
+   ]
+  },
+  {
+   "id": "systems_analysis",
+   "name_en": "Systems analysis",
+   "name_id": "Analisis sistem",
+   "careers": [
+    "system_analyst"
+   ]
+  },
+  {
+   "id": "databases_and_data_management",
+   "name_en": "Databases and data management",
+   "name_id": "Basis data dan manajemen data",
+   "careers": [
+    "database_administrator",
+    "data_engineer"
+   ]
+  },
+  {
+   "id": "quality_assurance",
+   "name_en": "Quality assurance",
+   "name_id": "Penjaminan mutu (QA)",
+   "careers": [
+    "qa_software_tester"
+   ]
+  },
+  {
+   "id": "ui_ux_design",
+   "name_en": "UI/UX design",
+   "name_id": "Desain UI/UX",
+   "careers": [
+    "ui_ux_designer"
+   ]
+  },
+  {
+   "id": "data_science_and_ai",
+   "name_en": "Data science and AI",
+   "name_id": "Sains data dan AI",
+   "careers": [
+    "data_analyst_bi",
+    "data_engineer",
+    "data_scientist_ml_ai_engineer"
+   ]
+  },
+  {
+   "id": "infrastructure_and_cloud",
+   "name_en": "Infrastructure and cloud",
+   "name_id": "Infrastruktur dan cloud",
+   "careers": [
+    "devops_cloud_engineer",
+    "network_system_administrator"
+   ]
+  },
+  {
+   "id": "security",
+   "name_en": "Security",
+   "name_id": "Keamanan siber",
+   "careers": [
+    "cyber_security"
+   ]
+  },
+  {
+   "id": "it_service_and_management",
+   "name_en": "IT service and management",
+   "name_id": "Layanan dan manajemen TI",
+   "careers": [
+    "it_support_helpdesk",
+    "it_project_product_manager"
+   ]
+  }
+ ],
+ "skills": [
+  {
+   "id": "python",
+   "name": "Python",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "python"
+   ]
+  },
+  {
+   "id": "java",
+   "name": "Java",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bjava\\b(?!script)"
+   ]
+  },
+  {
+   "id": "javascript",
+   "name": "JavaScript",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "javascript|\\bjs\\b"
+   ]
+  },
+  {
+   "id": "typescript",
+   "name": "TypeScript",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "typescript"
+   ]
+  },
+  {
+   "id": "php",
+   "name": "PHP",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bphp"
+   ]
+  },
+  {
+   "id": "go",
+   "name": "Go",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "golang|\\bgo lang"
+   ]
+  },
+  {
+   "id": "csharp",
+   "name": "C#",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "c#|c sharp"
+   ]
+  },
+  {
+   "id": "c_cpp",
+   "name": "C/C++",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "c\\+\\+"
+   ]
+  },
+  {
+   "id": "kotlin",
+   "name": "Kotlin",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "kotlin"
+   ]
+  },
+  {
+   "id": "swift",
+   "name": "Swift",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bswift\\b"
+   ]
+  },
+  {
+   "id": "dart",
+   "name": "Dart",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bdart\\b"
+   ]
+  },
+  {
+   "id": "r",
+   "name": "R",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\br programming|\\bbahasa r\\b|\\br studio|rstudio"
+   ]
+  },
+  {
+   "id": "ruby",
+   "name": "Ruby",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bruby"
+   ]
+  },
+  {
+   "id": "scala",
+   "name": "Scala",
+   "category": "Bahasa pemrograman",
+   "kind": "hard",
+   "patterns": [
+    "\\bscala\\b"
+   ]
+  },
+  {
+   "id": "html_css",
+   "name": "HTML/CSS",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "html|css"
+   ]
+  },
+  {
+   "id": "laravel",
+   "name": "Laravel",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "laravel"
+   ]
+  },
+  {
+   "id": "codeigniter",
+   "name": "CodeIgniter",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "codeigniter|\\bci3\\b"
+   ]
+  },
+  {
+   "id": "react",
+   "name": "React",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "react(?!\\s*native)|reactjs"
+   ]
+  },
+  {
+   "id": "vue_js",
+   "name": "Vue.js",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "\\bvue"
+   ]
+  },
+  {
+   "id": "angular",
+   "name": "Angular",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "angular"
+   ]
+  },
+  {
+   "id": "nodejs",
+   "name": "Node.js",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "node\\.?js|nodejs|\\bnode\\b"
+   ]
+  },
+  {
+   "id": "express_js",
+   "name": "Express.js",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "express\\.?js"
+   ]
+  },
+  {
+   "id": "spring_boot",
+   "name": "Spring Boot",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "spring ?boot|\\bspring\\b"
+   ]
+  },
+  {
+   "id": "django_flask",
+   "name": "Django/Flask",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "django|flask"
+   ]
+  },
+  {
+   "id": "dotnet",
+   "name": ".NET",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "\\.net|asp\\.net|dotnet"
+   ]
+  },
+  {
+   "id": "next_js",
+   "name": "Next.js",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "next\\.?js"
+   ]
+  },
+  {
+   "id": "wordpress",
+   "name": "WordPress",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "wordpress"
+   ]
+  },
+  {
+   "id": "rest_api",
+   "name": "REST API",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "rest ?api|restful|\\bapi\\b"
+   ]
+  },
+  {
+   "id": "graphql",
+   "name": "GraphQL",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "graphql"
+   ]
+  },
+  {
+   "id": "microservices",
+   "name": "Microservices",
+   "category": "Web",
+   "kind": "hard",
+   "patterns": [
+    "microservice"
+   ]
+  },
+  {
+   "id": "flutter",
+   "name": "Flutter",
+   "category": "Mobile",
+   "kind": "hard",
+   "patterns": [
+    "flutter"
+   ]
+  },
+  {
+   "id": "react_native",
+   "name": "React Native",
+   "category": "Mobile",
+   "kind": "hard",
+   "patterns": [
+    "react ?native"
+   ]
+  },
+  {
+   "id": "android",
+   "name": "Android",
+   "category": "Mobile",
+   "kind": "hard",
+   "patterns": [
+    "android"
+   ]
+  },
+  {
+   "id": "ios",
+   "name": "iOS",
+   "category": "Mobile",
+   "kind": "hard",
+   "patterns": [
+    "\\bios\\b"
+   ]
+  },
+  {
+   "id": "firebase",
+   "name": "Firebase",
+   "category": "Mobile",
+   "kind": "hard",
+   "patterns": [
+    "firebase"
+   ]
+  },
+  {
+   "id": "sql",
+   "name": "SQL",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "\\bsql\\b|t-sql|pl/sql|\\bddl\\b|\\bdml\\b"
+   ]
+  },
+  {
+   "id": "mysql",
+   "name": "MySQL",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "mysql"
+   ]
+  },
+  {
+   "id": "postgresql",
+   "name": "PostgreSQL",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "postgre"
+   ]
+  },
+  {
+   "id": "oracle_db",
+   "name": "Oracle DB",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "oracle"
+   ]
+  },
+  {
+   "id": "sql_server",
+   "name": "SQL Server",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "sql server|mssql|ms sql"
+   ]
+  },
+  {
+   "id": "mongodb",
+   "name": "MongoDB",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "mongo"
+   ]
+  },
+  {
+   "id": "nosql",
+   "name": "NoSQL",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "nosql"
+   ]
+  },
+  {
+   "id": "redis",
+   "name": "Redis",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "redis"
+   ]
+  },
+  {
+   "id": "backup_recovery",
+   "name": "Backup & Recovery",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "backup|recovery"
+   ]
+  },
+  {
+   "id": "database_design",
+   "name": "Database design",
+   "category": "Basis data",
+   "kind": "hard",
+   "patterns": [
+    "database design|desain database|perancangan basis data|\\berd\\b|entity relationship|normali[sz]"
+   ]
+  },
+  {
+   "id": "git",
+   "name": "Git",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "\\bgit\\b|github|gitlab|bitbucket"
+   ]
+  },
+  {
+   "id": "docker",
+   "name": "Docker",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "docker"
+   ]
+  },
+  {
+   "id": "kubernetes",
+   "name": "Kubernetes",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "kubernetes|\\bk8s\\b"
+   ]
+  },
+  {
+   "id": "ci_cd",
+   "name": "CI/CD",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "ci/cd|ci cd|jenkins|continuous integration"
+   ]
+  },
+  {
+   "id": "linux",
+   "name": "Linux",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "linux|ubuntu|centos|debian|red ?hat"
+   ]
+  },
+  {
+   "id": "aws",
+   "name": "AWS",
+   "category": "Cloud",
+   "kind": "hard",
+   "patterns": [
+    "\\baws\\b|amazon web services"
+   ]
+  },
+  {
+   "id": "gcp",
+   "name": "GCP",
+   "category": "Cloud",
+   "kind": "hard",
+   "patterns": [
+    "\\bgcp\\b|google cloud"
+   ]
+  },
+  {
+   "id": "azure",
+   "name": "Azure",
+   "category": "Cloud",
+   "kind": "hard",
+   "patterns": [
+    "azure"
+   ]
+  },
+  {
+   "id": "terraform_ansible",
+   "name": "Terraform/Ansible",
+   "category": "Tools & DevOps",
+   "kind": "hard",
+   "patterns": [
+    "terraform|ansible"
+   ]
+  },
+  {
+   "id": "machine_learning",
+   "name": "Machine Learning",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "machine learning|pembelajaran mesin"
+   ]
+  },
+  {
+   "id": "deep_learning",
+   "name": "Deep Learning",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "deep learning|neural network|jaringan saraf|pembelajaran mendalam"
+   ]
+  },
+  {
+   "id": "tensorflow_pytorch",
+   "name": "TensorFlow/PyTorch",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "tensorflow|pytorch"
+   ]
+  },
+  {
+   "id": "pandas_numpy",
+   "name": "Pandas/NumPy",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "pandas|numpy"
+   ]
+  },
+  {
+   "id": "statistics",
+   "name": "Statistics",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "statisti"
+   ]
+  },
+  {
+   "id": "data_visualization",
+   "name": "Data Visualization",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "visuali[sz]|dashboard"
+   ]
+  },
+  {
+   "id": "tableau",
+   "name": "Tableau",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "tableau"
+   ]
+  },
+  {
+   "id": "power_bi",
+   "name": "Power BI",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "power ?bi"
+   ]
+  },
+  {
+   "id": "excel",
+   "name": "Excel",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "\\bexcel\\b"
+   ]
+  },
+  {
+   "id": "etl",
+   "name": "ETL",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "\\betl\\b|data pipeline"
+   ]
+  },
+  {
+   "id": "spark_hadoop",
+   "name": "Spark/Hadoop",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "spark|hadoop|hive"
+   ]
+  },
+  {
+   "id": "nlp",
+   "name": "NLP",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "\\bnlp\\b|natural language"
+   ]
+  },
+  {
+   "id": "computer_vision",
+   "name": "Computer Vision",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "computer vision"
+   ]
+  },
+  {
+   "id": "networking_tcp_ip",
+   "name": "Networking (TCP/IP)",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "tcp/ip|tcp ip|networking|jaringan komputer|\\blan\\b|\\bwan\\b|model osi|\\bosi layer|subnet|pengalamatan ip|ip address"
+   ]
+  },
+  {
+   "id": "routing_switching",
+   "name": "Routing & Switching",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "routing|switching|\\brouter\\b|\\bvlan\\b"
+   ]
+  },
+  {
+   "id": "cisco_ccna",
+   "name": "Cisco (CCNA)",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "cisco|ccna|ccnp"
+   ]
+  },
+  {
+   "id": "mikrotik",
+   "name": "Mikrotik",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "mikrotik|mtcna"
+   ]
+  },
+  {
+   "id": "firewall",
+   "name": "Firewall",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "firewall|fortigate|palo alto"
+   ]
+  },
+  {
+   "id": "vpn",
+   "name": "VPN",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "\\bvpn\\b"
+   ]
+  },
+  {
+   "id": "windows_server",
+   "name": "Windows Server",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "windows server|active directory"
+   ]
+  },
+  {
+   "id": "virtualization",
+   "name": "Virtualization",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "vmware|virtuali[sz]|hyper-v|proxmox"
+   ]
+  },
+  {
+   "id": "network_security",
+   "name": "Network Security",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "network security|keamanan jaringan"
+   ]
+  },
+  {
+   "id": "penetration_testing",
+   "name": "Penetration Testing",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "penetration|pentest|uji penetrasi|vulnerability assessment"
+   ]
+  },
+  {
+   "id": "siem_soc",
+   "name": "SIEM/SOC",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "siem|\\bsoc\\b|security operation"
+   ]
+  },
+  {
+   "id": "iso_27001",
+   "name": "ISO 27001",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "iso ?27001|iso/iec 27001"
+   ]
+  },
+  {
+   "id": "manual_testing",
+   "name": "Manual Testing",
+   "category": "Testing",
+   "kind": "hard",
+   "patterns": [
+    "manual test|test case|test scenario|test plan|black ?box|white ?box|kasus uji|skenario (uji|pengujian)|pengujian perangkat lunak"
+   ]
+  },
+  {
+   "id": "automation_testing",
+   "name": "Automation Testing",
+   "category": "Testing",
+   "kind": "hard",
+   "patterns": [
+    "automation test|pengujian otomatis|selenium|cypress|appium|katalon"
+   ]
+  },
+  {
+   "id": "api_testing",
+   "name": "API Testing",
+   "category": "Testing",
+   "kind": "hard",
+   "patterns": [
+    "postman|api test"
+   ]
+  },
+  {
+   "id": "performance_testing",
+   "name": "Performance Testing",
+   "category": "Testing",
+   "kind": "hard",
+   "patterns": [
+    "jmeter|performance test|load test"
+   ]
+  },
+  {
+   "id": "figma",
+   "name": "Figma",
+   "category": "Desain",
+   "kind": "hard",
+   "patterns": [
+    "figma"
+   ]
+  },
+  {
+   "id": "adobe_xd_sketch",
+   "name": "Adobe XD/Sketch",
+   "category": "Desain",
+   "kind": "hard",
+   "patterns": [
+    "adobe xd|\\bsketch\\b"
+   ]
+  },
+  {
+   "id": "wireframe_prototype",
+   "name": "Wireframe/Prototype",
+   "category": "Desain",
+   "kind": "hard",
+   "patterns": [
+    "wireframe|prototyp|prototipe|purwarupa|mockup|mock-up"
+   ]
+  },
+  {
+   "id": "user_research",
+   "name": "User Research",
+   "category": "Desain",
+   "kind": "hard",
+   "patterns": [
+    "user research|usability|user testing|pengujian kegunaan|\\bpersona\\b"
+   ]
+  },
+  {
+   "id": "adobe_photoshop_illustrator",
+   "name": "Adobe Photoshop/Illustrator",
+   "category": "Desain",
+   "kind": "hard",
+   "patterns": [
+    "photoshop|illustrator"
+   ]
+  },
+  {
+   "id": "uml",
+   "name": "UML",
+   "category": "Analisis sistem",
+   "kind": "hard",
+   "patterns": [
+    "\\buml\\b|use case|activity diagram|sequence diagram|class diagram|diagram (kelas|aktivitas|sekuen)"
+   ]
+  },
+  {
+   "id": "requirement_analysis",
+   "name": "Requirement Analysis",
+   "category": "Analisis sistem",
+   "kind": "hard",
+   "patterns": [
+    "requirements? (analysis|gathering|engineering|elicitation)|analisa kebutuhan|analisis kebutuhan|elisitasi|spesifikasi kebutuhan|\\bsrs\\b|kebutuhan sistem|business process|proses bisnis|\\bbrd\\b|\\bfsd\\b|user stor"
+   ]
+  },
+  {
+   "id": "erp_sap",
+   "name": "ERP/SAP",
+   "category": "Analisis sistem",
+   "kind": "hard",
+   "patterns": [
+    "\\berp\\b|\\bsap\\b|odoo"
+   ]
+  },
+  {
+   "id": "hardware_troubleshooting",
+   "name": "Hardware Troubleshooting",
+   "category": "IT Support",
+   "kind": "hard",
+   "patterns": [
+    "hardware|perangkat keras|troubleshoot\\w*\\s+(?:\\w+\\s+){0,3}(?:pc|computer|komputer|printer|laptop|perangkat|devices?)\\b|perbaikan perangkat|instalasi perangkat|rakit (pc|komputer)"
+   ]
+  },
+  {
+   "id": "helpdesk_ticketing",
+   "name": "Helpdesk/Ticketing",
+   "category": "IT Support",
+   "kind": "hard",
+   "patterns": [
+    "helpdesk|help desk|ticketing|service desk"
+   ]
+  },
+  {
+   "id": "windows_os",
+   "name": "Windows OS",
+   "category": "IT Support",
+   "kind": "hard",
+   "patterns": [
+    "windows(?! server)"
+   ]
+  },
+  {
+   "id": "microsoft_office",
+   "name": "Microsoft Office",
+   "category": "IT Support",
+   "kind": "hard",
+   "patterns": [
+    "ms office|microsoft office"
+   ]
+  },
+  {
+   "id": "itil",
+   "name": "ITIL",
+   "category": "IT Support",
+   "kind": "hard",
+   "patterns": [
+    "\\bitil\\b"
+   ]
+  },
+  {
+   "id": "agile_scrum",
+   "name": "Agile/Scrum",
+   "category": "Metodologi",
+   "kind": "hard",
+   "patterns": [
+    "agile|scrum|kanban|sprint"
+   ]
+  },
+  {
+   "id": "sdlc",
+   "name": "SDLC",
+   "category": "Metodologi",
+   "kind": "hard",
+   "patterns": [
+    "sdlc|software development life ?cycle"
+   ]
+  },
+  {
+   "id": "oop",
+   "name": "OOP",
+   "category": "Metodologi",
+   "kind": "hard",
+   "patterns": [
+    "\\boop\\b|object[- ]oriented|berorientasi objek"
+   ]
+  },
+  {
+   "id": "design_pattern_clean_code",
+   "name": "Design Pattern/Clean Code",
+   "category": "Metodologi",
+   "kind": "hard",
+   "patterns": [
+    "design pattern|clean code|solid principle"
+   ]
+  },
+  {
+   "id": "project_management",
+   "name": "Project Management",
+   "category": "Metodologi",
+   "kind": "hard",
+   "patterns": [
+    "project management|manajemen proyek|\\bpmp\\b|prince2"
+   ]
+  },
+  {
+   "id": "cloud_computing_konsep",
+   "name": "Cloud computing (konsep)",
+   "category": "Cloud",
+   "kind": "hard",
+   "patterns": [
+    "cloud computing|komputasi awan|\\biaas\\b|\\bpaas\\b|\\bsaas\\b"
+   ]
+  },
+  {
+   "id": "information_security",
+   "name": "Information Security",
+   "category": "Keamanan",
+   "kind": "hard",
+   "patterns": [
+    "information security|keamanan informasi|kriptografi|cryptograph|enkripsi|encryption"
+   ]
+  },
+  {
+   "id": "data_mining",
+   "name": "Data Mining",
+   "category": "Data & AI",
+   "kind": "hard",
+   "patterns": [
+    "data mining|penambangan data|clustering|\\bk-?means\\b"
+   ]
+  },
+  {
+   "id": "iot",
+   "name": "IoT",
+   "category": "Jaringan",
+   "kind": "hard",
+   "patterns": [
+    "internet of things|\\biot\\b|arduino|raspberry|mikrokontroler|microcontroller"
+   ]
+  },
+  {
+   "id": "bahasa_inggris",
+   "name": "Bahasa Inggris",
+   "category": "Bahasa",
+   "kind": "hard",
+   "patterns": [
+    "english|bahasa inggris"
+   ]
+  },
+  {
+   "id": "speaking",
+   "name": "Speaking",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "communication skills?|good communicat\\w*|excellent communicat\\w*|strong communicat\\w*|verbal communicat\\w*|kemampuan (ber)?komunikasi|komunikasi (yang )?(baik|efektif|lisan)|komunikatif|presentation skills?|kemampuan presentasi|public speaking"
+   ]
+  },
+  {
+   "id": "writing",
+   "name": "Writing",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "written communicat\\w*|writing skills?|kemampuan menulis|komunikasi (tertulis|lisan dan tertulis)|verbal and written|lisan (maupun|dan) tulisan"
+   ]
+  },
+  {
+   "id": "active_listening",
+   "name": "Active Listening",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "active listening|good listener|mendengarkan dengan baik|pendengar yang baik"
+   ]
+  },
+  {
+   "id": "critical_thinking",
+   "name": "Critical Thinking",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "critical thinking|berpikir kritis|analytical (thinking|skills?|mind)|kemampuan analis\\w*|logical thinking|berpikir (logis|analitis)|analitis"
+   ]
+  },
+  {
+   "id": "complex_problem_solving",
+   "name": "Complex Problem Solving",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "problem[ -]solving|solve (complex )?problems?|pemecahan masalah|memecahkan masalah|menyelesaikan masalah|problem solver"
+   ]
+  },
+  {
+   "id": "active_learning",
+   "name": "Active Learning",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "fast learner|quick learner|willing(ness)? to learn|eager to learn|keen to learn|cepat belajar|mau belajar|kemauan (untuk )?belajar|keinginan (untuk )?belajar|senang belajar"
+   ]
+  },
+  {
+   "id": "time_management",
+   "name": "Time Management",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "time management|manajemen waktu|mengatur waktu|tight deadlines?|meet(ing)? deadlines?|multi[- ]?task\\w*"
+   ]
+  },
+  {
+   "id": "coordination",
+   "name": "Coordination",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "coordinat\\w+ with|berkoordinasi|koordinasi dengan"
+   ]
+  },
+  {
+   "id": "service_orientation",
+   "name": "Service Orientation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "customer[- ](oriented|focus\\w*|service orient\\w*)|service[- ]oriented\\b(?! (architectur|soa|programming|design|concept|computing))|service orientation|berorientasi (pada )?pelanggan|orientasi pelayanan"
+   ]
+  },
+  {
+   "id": "negotiation",
+   "name": "Negotiation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "negotiation|negotiating|(?<!di)negosiasi(?!kan)"
+   ]
+  },
+  {
+   "id": "persuasion",
+   "name": "Persuasion",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "persuasi\\w*|persuasive|influenc\\w+ (skills?|stakeholders?)"
+   ]
+  },
+  {
+   "id": "instructing",
+   "name": "Instructing",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "mentor(ing)? (junior|team|other)|coach(ing)? (junior|team)|membimbing (junior|tim)|train(ing)? (junior|new) (staff|members?)"
+   ]
+  },
+  {
+   "id": "social_perceptiveness",
+   "name": "Social Perceptiveness",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "interpersonal skills?|kemampuan interpersonal|hubungan interpersonal"
+   ]
+  },
+  {
+   "id": "cooperation",
+   "name": "Cooperation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "team[ -]?work|team player|work(ing)? (well )?(in|as|with) a team|collaborat\\w*|kolaborasi|kerja ?sama|bekerja (sama )?dalam (sebuah )?tim|bekerja secara tim|kerja tim|cross[- ]functional (teams?|collaboration)"
+   ]
+  },
+  {
+   "id": "leadership_orientation",
+   "name": "Leadership Orientation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "leadership|kepemimpinan|jiwa pemimpin|lead (a|the) team|memimpin tim"
+   ]
+  },
+  {
+   "id": "attention_to_detail",
+   "name": "Attention to Detail",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "attention to details?|detail[- ]oriented|keen eye for detail|teliti|ketelitian|cermat"
+   ]
+  },
+  {
+   "id": "adaptability",
+   "name": "Adaptability",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "adaptab\\w*|\\badaptif\\b|\\badaptive\\b(?! (design|layout|ui|web|streaming|bitrate|learning))|mudah beradaptasi|mampu beradaptasi|flexib\\w+ (to|in|with)"
+   ]
+  },
+  {
+   "id": "initiative",
+   "name": "Initiative",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "proactive|proaktif|self[- ]starter|self[- ]motivated|berinisiatif|inisiatif (tinggi|yang|dan)|take (the )?initiative|(show|showing|with) initiative|motivasi (yang )?tinggi|highly motivated"
+   ]
+  },
+  {
+   "id": "dependability",
+   "name": "Dependability",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "\\bresponsible and (honest|disciplined|reliable|hard)|bertanggung ?jawab(?!\\s*(atas|terhadap|untuk|dalam|pada|kepada|penuh atas|mengelola|melakukan|menangani|memastikan|menjaga|membuat))|\\bdependable\\b|\\bdisiplin\\b|\\bdisciplined\\b|\\breliable and (honest|responsible|hard[- ]?working|trustworthy|committed|disciplined)|\\breliable (person|individual|team)"
+   ]
+  },
+  {
+   "id": "integrity",
+   "name": "Integrity",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "integritas (yang )?tinggi|berintegritas|high(est)? (level of )?integrity|(?<!data )(?<!consistency )\\bintegrity and\\b(?! (system|security|availability|confidentiality))|(?<!data )(?<!consistency )(?<!security )\\band integrity\\b|\\bjujur\\b|\\bhonest\\b(?! company)|honesty"
+   ]
+  },
+  {
+   "id": "stress_tolerance",
+   "name": "Stress Tolerance",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "under pressure|bawah tekanan|dalam tekanan|stress tolerance|tahan (terhadap )?tekanan"
+   ]
+  },
+  {
+   "id": "achievement_orientation",
+   "name": "Achievement Orientation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "result[s]?[- ]oriented|target[- ]oriented|goal[- ]oriented|berorientasi (pada )?(target|hasil)|achievement[- ]oriented"
+   ]
+  },
+  {
+   "id": "innovation",
+   "name": "Innovation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "(?<!/)\\bcreative\\b(?!/)(?! (suite|cloud|agency|industry|director|team|studio|multimedia|media))|\\bcreativity\\b|(?<!PT )\\bkreatif\\b|kreativitas|innovative (thinking|mind|ideas?)|\\binovatif\\b"
+   ]
+  },
+  {
+   "id": "intellectual_curiosity",
+   "name": "Intellectual Curiosity",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "curious|curiosity|rasa ingin tahu|passion for (learning|technology)"
+   ]
+  },
+  {
+   "id": "self_confidence",
+   "name": "Self-Confidence",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "self[- ]confiden\\w*|percaya diri|\\bconfident(ly)?\\b"
+   ]
+  },
+  {
+   "id": "perseverance",
+   "name": "Perseverance",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "persever\\w*|\\bpersistent\\b(?! (database|storage|volume|data|disk|connection|queue|memory))|pantang menyerah|\\bulet\\b|\\btekun\\b|tenacious"
+   ]
+  },
+  {
+   "id": "social_orientation",
+   "name": "Social Orientation",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "mudah bergaul|(?<!incoming and )(?<!incoming & )\\boutgoing\\b(?! (project |the )?(documentation|documents?|calls?|e-?mails?|mail|traffic|goods|shipments?|letters?))|sociable"
+   ]
+  },
+  {
+   "id": "optimism",
+   "name": "Optimism",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "positive attitude|sikap positif|\\boptimis(tic|tik|me)?\\b|\\boptimist\\b"
+   ]
+  },
+  {
+   "id": "empathy",
+   "name": "Empathy",
+   "category": "Soft skill",
+   "kind": "soft",
+   "patterns": [
+    "\\bempath\\w*|\\bempati\\b"
+   ]
+  }
+ ],
+ "soft_skills": [
+  {
+   "id": "speaking",
+   "name_en": "Speaking",
+   "name_id": "Berbicara",
+   "patterns": [
+    "communication skills?|good communicat\\w*|excellent communicat\\w*|strong communicat\\w*|verbal communicat\\w*|kemampuan (ber)?komunikasi|komunikasi (yang )?(baik|efektif|lisan)|komunikatif|presentation skills?|kemampuan presentasi|public speaking"
+   ]
+  },
+  {
+   "id": "writing",
+   "name_en": "Writing",
+   "name_id": "Menulis",
+   "patterns": [
+    "written communicat\\w*|writing skills?|kemampuan menulis|komunikasi (tertulis|lisan dan tertulis)|verbal and written|lisan (maupun|dan) tulisan"
+   ]
+  },
+  {
+   "id": "active_listening",
+   "name_en": "Active Listening",
+   "name_id": "Mendengarkan aktif",
+   "patterns": [
+    "active listening|good listener|mendengarkan dengan baik|pendengar yang baik"
+   ]
+  },
+  {
+   "id": "critical_thinking",
+   "name_en": "Critical Thinking",
+   "name_id": "Berpikir kritis",
+   "patterns": [
+    "critical thinking|berpikir kritis|analytical (thinking|skills?|mind)|kemampuan analis\\w*|logical thinking|berpikir (logis|analitis)|analitis"
+   ]
+  },
+  {
+   "id": "complex_problem_solving",
+   "name_en": "Complex Problem Solving",
+   "name_id": "Pemecahan masalah kompleks",
+   "patterns": [
+    "problem[ -]solving|solve (complex )?problems?|pemecahan masalah|memecahkan masalah|menyelesaikan masalah|problem solver"
+   ]
+  },
+  {
+   "id": "active_learning",
+   "name_en": "Active Learning",
+   "name_id": "Belajar aktif",
+   "patterns": [
+    "fast learner|quick learner|willing(ness)? to learn|eager to learn|keen to learn|cepat belajar|mau belajar|kemauan (untuk )?belajar|keinginan (untuk )?belajar|senang belajar"
+   ]
+  },
+  {
+   "id": "time_management",
+   "name_en": "Time Management",
+   "name_id": "Manajemen waktu",
+   "patterns": [
+    "time management|manajemen waktu|mengatur waktu|tight deadlines?|meet(ing)? deadlines?|multi[- ]?task\\w*"
+   ]
+  },
+  {
+   "id": "coordination",
+   "name_en": "Coordination",
+   "name_id": "Koordinasi",
+   "patterns": [
+    "coordinat\\w+ with|berkoordinasi|koordinasi dengan"
+   ]
+  },
+  {
+   "id": "service_orientation",
+   "name_en": "Service Orientation",
+   "name_id": "Orientasi pelayanan",
+   "patterns": [
+    "customer[- ](oriented|focus\\w*|service orient\\w*)|service[- ]oriented\\b(?! (architectur|soa|programming|design|concept|computing))|service orientation|berorientasi (pada )?pelanggan|orientasi pelayanan"
+   ]
+  },
+  {
+   "id": "negotiation",
+   "name_en": "Negotiation",
+   "name_id": "Negosiasi",
+   "patterns": [
+    "negotiation|negotiating|(?<!di)negosiasi(?!kan)"
+   ]
+  },
+  {
+   "id": "persuasion",
+   "name_en": "Persuasion",
+   "name_id": "Persuasi",
+   "patterns": [
+    "persuasi\\w*|persuasive|influenc\\w+ (skills?|stakeholders?)"
+   ]
+  },
+  {
+   "id": "instructing",
+   "name_en": "Instructing",
+   "name_id": "Mengajar/melatih",
+   "patterns": [
+    "mentor(ing)? (junior|team|other)|coach(ing)? (junior|team)|membimbing (junior|tim)|train(ing)? (junior|new) (staff|members?)"
+   ]
+  },
+  {
+   "id": "social_perceptiveness",
+   "name_en": "Social Perceptiveness",
+   "name_id": "Kepekaan sosial",
+   "patterns": [
+    "interpersonal skills?|kemampuan interpersonal|hubungan interpersonal"
+   ]
+  },
+  {
+   "id": "cooperation",
+   "name_en": "Cooperation",
+   "name_id": "Kerja sama",
+   "patterns": [
+    "team[ -]?work|team player|work(ing)? (well )?(in|as|with) a team|collaborat\\w*|kolaborasi|kerja ?sama|bekerja (sama )?dalam (sebuah )?tim|bekerja secara tim|kerja tim|cross[- ]functional (teams?|collaboration)"
+   ]
+  },
+  {
+   "id": "leadership_orientation",
+   "name_en": "Leadership Orientation",
+   "name_id": "Orientasi kepemimpinan",
+   "patterns": [
+    "leadership|kepemimpinan|jiwa pemimpin|lead (a|the) team|memimpin tim"
+   ]
+  },
+  {
+   "id": "attention_to_detail",
+   "name_en": "Attention to Detail",
+   "name_id": "Ketelitian",
+   "patterns": [
+    "attention to details?|detail[- ]oriented|keen eye for detail|teliti|ketelitian|cermat"
+   ]
+  },
+  {
+   "id": "adaptability",
+   "name_en": "Adaptability",
+   "name_id": "Kemampuan beradaptasi",
+   "patterns": [
+    "adaptab\\w*|\\badaptif\\b|\\badaptive\\b(?! (design|layout|ui|web|streaming|bitrate|learning))|mudah beradaptasi|mampu beradaptasi|flexib\\w+ (to|in|with)"
+   ]
+  },
+  {
+   "id": "initiative",
+   "name_en": "Initiative",
+   "name_id": "Inisiatif",
+   "patterns": [
+    "proactive|proaktif|self[- ]starter|self[- ]motivated|berinisiatif|inisiatif (tinggi|yang|dan)|take (the )?initiative|(show|showing|with) initiative|motivasi (yang )?tinggi|highly motivated"
+   ]
+  },
+  {
+   "id": "dependability",
+   "name_en": "Dependability",
+   "name_id": "Dapat diandalkan",
+   "patterns": [
+    "\\bresponsible and (honest|disciplined|reliable|hard)|bertanggung ?jawab(?!\\s*(atas|terhadap|untuk|dalam|pada|kepada|penuh atas|mengelola|melakukan|menangani|memastikan|menjaga|membuat))|\\bdependable\\b|\\bdisiplin\\b|\\bdisciplined\\b|\\breliable and (honest|responsible|hard[- ]?working|trustworthy|committed|disciplined)|\\breliable (person|individual|team)"
+   ]
+  },
+  {
+   "id": "integrity",
+   "name_en": "Integrity",
+   "name_id": "Integritas",
+   "patterns": [
+    "integritas (yang )?tinggi|berintegritas|high(est)? (level of )?integrity|(?<!data )(?<!consistency )\\bintegrity and\\b(?! (system|security|availability|confidentiality))|(?<!data )(?<!consistency )(?<!security )\\band integrity\\b|\\bjujur\\b|\\bhonest\\b(?! company)|honesty"
+   ]
+  },
+  {
+   "id": "stress_tolerance",
+   "name_en": "Stress Tolerance",
+   "name_id": "Ketahanan terhadap tekanan",
+   "patterns": [
+    "under pressure|bawah tekanan|dalam tekanan|stress tolerance|tahan (terhadap )?tekanan"
+   ]
+  },
+  {
+   "id": "achievement_orientation",
+   "name_en": "Achievement Orientation",
+   "name_id": "Orientasi prestasi",
+   "patterns": [
+    "result[s]?[- ]oriented|target[- ]oriented|goal[- ]oriented|berorientasi (pada )?(target|hasil)|achievement[- ]oriented"
+   ]
+  },
+  {
+   "id": "innovation",
+   "name_en": "Innovation",
+   "name_id": "Inovasi",
+   "patterns": [
+    "(?<!/)\\bcreative\\b(?!/)(?! (suite|cloud|agency|industry|director|team|studio|multimedia|media))|\\bcreativity\\b|(?<!PT )\\bkreatif\\b|kreativitas|innovative (thinking|mind|ideas?)|\\binovatif\\b"
+   ]
+  },
+  {
+   "id": "intellectual_curiosity",
+   "name_en": "Intellectual Curiosity",
+   "name_id": "Rasa ingin tahu intelektual",
+   "patterns": [
+    "curious|curiosity|rasa ingin tahu|passion for (learning|technology)"
+   ]
+  },
+  {
+   "id": "self_confidence",
+   "name_en": "Self-Confidence",
+   "name_id": "Self-Confidence",
+   "patterns": [
+    "self[- ]confiden\\w*|percaya diri|\\bconfident(ly)?\\b"
+   ]
+  },
+  {
+   "id": "perseverance",
+   "name_en": "Perseverance",
+   "name_id": "Perseverance",
+   "patterns": [
+    "persever\\w*|\\bpersistent\\b(?! (database|storage|volume|data|disk|connection|queue|memory))|pantang menyerah|\\bulet\\b|\\btekun\\b|tenacious"
+   ]
+  },
+  {
+   "id": "social_orientation",
+   "name_en": "Social Orientation",
+   "name_id": "Orientasi sosial",
+   "patterns": [
+    "mudah bergaul|(?<!incoming and )(?<!incoming & )\\boutgoing\\b(?! (project |the )?(documentation|documents?|calls?|e-?mails?|mail|traffic|goods|shipments?|letters?))|sociable"
+   ]
+  },
+  {
+   "id": "optimism",
+   "name_en": "Optimism",
+   "name_id": "Optimisme",
+   "patterns": [
+    "positive attitude|sikap positif|\\boptimis(tic|tik|me)?\\b|\\boptimist\\b"
+   ]
+  },
+  {
+   "id": "empathy",
+   "name_en": "Empathy",
+   "name_id": "Empati",
+   "patterns": [
+    "\\bempath\\w*|\\bempati\\b"
+   ]
+  }
+ ],
+ "courses": [
+  {
+   "id": "TIK2103",
+   "name_id": "Pengantar Teknologi Informasi & Komunikasi",
+   "name_en": "Pengantar Teknologi Informasi & Komunikasi",
+   "semester": 1,
+   "skills": [
+    "networking_tcp_ip",
+    "backup_recovery"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TIK2105",
+   "name_id": "Algoritma & Pemrograman",
+   "name_en": "Algoritma & Pemrograman",
+   "semester": 1,
+   "skills": [
+    "c_cpp"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210201",
+   "name_id": "Pemrograman Berorientasi Objek",
+   "name_en": "Pemrograman Berorientasi Objek",
+   "semester": 2,
+   "skills": [
+    "java",
+    "oop",
+    "uml"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210202",
+   "name_id": "Pemrograman Web Dasar",
+   "name_en": "Pemrograman Web Dasar",
+   "semester": 2,
+   "skills": [
+    "html_css",
+    "javascript"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210203",
+   "name_id": "Rekayasa Perangkat Lunak",
+   "name_en": "Rekayasa Perangkat Lunak",
+   "semester": 2,
+   "skills": [
+    "agile_scrum",
+    "wireframe_prototype",
+    "design_pattern_clean_code",
+    "requirement_analysis",
+    "user_research"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210205",
+   "name_id": "Sistem Basis Data",
+   "name_en": "Sistem Basis Data",
+   "semester": 2,
+   "skills": [
+    "sql",
+    "database_design",
+    "mysql",
+    "oracle_db",
+    "nosql",
+    "mongodb"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210207",
+   "name_id": "Sistem Informasi Manajemen",
+   "name_en": "Sistem Informasi Manajemen",
+   "semester": 2,
+   "skills": [
+    "requirement_analysis",
+    "project_management"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TIK2104",
+   "name_id": "Jaringan Komputer",
+   "name_en": "Jaringan Komputer",
+   "semester": 2,
+   "skills": [
+    "networking_tcp_ip",
+    "routing_switching"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210302",
+   "name_id": "Manajemen Proyek TIK",
+   "name_en": "Manajemen Proyek TIK",
+   "semester": 3,
+   "skills": [
+    "project_management"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210303",
+   "name_id": "Desain UI/UX",
+   "name_en": "Desain UI/UX",
+   "semester": 3,
+   "skills": [
+    "wireframe_prototype",
+    "user_research",
+    "requirement_analysis"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210306",
+   "name_id": "Pemrograman Web Lanjut",
+   "name_en": "Pemrograman Web Lanjut",
+   "semester": 3,
+   "skills": [
+    "php",
+    "mysql",
+    "html_css",
+    "sql",
+    "javascript"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210307",
+   "name_id": "Pemrograman Basis Data",
+   "name_en": "Pemrograman Basis Data",
+   "semester": 3,
+   "skills": [
+    "sql"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210308",
+   "name_id": "Analisis dan Desain Sistem Informasi",
+   "name_en": "Analisis dan Desain Sistem Informasi",
+   "semester": 3,
+   "skills": [
+    "agile_scrum"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210310",
+   "name_id": "Sistem Terdistribusi",
+   "name_en": "Sistem Terdistribusi",
+   "semester": 3,
+   "skills": [
+    "cloud_computing_konsep",
+    "virtualization",
+    "docker",
+    "information_security"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210304",
+   "name_id": "Keamanan Informasi",
+   "name_en": "Keamanan Informasi",
+   "semester": 4,
+   "skills": [
+    "information_security",
+    "network_security"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210401",
+   "name_id": "Framework Programming",
+   "name_en": "Framework Programming",
+   "semester": 4,
+   "skills": [
+    "laravel",
+    "rest_api",
+    "php",
+    "oop",
+    "html_css"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210402",
+   "name_id": "Mobile Programming",
+   "name_en": "Mobile Programming",
+   "semester": 4,
+   "skills": [
+    "android"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210404",
+   "name_id": "Cloud Computing",
+   "name_en": "Cloud Computing",
+   "semester": 4,
+   "skills": [
+    "cloud_computing_konsep",
+    "information_security",
+    "virtualization"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210405",
+   "name_id": "Software Quality Assurance",
+   "name_en": "Software Quality Assurance",
+   "semester": 4,
+   "skills": [
+    "manual_testing",
+    "performance_testing"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210406",
+   "name_id": "Statistika Probabilitas",
+   "name_en": "Statistika Probabilitas",
+   "semester": 4,
+   "skills": [
+    "statistics"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210601",
+   "name_id": "Machine Learning",
+   "name_en": "Machine Learning",
+   "semester": 6,
+   "skills": [
+    "machine_learning",
+    "deep_learning"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210602",
+   "name_id": "Natural Language Processing",
+   "name_en": "Natural Language Processing",
+   "semester": 6,
+   "skills": [
+    "nlp",
+    "data_mining",
+    "python"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210603",
+   "name_id": "Internet of Things",
+   "name_en": "Internet of Things",
+   "semester": 6,
+   "skills": [
+    "iot"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TI210604",
+   "name_id": "Data Mining & Big Data",
+   "name_en": "Data Mining & Big Data",
+   "semester": 6,
+   "skills": [
+    "data_mining",
+    "spark_hadoop",
+    "nosql"
+   ],
+   "category": "it"
+  },
+  {
+   "id": "TIK2108",
+   "name_id": "Proyek sesuai kekhususan bidang Teknik Informatika",
+   "name_en": "Proyek sesuai kekhususan bidang Teknik Informatika",
+   "semester": 6,
+   "skills": [
+    "requirement_analysis"
+   ],
+   "category": "it"
+  }
+ ],
+ "course_categories": [
+  {
+   "id": "it",
+   "name_id": "Teknik Informatika PNJ (Kurikulum 2021)",
+   "name_en": "PNJ Informatics (curriculum 2021)"
+  }
+ ]
+}
