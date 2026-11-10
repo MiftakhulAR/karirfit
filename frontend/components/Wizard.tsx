@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { api } from "@/lib/api";
-import type { Grade, Interest, Level } from "@/lib/types";
+import type { CustomCourse, Grade, Interest, Level } from "@/lib/types";
 import { useApp } from "./AppProvider";
 import { ServerError } from "./Header";
 
@@ -103,7 +103,7 @@ function StepInterests() {
 }
 
 function StepSkills() {
-  const { t, model, answers, update } = useApp();
+  const { t, model, answers, update, skillName } = useApp();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("all");
   const hard = useMemo(() => model!.skills.filter(s => s.kind !== "soft"), [model]);   // soft skills have their own step
@@ -130,8 +130,8 @@ function StepSkills() {
           const lv = answers.skills[s.id];
           return (
             <div key={s.id} className={"skill" + (lv ? " on" : "")}>
-              <span className="nm">{s.name}</span>
-              <div className="levels" role="group" aria-label={s.name}>
+              <span className="nm">{skillName(s.id)}</span>
+              <div className="levels" role="group" aria-label={skillName(s.id)}>
                 {LEVELS.map(l => (
                   <button key={l} aria-pressed={lv === l} onClick={() => setLevel(s.id, l)}>{t.lv[l]}</button>
                 ))}
@@ -141,6 +141,36 @@ function StepSkills() {
         })}
       </div>
       <p className="picked">{t.picked(Object.keys(answers.skills).length)}</p>
+      <OwnSkills />
+    </div>
+  );
+}
+
+/** Skills that are not in the dictionary: kept in the profile (no hard-coded list), not scored, because
+ *  no job-ad demand exists for them (thesis 3.5.1). */
+function OwnSkills() {
+  const { t, answers, update } = useApp();
+  const [v, setV] = useState("");
+  const own = answers.ownSkills ?? [];
+  const add = () => {
+    const s = v.trim().slice(0, 60);
+    if (s && !own.includes(s) && own.length < 20) update({ ownSkills: [...own, s] });
+    setV("");
+  };
+  return (
+    <div className="group">
+      <h3 className="group-h">{t.own_title}</h3>
+      <p className="hint small">{t.own_hint}</p>
+      <div className="row">
+        <input value={v} maxLength={60} onChange={e => setV(e.target.value)} placeholder={t.own_ph} aria-label={t.own_title}
+          onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); add(); } }} />
+        <button className="btn" onClick={add} disabled={!v.trim()}>{t.add}</button>
+      </div>
+      {own.length > 0 && (
+        <div className="chips">
+          {own.map(s => <button key={s} className="chip" aria-pressed="true" onClick={() => update({ ownSkills: own.filter(x => x !== s) })}>{s} ×</button>)}
+        </div>
+      )}
     </div>
   );
 }
@@ -223,9 +253,10 @@ function StepExperience() {
 function StepCourses() {
   const { t, model, answers, update, lang } = useApp();
   const cats = model!.course_categories ?? [];
+  const custom = answers.customCourses ?? [];
   const [cat, setCat] = useState<string>(() => {
     const taken = model!.courses.find(c => answers.courses[c.id]);
-    return taken?.category ?? cats[0]?.id ?? "it";
+    return taken?.category ?? cats.find(c => model!.courses.some(x => x.category === c.id))?.id ?? cats[0]?.id ?? "prodi";
   });
   const [q, setQ] = useState("");
   const setGrade = (id: string, g: string) => update(a => {
@@ -234,8 +265,10 @@ function StepCourses() {
     return { courses };
   });
   const name = (c: { name_id: string; name_en: string }) => (lang === "id" ? c.name_id : c.name_en);
-  const list = model!.courses.filter(c => (q ? name(c).toLowerCase().includes(q.toLowerCase()) : (c.category ?? "it") === cat));
-  const count = (id: string) => model!.courses.filter(c => (c.category ?? "it") === id && answers.courses[c.id]).length;
+  const list = model!.courses.filter(c => (q ? name(c).toLowerCase().includes(q.toLowerCase()) : (c.category ?? "prodi") === cat));
+  const count = (id: string) => model!.courses.filter(c => (c.category ?? "prodi") === id && answers.courses[c.id]).length
+    + custom.filter(c => c.category === id).length;
+  const ownHere = custom.map((c, i) => [c, i] as const).filter(([c]) => q ? c.name.toLowerCase().includes(q.toLowerCase()) : c.category === cat);
   return (
     <div className="step">
       <StepHead title={t.s4_title} hint={t.s4_hint} />
@@ -268,7 +301,72 @@ function StepCourses() {
             </label>
           );
         })}
+        {ownHere.map(([c, i]) => (
+          <div key={`own-${i}`} className="course on">
+            <span>{c.name} <small className="hint">({t.cc_own})</small></span>
+            <span>{c.grade}</span>
+            <button className="btn ghost small" onClick={() => update({ customCourses: custom.filter((_, j) => j !== i) })}>{t.remove}</button>
+          </div>
+        ))}
+        {!q && list.length === 0 && ownHere.length === 0 && <p className="hint small">{t.cc_empty}</p>}
       </div>
+      <AddCourse defaultCat={cat} />
+    </div>
+  );
+}
+
+/** FR2 (supervisor, 19 Oct 2026): courses are not hard-coded. Any course can be added in one of the four
+ *  Indonesian course groups and linked to dictionary skills; its grade then counts like a listed course. */
+function AddCourse({ defaultCat }: { defaultCat: string }) {
+  const { t, model, answers, update, lang, skillName } = useApp();
+  const cats = model!.course_categories ?? [];
+  const blank = (): CustomCourse => ({ name: "", category: defaultCat, grade: "B", skills: [] });
+  const [open, setOpen] = useState(false);
+  const [c, setC] = useState<CustomCourse>(blank);
+  const [q, setQ] = useState("");
+  const hits = q.trim().length < 2 ? [] : model!.skills
+    .filter(s => !c.skills.includes(s.id) && `${skillName(s.id)} ${s.name} ${s.name_en ?? ""}`.toLowerCase().includes(q.toLowerCase()))
+    .slice(0, 8);
+  const ok = c.name.trim().length > 1 && c.skills.length > 0;
+  const save = () => {
+    if (!ok) return;
+    update(a => ({ customCourses: [...(a.customCourses ?? []), { ...c, name: c.name.trim().slice(0, 120) }] }));
+    setC(blank()); setQ(""); setOpen(false);
+  };
+  if (!open) return <button className="btn ghost" onClick={() => { setC(blank()); setOpen(true); }}>{t.cc_add}</button>;
+  return (
+    <div className="group add-course">
+      <h3 className="group-h">{t.cc_add}</h3>
+      <p className="hint small">{t.cc_hint}</p>
+      <label className="field"><span>{t.cc_name}</span>
+        <input value={c.name} maxLength={120} onChange={e => setC({ ...c, name: e.target.value })} placeholder={t.cc_name_ph} /></label>
+      <div className="row">
+        <label className="field"><span>{t.cc_cat}</span>
+          <select value={c.category} onChange={e => setC({ ...c, category: e.target.value })}>
+            {cats.map(x => <option key={x.id} value={x.id}>{lang === "id" ? x.name_id : x.name_en}</option>)}
+          </select></label>
+        <label className="field"><span>{t.cc_grade}</span>
+          <select value={c.grade} onChange={e => setC({ ...c, grade: e.target.value as Grade })}>
+            {GRADES.map(x => <option key={x} value={x}>{x}</option>)}
+          </select></label>
+      </div>
+      <label className="field"><span>{t.cc_skills}</span>
+        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={t.cc_skills_ph} /></label>
+      {hits.length > 0 && (
+        <div className="chips">
+          {hits.map(s => <button key={s.id} className="chip" onClick={() => { setC({ ...c, skills: [...c.skills, s.id].slice(0, 15) }); setQ(""); }}>+ {skillName(s.id)}</button>)}
+        </div>
+      )}
+      {c.skills.length > 0 && (
+        <div className="chips">
+          {c.skills.map(id => <button key={id} className="chip" aria-pressed="true" onClick={() => setC({ ...c, skills: c.skills.filter(x => x !== id) })}>{skillName(id)} ×</button>)}
+        </div>
+      )}
+      <div className="row">
+        <button className="btn ghost" onClick={() => setOpen(false)}>{t.cancel}</button>
+        <button className="btn primary" onClick={save} disabled={!ok}>{t.cc_save}</button>
+      </div>
+      {answers.customCourses && answers.customCourses.length >= 40 && <p className="notice">{t.cc_max}</p>}
     </div>
   );
 }
@@ -277,7 +375,10 @@ function StepSummary() {
   const { t, model, answers, update, careerName, skillName, softName, lang } = useApp();
   const join = (a: string[]) => (a.length ? a.join(", ") : t.empty);
   const interests = model!.interests.filter(i => answers.interests.includes(i.id)).map(i => (lang === "id" ? i.name_id : i.name_en));
-  const courses = model!.courses.filter(c => answers.courses[c.id]).map(c => `${lang === "id" ? c.name_id : c.name_en} (${answers.courses[c.id]})`);
+  const courses = [
+    ...model!.courses.filter(c => answers.courses[c.id]).map(c => `${lang === "id" ? c.name_id : c.name_en} (${answers.courses[c.id]})`),
+    ...(answers.customCourses ?? []).map(c => `${c.name} (${c.grade})`),
+  ];
   return (
     <div className="step">
       <StepHead title={t.s5_title} hint={t.s5_hint} />
@@ -292,6 +393,7 @@ function StepSummary() {
         <dl>
           <dt>{t.sum_interests}</dt><dd>{join(interests)}</dd>
           <dt>{t.sum_skills}</dt><dd>{join(Object.entries(answers.skills).map(([s, l]) => `${skillName(s)} (${t.lv[l]})`))}</dd>
+          {(answers.ownSkills ?? []).length > 0 && <><dt>{t.own_title}</dt><dd>{join(answers.ownSkills ?? [])}</dd></>}
           <dt>{t.sum_soft}</dt><dd>{join(Object.entries(answers.softSkills ?? {}).map(([s, l]) => `${softName(s)} (${t.lv[l]})`))}</dd>
           <dt>{t.sum_exp}</dt><dd>{join(answers.expSkills.map(skillName))}</dd>
           <dt>{t.sum_major}</dt><dd>{answers.major || t.empty}</dd>

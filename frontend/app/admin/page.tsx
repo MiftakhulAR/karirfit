@@ -47,7 +47,7 @@ export default function AdminPage() {
 
   const upload = async (e: FormEvent) => {
     e.preventDefault();
-    if (!file || !form.careers.length) { setMsg("Pilih berkas dan minimal satu karir."); return; }
+    if (!file || !form.careers.length) { setMsg("Pilih berkas dan minimal satu karier."); return; }
     const fd = new FormData();
     fd.append("file", file);
     fd.append("doc_type", form.doc_type);
@@ -123,7 +123,7 @@ export default function AdminPage() {
       <section>
         <h3>Dokumen ({kb?.documents.length ?? 0})</h3>
         <table className="tbl">
-          <thead><tr><th>Berkas</th><th>Jenis</th><th>Karir</th><th>Akses</th><th /></tr></thead>
+          <thead><tr><th>Berkas</th><th>Jenis</th><th>Karier</th><th>Akses</th><th /></tr></thead>
           <tbody>
             {kb?.documents.map(d => (
               <tr key={d.file}>

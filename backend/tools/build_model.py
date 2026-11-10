@@ -81,7 +81,7 @@ def main():
     courses = {}
     for r in rows("mk_skill_web.csv"):
         c = courses.setdefault(r["kode"], {"id": r["kode"], "name_id": r["nama_mata_kuliah"], "name_en": r["nama_mata_kuliah"],
-                                          "semester": int(r["semester"]), "skills": [], "category": "it"})
+                                          "semester": int(r["semester"]), "skills": [], "category": "prodi"})
         if sid[r["skill"]] not in c["skills"]:
             c["skills"].append(sid[r["skill"]])
     courses = sorted(courses.values(), key=lambda c: (c["semester"], c["id"]))
@@ -139,8 +139,11 @@ def main():
         "courses": courses,
         "crosswalk": dict(crosswalk),
         "reference_source": "O*NET 31.0 Database, U.S. Department of Labor/ETA, CC BY 4.0 (profil acuan, belum divalidasi untuk Indonesia)",
-        "course_categories": [{"id": "it", "name_id": "Teknik Informatika PNJ (Kurikulum 2021)",
-                               "name_en": "PNJ Informatics (curriculum 2021)"}],
+        "course_categories": [   # FR2: Indonesian course groups (supervisor 19 Oct 2026); PNJ list = programme courses
+            {"id": "univ", "name_id": "Wajib universitas", "name_en": "University compulsory"},
+            {"id": "jurusan", "name_id": "Wajib jurusan/fakultas", "name_en": "Faculty/department compulsory"},
+            {"id": "prodi", "name_id": "Wajib program studi (daftar: TI PNJ, Kurikulum 2021)", "name_en": "Study programme (list: PNJ Informatics, 2021 curriculum)"},
+            {"id": "pilihan", "name_id": "Pilihan", "name_en": "Elective"}],
     }
     out = HERE / "model.json"
     json.dump(model, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))

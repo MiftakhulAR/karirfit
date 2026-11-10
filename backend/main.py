@@ -31,6 +31,8 @@ from __future__ import annotations
 
 import csv
 import io
+import gzip
+import hashlib
 import json
 import os
 import sys
@@ -38,7 +40,7 @@ import threading
 import time
 from pathlib import Path
 
-from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, Header, HTTPException, Request, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
@@ -89,12 +91,23 @@ app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["*"], a
 app.add_middleware(GZipMiddleware, minimum_size=2048)   # model.json and the 896 O*NET results compress ~10x
 
 
+class CustomCourse(BaseModel):
+    """FR2: a course that is not in the PNJ list (other study programmes, electives). The user maps it to
+    dictionary skills; its grade is evidence for those skills exactly like a listed course."""
+    name: str = Field(max_length=120)
+    category: str = Field(default="prodi", max_length=20)   # univ | jurusan | prodi | pilihan
+    grade: str = Field(max_length=2)
+    skills: list[str] = Field(default_factory=list, max_length=15)
+
+
 class Profile(BaseModel):
     courses: dict[str, str] = Field(default_factory=dict)        # course_id -> grade (PNJ scale A, A-, B+, B, B-, C+, C, D, E)
     skills: dict[str, str] = Field(default_factory=dict)         # skill_id -> beginner|intermediate|advanced
     soft_skills: dict[str, str] = Field(default_factory=dict)    # soft skill -> level (scored: soft skills are in R(c))
     experience_skills: list[str] = Field(default_factory=list)   # confirmed skill ids
-    interests: list[str] = Field(default_factory=list, max_length=30)   # any number of areas (UI: no limit)
+    interests: list[str] = Field(default_factory=list, max_length=60)   # any number of areas (50 in the model)
+    custom_courses: list[CustomCourse] = Field(default_factory=list, max_length=40)   # FR2: courses typed by the user
+    own_skills: list[str] = Field(default_factory=list, max_length=20)  # skills outside the dictionary: stored, not scored
     major: str | None = None                                     # e.g. "Akuntansi" (context only)
     target_career: str | None = None
 
@@ -186,18 +199,38 @@ def effective_alpha(requested: float | None, token: str) -> float | None:
     return requested
 
 
+def _public_model() -> dict:
+    """model.json for the browser. O*NET reference careers keep their 10 heaviest requirements (the catalogue
+    shows 10) plus the full count; scoring always uses the complete MODEL on the server."""
+    careers = []
+    for c in MODEL["careers"]:
+        if c["group"] == "non_it":
+            c = c | {"requirements": c["requirements"][:10], "n_requirements": len(c["requirements"])}
+        careers.append(c)
+    return MODEL | {"careers": careers}
+
+
+_MODEL_JSON = json.dumps(_public_model(), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+_MODEL_GZ = gzip.compress(_MODEL_JSON, 6)
+_MODEL_ETAG = '"' + hashlib.sha256(_MODEL_JSON).hexdigest()[:16] + '"'
+
+
 @app.get("/api/model")
-def get_model():
-    return MODEL
+def get_model(request: Request):
+    """Serialised and compressed once at start-up (Render Free has little CPU; 911 careers)."""
+    headers = {"ETag": _MODEL_ETAG, "Cache-Control": "public, max-age=600", "Vary": "Accept-Encoding"}
+    if request.headers.get("if-none-match") == _MODEL_ETAG:
+        return Response(status_code=304, headers=headers)
+    if "gzip" in request.headers.get("accept-encoding", ""):
+        return Response(_MODEL_GZ, media_type="application/json", headers=headers | {"Content-Encoding": "gzip"})
+    return Response(_MODEL_JSON, media_type="application/json", headers=headers)
 
 
 @app.post("/api/extract-skills")
 def extract_skills(req: ExtractReq, user: dict | None = Depends(current_user)):
-    try:
-        skills, model_id = llm.extract_skills(req.text, MODEL["skills"])
-    except Exception as e:
-        skills, model_id = EXTRACTOR.extract(req.text), f"dictionary ({e.__class__.__name__})"
-    return {"skills": skills, "model": model_id}
+    # FR4 (thesis v8.2): suggestions come from the same dictionary patterns used on the job ads (kamus v4),
+    # without an LLM; the student confirms or removes each suggestion.
+    return {"skills": EXTRACTOR.extract(req.text), "model": "kamus skill v4 (tanpa LLM)"}
 
 
 @app.post("/api/recommend")

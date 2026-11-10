@@ -11,8 +11,8 @@ const body = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["400", "500", "600
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#1c2551" };
 
 export const metadata: Metadata = {
-  title: "KarirFit — Temukan karir yang sesuai dengan Anda",
-  description: "Tes gratis yang mencocokkan minat, keterampilan, dan pengalaman Anda dengan lowongan kerja di Indonesia, untuk karir IT maupun bidang umum.",
+  title: "KarirFit — Temukan karier yang sesuai dengan Anda",
+  description: "Tes gratis yang mencocokkan minat, keterampilan, dan pengalaman Anda dengan lowongan kerja di Indonesia, untuk karier IT maupun bidang umum.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -96,11 +96,14 @@ class Retriever:
             _log("retrieval disabled: " + self.error)
 
     def _self_test(self):
-        """Re-encode the first passage and compare with its Colab embedding (should be ~1.0)."""
+        """Re-encode the shortest passage and compare with its Colab embedding (should be ~1.0).
+        The shortest one keeps the start-up check cheap on Render Free (little CPU)."""
         try:
             t = time.time()
-            v = self.encoder.encode([self.chunks[0]["text"]], P_PREFIX)[0]
-            self.selftest = {"cosine_vs_colab": round(float(v @ self.emb[0]), 6), "ms": round((time.time() - t) * 1000)}
+            i = min(range(len(self.chunks)), key=lambda j: len(self.chunks[j]["text"]))
+            v = self.encoder.encode([self.chunks[i]["text"]], P_PREFIX)[0]
+            self.selftest = {"cosine_vs_colab": round(float(v @ self.emb[i]), 6), "passage": self.chunks[i]["id"],
+                             "ms": round((time.time() - t) * 1000)}
             _log(f"self-test {self.selftest}")
         except Exception as e:
             self.selftest = {"error": str(e)[:200]}

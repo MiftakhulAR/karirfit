@@ -8,7 +8,7 @@ import { DICTS, type Dict } from "@/lib/i18n";
 import type { Answers, Career, Health, Lang, Model, Profile } from "@/lib/types";
 
 const EMPTY: Answers = {
-  interests: [], skills: {}, softSkills: {}, major: "", experience: "", expSkills: [], expPhrases: {}, courses: {}, target: "", consent: false,
+  interests: [], skills: {}, softSkills: {}, major: "", experience: "", expSkills: [], expPhrases: {}, courses: {}, customCourses: [], ownSkills: [], target: "", consent: false,
 };
 
 /** Profile sent to the API, built from the answers kept in the browser. */
@@ -16,6 +16,7 @@ export function toProfile(a: Answers): Profile {
   return {
     courses: a.courses ?? {}, skills: a.skills ?? {}, soft_skills: a.softSkills ?? {},
     experience_skills: a.expSkills ?? [], interests: a.interests ?? [], target_career: a.target || null, major: a.major || null,
+    custom_courses: a.customCourses ?? [], own_skills: a.ownSkills ?? [],
   };
 }
 
@@ -134,7 +135,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const reset = useCallback(() => { setAnswers(EMPTY); writeStore("answers", EMPTY); }, []);
 
   const value = useMemo<Ctx>(() => {
-    const skillNames = Object.fromEntries((model?.skills ?? []).map(s => [s.id, s.name]));
+    // soft skills and O*NET elements are shown in the selected language
+    const skillNames = Object.fromEntries((model?.skills ?? []).map(s => [s.id, lang === "en" && s.name_en ? s.name_en : s.name]));
     const softNames = Object.fromEntries((model?.soft_skills ?? []).map(s => [s.id, lang === "id" ? s.name_id : s.name_en]));
     return {
       lang, setLang, t: DICTS[lang],
@@ -142,7 +144,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       answers, update, reset, hydrated, session: user?.id ?? session,
       profile: toProfile(answers),
       careerName: c => (lang === "id" ? c.name_id : c.name_en),
-      skillName: id => skillNames[id] ?? id,
+      skillName: id => softNames[id] ?? skillNames[id] ?? id,
       softName: id => softNames[id] ?? id,
       user, authReady, recovery, setRecovery, signOut,
       consent: Boolean(user?.consent),

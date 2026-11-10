@@ -97,7 +97,7 @@ function Landing() {
           {filtered.length > HOME_PAGE_SIZE && (
             <div className="ex-more">
               <p className="hint small">{lang === "id"
-                ? `Menampilkan ${Math.min(limit, filtered.length)} dari ${filtered.length} karir.`
+                ? `Menampilkan ${Math.min(limit, filtered.length)} dari ${filtered.length} karier.`
                 : `Showing ${Math.min(limit, filtered.length)} of ${filtered.length} careers.`}</p>
               {limit < filtered.length && (
                 <>

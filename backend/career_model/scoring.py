@@ -94,6 +94,13 @@ def evidence(profile: dict, model: dict) -> dict[str, dict]:
         v = grade_points.get(str(grade).upper(), 0.0)
         for s in course["skills"]:
             put(s, v, "course", f"{course['name_en']} ({grade})", cid)
+    # FR2: courses typed by the user (any study programme), mapped by the user to dictionary skills
+    known = {s["id"] for s in model["skills"]}
+    for cc in profile.get("custom_courses") or []:
+        v = grade_points.get(str(cc.get("grade", "")).upper(), 0.0)
+        for s in cc.get("skills") or []:
+            if s in known:
+                put(s, v, "course", f"{cc.get('name', '')} ({cc.get('grade', '')})")
     for s, level in (profile.get("skills") or {}).items():
         put(s, SELF_LEVEL.get(level, 0.0), "self", level)
     # soft skills are part of R(c) (thesis Tahap 13 v2b): a self-rated soft skill is evidence like a hard skill

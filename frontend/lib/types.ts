@@ -7,9 +7,9 @@ export interface Requirement { skill: string; demand: number | null; weight: num
 export type CareerGroup = "primary" | "alternative" | "non_it";
 export interface SoftRequirement { skill: string; demand: number }
 export interface RefInfo { onet_soc?: string; job_zone?: number | null; field_id?: string; field_en?: string }
-export interface Career extends RefInfo { id: string; name_en: string; name_id: string; group: CareerGroup; requirements: Requirement[]; soft_skills?: SoftRequirement[] }
+export interface Career extends RefInfo { n_requirements?: number; id: string; name_en: string; name_id: string; group: CareerGroup; requirements: Requirement[]; soft_skills?: SoftRequirement[] }
 export interface Interest { id: string; name_en: string; name_id: string; careers: string[] }
-export interface Skill { id: string; name: string; category: string; kind?: "hard" | "soft"; patterns: string[] }
+export interface Skill { id: string; name: string; name_en?: string; category: string; kind?: "hard" | "soft"; patterns: string[] }
 export interface Course { id: string; name_id: string; name_en: string; skills: string[]; category?: string }
 export interface CourseCategory { id: string; name_id: string; name_en: string }
 export interface SoftSkill { id: string; name_id: string; name_en: string }
@@ -38,6 +38,8 @@ export interface Profile {
   interests: string[];
   target_career: string | null;
   major: string | null;
+  custom_courses: CustomCourse[];
+  own_skills: string[];
 }
 
 export interface Evidence { value: number; source: "course" | "self" | "experience"; detail: string; course?: string; via?: string }
@@ -87,6 +89,9 @@ export interface KbStatus { state: "idle" | "running" | "done" | "error"; messag
 export interface KbList { documents: KbDocument[]; index_ready: boolean; n_chunks: number; careers: string[]; rebuild: KbStatus; note: string }
 
 /** Answers kept in the browser while the user fills the test. */
+/** FR2: a course not in the list; its grade is evidence for the dictionary skills the user links to it. */
+export interface CustomCourse { name: string; category: string; grade: Grade; skills: string[] }
+
 export interface Answers {
   interests: string[];
   skills: Record<string, Level>;
@@ -96,6 +101,8 @@ export interface Answers {
   expSkills: string[];
   expPhrases: Record<string, string>;
   courses: Record<string, Grade>;
+  customCourses?: CustomCourse[];   // FR2: courses typed by the user (any study programme)
+  ownSkills?: string[];             // skills outside the dictionary: stored, not scored
   target: string;
   consent: boolean;
 }

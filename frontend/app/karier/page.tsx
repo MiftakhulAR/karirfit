@@ -64,7 +64,7 @@ export default function CareersPage() {
                   <span className="grp">{t.ex_groups[c.group]}</span>
                   <h2>{careerName(c)}</h2>
                   <span className="ex-preview">{reqs.slice(0, 3).map(r => skillName(r.skill)).join(" · ")}</span>
-                  <span className="ex-n">{t.ex_n_skills(reqs.length)}</span>
+                  <span className="ex-n">{t.ex_n_skills(c.n_requirements ?? reqs.length)}</span>
                   {c.group === "non_it" && <span className="ex-n">{refNote(c, lang)}</span>}
                 </button>
                 {isOpen && (
