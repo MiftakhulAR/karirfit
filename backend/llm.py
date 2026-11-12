@@ -18,7 +18,7 @@ import re
 import urllib.error
 import urllib.request
 
-PROMPT_VERSION = "v1.1"   # v1.1: career source line (IT job ads vs O*NET reference)
+PROMPT_VERSION = "v1.2"   # v1.1: career source line (IT job ads vs O*NET reference)
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 GROQ_REASONING = os.getenv("GROQ_REASONING_EFFORT", "low")   # gpt-oss only: low | medium | high
@@ -124,7 +124,7 @@ FACTS (computed by the system, do not change them):
 - Career source: {career_source}
 - Matched skills (skill: demand in job ads or O*NET importance, evidence): {matched}
 - Skill gaps ordered by importance (skill: demand in job ads or O*NET importance): {gaps}
-- Soft skills often requested for this career that the person has not marked as strong (advice only): {soft}
+- Soft skills often requested for this career that the person has not marked as strong (development checklist; required soft skills already contribute to the computed score): {soft}
 
 CONTEXT:
 {context}

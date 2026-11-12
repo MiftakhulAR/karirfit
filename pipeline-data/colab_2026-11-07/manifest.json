@@ -1,0 +1,47 @@
+{
+  "run_date": "2026-11-07",
+  "files": [
+    {
+      "file": "bobot_skill_karier_v3.csv",
+      "drive_id": "1cUv9gzxfW5qIIfk1hDQmMcVcQ2zDVnP6",
+      "sha256": "57f2ddebad51868a1d05d68bb920517a2a2aee0c7adfb2254774784bea293697",
+      "bytes": 31617
+    },
+    {
+      "file": "kamus_skill_v4.csv",
+      "drive_id": "1rGeCfjGZEgaI8d6HYaWPsGxQbdAguU0T",
+      "sha256": "0bde2735b1cef66d51f8a44e2c9846c5e4b86d5900b7a06310b6eabeb36ee1e6",
+      "bytes": 13338
+    },
+    {
+      "file": "kb_v2_chunks_publik.jsonl",
+      "drive_id": "1chSMZZ27UrklzuZah4ByslfviOLUpfnL",
+      "sha256": "71b271ac8ffa48d25ae52cb7dcd47f9e5ba772a9cb7af5b7ba71ddd108f128fe",
+      "bytes": 3482535
+    },
+    {
+      "file": "retrieval_config.json",
+      "drive_id": "12X7Jm12_D1OrI2IG8HhZReRhowUC61ZS",
+      "sha256": "a8f7551828803b78bc8d521ee0a3c186fc8956ad9b1b0cfbf51b59d0d053c119",
+      "bytes": 427
+    },
+    {
+      "file": "kb_v2_index.faiss",
+      "drive_id": "1eli0NopjJgD486oTbrkbU-FELMyx5IMr",
+      "sha256": "8ff20951b86dee40e53ff7b0010824461da2d3e6effa855dc543e6994494a428",
+      "bytes": 7784493
+    },
+    {
+      "file": "tahap13_log.json",
+      "drive_id": "1UdOBvYaUEJhtGivH3hd-x-kodFSNdCsb",
+      "sha256": "e48a99244d766df1dcdee35c15fca82c589e73fa5ca086921499042d7ebb2fc1",
+      "bytes": 2933
+    },
+    {
+      "file": "model_final.json",
+      "drive_id": "1ufoQAVRqbYWpJlwlsVqfQ_eFerN7HMez",
+      "sha256": "7c4fbc04bebc2b966a2c5c1025eb460f4d88fca06714c0dab980ad2655c83782",
+      "bytes": 837
+    }
+  ]
+}

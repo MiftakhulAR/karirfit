@@ -172,16 +172,19 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
   };
   const [exp, setExp] = useState<ExplainResponse | null>(null);
   const [expErr, setExpErr] = useState<string | null>(null);
+  const [requested, setRequested] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let alive = true;
     setExp(null); setExpErr(null);
+    if (!requested) return;
     api.explain(profile, r.career, lang, session, consent)
       .then(x => alive && setExp(x))
       .catch(e => alive && setExpErr(String((e as Error).message)));
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [r.career, lang]);
+  }, [r.career, lang, JSON.stringify(profile), requested, attempt]);
 
   const rows = [
     ...r.matched.map(x => ({ ...x, ok: true as const })),
@@ -243,7 +246,10 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
       )}
 
       <h4>{t.explain}</h4>
-      <div className="explain">{exp ? exp.text : expErr ?? t.loading}</div>
+      {!requested ? <button className="btn" onClick={() => setRequested(true)}>{lang === "id" ? "Buat penjelasan AI" : "Generate AI explanation"}</button> : <>
+        <div className="explain" role="status">{exp ? exp.text : expErr ?? (lang === "id" ? "Mencari bukti dan menyusun penjelasan. Skor Anda sudah tersedia; proses AI dapat memerlukan sekitar satu menit." : "Retrieving evidence and writing the explanation. Your scores are ready; AI processing can take about a minute.")}</div>
+        {expErr && <button className="btn" onClick={() => setAttempt(x => x + 1)}>{lang === "id" ? "Coba lagi" : "Retry"}</button>}
+      </>}
       {exp && (
         <div className="meta">
           {exp.mode === "template" ? t.via_template : t.via_llm(exp.model)}

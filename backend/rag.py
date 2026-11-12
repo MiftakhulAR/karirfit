@@ -16,6 +16,8 @@ Encoder e5_numpy.E5Numpy (NumPy, float16 weights, no torch) so the backend fits 
 from __future__ import annotations
 
 import json
+import hashlib
+from collections import OrderedDict
 import os
 import sys
 import threading
@@ -69,6 +71,13 @@ def _load_layer(name: str, ids: dict[str, str]) -> tuple[list[dict], np.ndarray 
 class Retriever:
     def __init__(self, warmup: bool = True):
         self.ready, self.error, self.encoder, self.selftest = False, None, None, None
+        # One bounded cache per retriever instance: rebuilt KBs receive a fresh cache.
+        # Hash keys avoid retaining profile-derived query text. Never cache AI replies.
+        self._query_cache = OrderedDict()
+        self._cache_lock = threading.Lock()
+        self._cache_limit = max(0, min(1024, int(os.getenv("RAG_CACHE_SIZE", "128"))))
+        self._cache_ttl = max(0, float(os.getenv("RAG_CACHE_TTL", "900")))
+        self._cache_hits = self._cache_misses = 0
         self.chunks: list[dict] = []
         self.emb = np.zeros((0, 768), dtype=np.float32)
         try:
@@ -133,18 +142,40 @@ class Retriever:
         c = self.chunks[i]
         return c["retrievable"] and c["doc_type"] not in SKIP_TYPES and not (PUBLIC_MODE and c["access"] == "private")
 
+    def _query_vector(self, text: str) -> np.ndarray:
+        key = hashlib.sha256((EMBED_MODEL + "\0" + Q_PREFIX + text).encode()).digest()
+        started = time.perf_counter()
+        # Serialize misses so simultaneous identical requests encode only once.
+        with self._cache_lock:
+            now = time.monotonic()
+            cached = self._query_cache.pop(key, None)
+            hit = cached is not None and now - cached[0] < self._cache_ttl
+            if hit:
+                self._query_cache[key] = cached
+                self._cache_hits += 1
+                vector = cached[1]
+            else:
+                self._cache_misses += 1
+                vector = self.encoder.encode([text], Q_PREFIX)[0]
+                if self._cache_limit and self._cache_ttl:
+                    self._query_cache[key] = (time.monotonic(), vector)
+                    while len(self._query_cache) > self._cache_limit:
+                        self._query_cache.popitem(last=False)
+        _log(f"query cache_hit={hit} ms={1000 * (time.perf_counter() - started):.1f}")
+        return vector
+
     def search(self, career: str, matched: list[str], gaps: list[str], career_name: str) -> list[dict]:
         """Passages for the explanation of one career (notebook Tahap 12, ambil())."""
         if not self.ready:
             return []
-        q = self.encoder.encode([self.career_query(career_name, matched, gaps)], Q_PREFIX)[0]
+        q = self._query_vector(self.career_query(career_name, matched, gaps))
         return self._rank(q, [i for i, s in enumerate(self.careers) if career in s and self._allowed(i)], TOP_K)
 
     def search_question(self, question: str, careers: list[str] | None = None, k: int = 4) -> list[dict]:
         """Passages for a free question (assistant); same tau. Not part of the Tahap 12 evaluation."""
         if not self.ready:
             return []
-        q = self.encoder.encode([question], Q_PREFIX)[0]
+        q = self._query_vector(question)
         want = set(careers or [])
         return self._rank(q, [i for i, s in enumerate(self.careers) if (not want or s & want) and self._allowed(i)], k)
 
@@ -154,7 +185,9 @@ class Retriever:
             kinds[c["doc_type"]] = kinds.get(c["doc_type"], 0) + 1
         return {"ready": self.ready, "error": self.error, "passages": len(self.chunks), "by_type": kinds,
                 "tau": TAU, "top_k": TOP_K, "embedding_model": EMBED_MODEL, "encoder": "e5_numpy (float16)",
-                "kb_version": CFG.get("kb_versi"), "selftest": self.selftest}
+                "kb_version": CFG.get("kb_versi"), "selftest": self.selftest,
+                "query_cache": {"entries": len(self._query_cache), "limit": self._cache_limit,
+                                "ttl_seconds": self._cache_ttl, "hits": self._cache_hits, "misses": self._cache_misses}}
 
 
 def build_extra(jsonl_path: str) -> int:

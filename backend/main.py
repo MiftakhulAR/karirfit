@@ -270,14 +270,18 @@ def _non_rag_twin(result: dict, profile: dict, lang: str, session: str, rag_pass
 def do_explain(req: ExplainReq, background: BackgroundTasks, x_admin_token: str = Header(default=""),
                user: dict | None = Depends(current_user)):
     session, consent = who(user, req.session, req.consent)
+    started = time.perf_counter()
     soft_names = SOFT_NAMES.get(req.lang, SOFT_NAMES["en"])
     profile = req.profile.model_dump()
     ranked = recommend(profile, MODEL, alpha=effective_alpha(req.alpha, x_admin_token))["all"]
     result = next((r for r in ranked if r["career"] == req.career), None)
     if not result:
         raise HTTPException(404, "unknown career")
+    retrieval_started = time.perf_counter()
     passages = RETRIEVER.search(result["career"], [NAMES[r["skill"]] for r in result["matched"]],
                                 [NAMES[r["skill"]] for r in result["gaps"]], result["name_en"])
+    retrieval_ms = round((time.perf_counter() - retrieval_started) * 1000, 1)
+    generation_started = time.perf_counter()
     out = {"career": req.career, "passages": passages, "prompt_version": llm.PROMPT_VERSION}
     try:
         text, model_id = llm.explain(result, NAMES, passages, req.lang, soft_names)
@@ -289,12 +293,16 @@ def do_explain(req: ExplainReq, background: BackgroundTasks, x_admin_token: str 
     except Exception as e:  # NFR6: ranking and skill lists remain available
         out |= {"text": template_explanation(result, NAMES, req.lang, soft_names), "model": "template",
                 "mode": "template", "error": str(e)[:200]}
+    generation_ms = round((time.perf_counter() - generation_started) * 1000, 1)
+    out["timings"] = {"retrieval_ms": retrieval_ms, "generation_ms": generation_ms,
+                      "total_ms": round((time.perf_counter() - started) * 1000, 1)}
+    print("[performance] explain " + json.dumps(out["timings"]), flush=True)
     chk = check_explanation(out["text"], result, MODEL, passages, profile, EXTRACTOR)
     out["check"] = _check_summary(chk)
     if consent:
         log("explain", session, {"career": req.career, "condition": "rag", "mode": out["mode"],
                                      "model": out["model"], "prompt_version": llm.PROMPT_VERSION,
-                                     "passages": [p["id"] for p in passages], "text": out["text"],
+                                     "passages": [p["id"] for p in passages], "text": out["text"], "timings": out["timings"],
                                      "check": out["check"], "claims": chk["claims"]})
         if EVAL_MODE and out["mode"] != "template":
             background.add_task(_non_rag_twin, result, profile, req.lang, session, [p["id"] for p in passages])
@@ -353,10 +361,13 @@ def _results_text(res: dict, lang: str, focus: dict | None) -> str:
     lines.append("IT graduate-profile careers: " + "; ".join(f"{name(r)} {r['fit']:.0f}" for r in res["primary"]))
     for r in ([focus] if focus else []) + [x for x in res["top"][:2] if not focus or x["career"] != focus["career"]]:
         has = ", ".join(NAMES[m["skill"]] for m in r["matched"][:8]) or "none"
-        todo = ", ".join("%s %.0f%%" % (NAMES[g["skill"]], g["demand"] * 100) for g in r["gaps"][:6]) or "none"
+        todo = "; ".join(("%s %.0f%% of job ads" % (NAMES[g["skill"]], g["demand"] * 100))
+                         if g.get("demand") is not None else
+                         ("%s O*NET importance %.1f/%s" % (NAMES[g["skill"]], g.get("importance", 0), g.get("scale", 5)))
+                         for g in r["gaps"][:6]) or "none"
         soft_todo = ", ".join(soft.get(x["skill"], x["skill"]) for x in r.get("soft", []) if not x["have"]) or "none"
         lines.append("- %s: fit %.0f, competency %.0f%%, interest match %s; has: %s; to learn (most important first, "
-                     "%% of job ads): %s; soft skills to develop: %s"
+                     "source-specific units): %s; soft skills to develop: %s"
                      % (name(r), r["fit"], r["K"] * 100, "yes" if r["M"] else "no", has, todo, soft_todo))
     return "\n".join(lines)
 
@@ -364,11 +375,13 @@ def _results_text(res: dict, lang: str, focus: dict | None) -> str:
 @app.post("/api/chat")
 def do_chat(req: ChatReq, user: dict | None = Depends(current_user)):
     session, consent = who(user, req.session, req.consent)
+    started = time.perf_counter()
     p = req.profile
     tested = bool(p.interests or p.skills or p.courses or p.experience_skills)
     res = recommend(p.model_dump(), MODEL)
     focus = next((r for r in res["all"] if r["career"] == req.career), None) if req.career else None
     target = focus or res["top"][0]
+    retrieval_started = time.perf_counter()
     if tested or focus:
         passages = RETRIEVER.search(target["career"], [NAMES[r["skill"]] for r in target["matched"]],
                                     [NAMES[r["skill"]] for r in target["gaps"]], target["name_en"])
@@ -380,14 +393,19 @@ def do_chat(req: ChatReq, user: dict | None = Depends(current_user)):
                         "questions about careers, skills and learning, and suggest taking the KarirFit test for a "
                         "personal recommendation. Careers covered by KarirFit: "
                         + ", ".join(name(c) for c in MODEL["careers"]))
+    retrieval_ms = round((time.perf_counter() - retrieval_started) * 1000, 1)
+    generation_started = time.perf_counter()
     try:
         reply, model_id = llm.chat([m.model_dump() for m in req.messages], results_text, passages, req.lang)
     except Exception as e:
         raise HTTPException(503, f"assistant unavailable: {str(e)[:150]}")
+    timings = {"retrieval_ms": retrieval_ms, "generation_ms": round((time.perf_counter() - generation_started) * 1000, 1),
+               "total_ms": round((time.perf_counter() - started) * 1000, 1)}
+    print("[performance] chat " + json.dumps(timings), flush=True)
     if consent:
         log("chat", session, {"career": target["career"], "question": req.messages[-1].content[:1000],
-                              "answer": reply[:3000], "model": model_id, "passages": [p["id"] for p in passages]})
-    return {"reply": reply, "model": model_id, "passages": [{"id": p["id"], "source": p["source"]} for p in passages]}
+                              "answer": reply[:3000], "model": model_id, "timings": timings, "passages": [p["id"] for p in passages]})
+    return {"reply": reply, "model": model_id, "timings": timings, "passages": [{"id": p["id"], "source": p["source"]} for p in passages]}
 
 
 @app.get("/api/export")

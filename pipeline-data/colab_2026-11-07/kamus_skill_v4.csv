@@ -1,0 +1,136 @@
+skill,kategori,pola,jenis,sumber
+Python,Bahasa pemrograman,python,hard,kamus v3 (Tahap 8)
+Java,Bahasa pemrograman,\bjava\b(?!script),hard,kamus v3 (Tahap 8)
+JavaScript,Bahasa pemrograman,javascript|\bjs\b,hard,kamus v3 (Tahap 8)
+TypeScript,Bahasa pemrograman,typescript,hard,kamus v3 (Tahap 8)
+PHP,Bahasa pemrograman,\bphp,hard,kamus v3 (Tahap 8)
+Go,Bahasa pemrograman,golang|\bgo lang,hard,kamus v3 (Tahap 8)
+C#,Bahasa pemrograman,c#|c sharp,hard,kamus v3 (Tahap 8)
+C/C++,Bahasa pemrograman,c\+\+,hard,kamus v3 (Tahap 8)
+Kotlin,Bahasa pemrograman,kotlin,hard,kamus v3 (Tahap 8)
+Swift,Bahasa pemrograman,\bswift\b,hard,kamus v3 (Tahap 8)
+Dart,Bahasa pemrograman,\bdart\b,hard,kamus v3 (Tahap 8)
+R,Bahasa pemrograman,\br programming|\bbahasa r\b|\br studio|rstudio,hard,kamus v3 (Tahap 8)
+Ruby,Bahasa pemrograman,\bruby,hard,kamus v3 (Tahap 8)
+Scala,Bahasa pemrograman,\bscala\b,hard,kamus v3 (Tahap 8)
+HTML/CSS,Web,html|css,hard,kamus v3 (Tahap 8)
+Laravel,Web,laravel,hard,kamus v3 (Tahap 8)
+CodeIgniter,Web,codeigniter|\bci3\b,hard,kamus v3 (Tahap 8)
+React,Web,react(?!\s*native)|reactjs,hard,kamus v3 (Tahap 8)
+Vue.js,Web,\bvue,hard,kamus v3 (Tahap 8)
+Angular,Web,angular,hard,kamus v3 (Tahap 8)
+Node.js,Web,node\.?js|nodejs|\bnode\b,hard,kamus v3 (Tahap 8)
+Express.js,Web,express\.?js,hard,kamus v3 (Tahap 8)
+Spring Boot,Web,spring ?boot|\bspring\b,hard,kamus v3 (Tahap 8)
+Django/Flask,Web,django|flask,hard,kamus v3 (Tahap 8)
+.NET,Web,\.net|asp\.net|dotnet,hard,kamus v3 (Tahap 8)
+Next.js,Web,next\.?js,hard,kamus v3 (Tahap 8)
+WordPress,Web,wordpress,hard,kamus v3 (Tahap 8)
+REST API,Web,rest ?api|restful|\bapi\b,hard,kamus v3 (Tahap 8)
+GraphQL,Web,graphql,hard,kamus v3 (Tahap 8)
+Microservices,Web,microservice,hard,kamus v3 (Tahap 8)
+Flutter,Mobile,flutter,hard,kamus v3 (Tahap 8)
+React Native,Mobile,react ?native,hard,kamus v3 (Tahap 8)
+Android,Mobile,android,hard,kamus v3 (Tahap 8)
+iOS,Mobile,\bios\b,hard,kamus v3 (Tahap 8)
+Firebase,Mobile,firebase,hard,kamus v3 (Tahap 8)
+SQL,Basis data,\bsql\b|t-sql|pl/sql|\bddl\b|\bdml\b,hard,kamus v3 (Tahap 8)
+MySQL,Basis data,mysql,hard,kamus v3 (Tahap 8)
+PostgreSQL,Basis data,postgre,hard,kamus v3 (Tahap 8)
+Oracle DB,Basis data,oracle,hard,kamus v3 (Tahap 8)
+SQL Server,Basis data,sql server|mssql|ms sql,hard,kamus v3 (Tahap 8)
+MongoDB,Basis data,mongo,hard,kamus v3 (Tahap 8)
+NoSQL,Basis data,nosql,hard,kamus v3 (Tahap 8)
+Redis,Basis data,redis,hard,kamus v3 (Tahap 8)
+Backup & Recovery,Basis data,backup|recovery,hard,kamus v3 (Tahap 8)
+Database design,Basis data,database design|desain database|perancangan basis data|\berd\b|entity relationship|normali[sz],hard,kamus v3 (Tahap 8)
+Git,Tools & DevOps,\bgit\b|github|gitlab|bitbucket,hard,kamus v3 (Tahap 8)
+Docker,Tools & DevOps,docker,hard,kamus v3 (Tahap 8)
+Kubernetes,Tools & DevOps,kubernetes|\bk8s\b,hard,kamus v3 (Tahap 8)
+CI/CD,Tools & DevOps,ci/cd|ci cd|jenkins|continuous integration,hard,kamus v3 (Tahap 8)
+Linux,Tools & DevOps,linux|ubuntu|centos|debian|red ?hat,hard,kamus v3 (Tahap 8)
+AWS,Cloud,\baws\b|amazon web services,hard,kamus v3 (Tahap 8)
+GCP,Cloud,\bgcp\b|google cloud,hard,kamus v3 (Tahap 8)
+Azure,Cloud,azure,hard,kamus v3 (Tahap 8)
+Terraform/Ansible,Tools & DevOps,terraform|ansible,hard,kamus v3 (Tahap 8)
+Machine Learning,Data & AI,machine learning|pembelajaran mesin,hard,kamus v3 (Tahap 8)
+Deep Learning,Data & AI,deep learning|neural network|jaringan saraf|pembelajaran mendalam,hard,kamus v3 (Tahap 8)
+TensorFlow/PyTorch,Data & AI,tensorflow|pytorch,hard,kamus v3 (Tahap 8)
+Pandas/NumPy,Data & AI,pandas|numpy,hard,kamus v3 (Tahap 8)
+Statistics,Data & AI,statisti,hard,kamus v3 (Tahap 8)
+Data Visualization,Data & AI,visuali[sz]|dashboard,hard,kamus v3 (Tahap 8)
+Tableau,Data & AI,tableau,hard,kamus v3 (Tahap 8)
+Power BI,Data & AI,power ?bi,hard,kamus v3 (Tahap 8)
+Excel,Data & AI,\bexcel\b,hard,kamus v3 (Tahap 8)
+ETL,Data & AI,\betl\b|data pipeline,hard,kamus v3 (Tahap 8)
+Spark/Hadoop,Data & AI,spark|hadoop|hive,hard,kamus v3 (Tahap 8)
+NLP,Data & AI,\bnlp\b|natural language,hard,kamus v3 (Tahap 8)
+Computer Vision,Data & AI,computer vision,hard,kamus v3 (Tahap 8)
+Networking (TCP/IP),Jaringan,tcp/ip|tcp ip|networking|jaringan komputer|\blan\b|\bwan\b|model osi|\bosi layer|subnet|pengalamatan ip|ip address,hard,kamus v3 (Tahap 8)
+Routing & Switching,Jaringan,routing|switching|\brouter\b|\bvlan\b,hard,kamus v3 (Tahap 8)
+Cisco (CCNA),Jaringan,cisco|ccna|ccnp,hard,kamus v3 (Tahap 8)
+Mikrotik,Jaringan,mikrotik|mtcna,hard,kamus v3 (Tahap 8)
+Firewall,Keamanan,firewall|fortigate|palo alto,hard,kamus v3 (Tahap 8)
+VPN,Jaringan,\bvpn\b,hard,kamus v3 (Tahap 8)
+Windows Server,Jaringan,windows server|active directory,hard,kamus v3 (Tahap 8)
+Virtualization,Jaringan,vmware|virtuali[sz]|hyper-v|proxmox,hard,kamus v3 (Tahap 8)
+Network Security,Keamanan,network security|keamanan jaringan,hard,kamus v3 (Tahap 8)
+Penetration Testing,Keamanan,penetration|pentest|uji penetrasi|vulnerability assessment,hard,kamus v3 (Tahap 8)
+SIEM/SOC,Keamanan,siem|\bsoc\b|security operation,hard,kamus v3 (Tahap 8)
+ISO 27001,Keamanan,iso ?27001|iso/iec 27001,hard,kamus v3 (Tahap 8)
+Manual Testing,Testing,manual test|test case|test scenario|test plan|black ?box|white ?box|kasus uji|skenario (uji|pengujian)|pengujian perangkat lunak,hard,kamus v3 (Tahap 8)
+Automation Testing,Testing,automation test|pengujian otomatis|selenium|cypress|appium|katalon,hard,kamus v3 (Tahap 8)
+API Testing,Testing,postman|api test,hard,kamus v3 (Tahap 8)
+Performance Testing,Testing,jmeter|performance test|load test,hard,kamus v3 (Tahap 8)
+Figma,Desain,figma,hard,kamus v3 (Tahap 8)
+Adobe XD/Sketch,Desain,adobe xd|\bsketch\b,hard,kamus v3 (Tahap 8)
+Wireframe/Prototype,Desain,wireframe|prototyp|prototipe|purwarupa|mockup|mock-up,hard,kamus v3 (Tahap 8)
+User Research,Desain,user research|usability|user testing|pengujian kegunaan|\bpersona\b,hard,kamus v3 (Tahap 8)
+Adobe Photoshop/Illustrator,Desain,photoshop|illustrator,hard,kamus v3 (Tahap 8)
+UML,Analisis sistem,\buml\b|use case|activity diagram|sequence diagram|class diagram|diagram (kelas|aktivitas|sekuen),hard,kamus v3 (Tahap 8)
+Requirement Analysis,Analisis sistem,requirements? (analysis|gathering|engineering|elicitation)|analisa kebutuhan|analisis kebutuhan|elisitasi|spesifikasi kebutuhan|\bsrs\b|kebutuhan sistem|business process|proses bisnis|\bbrd\b|\bfsd\b|user stor,hard,kamus v3 (Tahap 8)
+ERP/SAP,Analisis sistem,\berp\b|\bsap\b|odoo,hard,kamus v3 (Tahap 8)
+Hardware Troubleshooting,IT Support,"hardware|perangkat keras|troubleshoot\w*\s+(?:\w+\s+){0,3}(?:pc|computer|komputer|printer|laptop|perangkat|devices?)\b|perbaikan perangkat|instalasi perangkat|rakit (pc|komputer)",hard,kamus v3 (Tahap 8)
+Helpdesk/Ticketing,IT Support,helpdesk|help desk|ticketing|service desk,hard,kamus v3 (Tahap 8)
+Windows OS,IT Support,windows(?! server),hard,kamus v3 (Tahap 8)
+Microsoft Office,IT Support,ms office|microsoft office,hard,kamus v3 (Tahap 8)
+ITIL,IT Support,\bitil\b,hard,kamus v3 (Tahap 8)
+Agile/Scrum,Metodologi,agile|scrum|kanban|sprint,hard,kamus v3 (Tahap 8)
+SDLC,Metodologi,sdlc|software development life ?cycle,hard,kamus v3 (Tahap 8)
+OOP,Metodologi,\boop\b|object[- ]oriented|berorientasi objek,hard,kamus v3 (Tahap 8)
+Design Pattern/Clean Code,Metodologi,design pattern|clean code|solid principle,hard,kamus v3 (Tahap 8)
+Project Management,Metodologi,project management|manajemen proyek|\bpmp\b|prince2,hard,kamus v3 (Tahap 8)
+Cloud computing (konsep),Cloud,cloud computing|komputasi awan|\biaas\b|\bpaas\b|\bsaas\b,hard,kamus v3 (Tahap 8)
+Information Security,Keamanan,information security|keamanan informasi|kriptografi|cryptograph|enkripsi|encryption,hard,kamus v3 (Tahap 8)
+Data Mining,Data & AI,data mining|penambangan data|clustering|\bk-?means\b,hard,kamus v3 (Tahap 8)
+IoT,Jaringan,internet of things|\biot\b|arduino|raspberry|mikrokontroler|microcontroller,hard,kamus v3 (Tahap 8)
+Bahasa Inggris,Bahasa,english|bahasa inggris,hard,kamus v3 (Tahap 8)
+Speaking,Soft skill,communication skills?|good communicat\w*|excellent communicat\w*|strong communicat\w*|verbal communicat\w*|kemampuan (ber)?komunikasi|komunikasi (yang )?(baik|efektif|lisan)|komunikatif|presentation skills?|kemampuan presentasi|public speaking,soft,O*NET 31.0 — Skill
+Writing,Soft skill,written communicat\w*|writing skills?|kemampuan menulis|komunikasi (tertulis|lisan dan tertulis)|verbal and written|lisan (maupun|dan) tulisan,soft,O*NET 31.0 — Skill
+Active Listening,Soft skill,active listening|good listener|mendengarkan dengan baik|pendengar yang baik,soft,O*NET 31.0 — Skill
+Critical Thinking,Soft skill,critical thinking|berpikir kritis|analytical (thinking|skills?|mind)|kemampuan analis\w*|logical thinking|berpikir (logis|analitis)|analitis,soft,O*NET 31.0 — Skill
+Complex Problem Solving,Soft skill,problem[ -]solving|solve (complex )?problems?|pemecahan masalah|memecahkan masalah|menyelesaikan masalah|problem solver,soft,O*NET 31.0 — Skill
+Active Learning,Soft skill,fast learner|quick learner|willing(ness)? to learn|eager to learn|keen to learn|cepat belajar|mau belajar|kemauan (untuk )?belajar|keinginan (untuk )?belajar|senang belajar,soft,O*NET 31.0 — Skill
+Time Management,Soft skill,time management|manajemen waktu|mengatur waktu|tight deadlines?|meet(ing)? deadlines?|multi[- ]?task\w*,soft,O*NET 31.0 — Skill
+Coordination,Soft skill,coordinat\w+ with|berkoordinasi|koordinasi dengan,soft,O*NET 31.0 — Skill
+Service Orientation,Soft skill,customer[- ](oriented|focus\w*|service orient\w*)|service[- ]oriented\b(?! (architectur|soa|programming|design|concept|computing))|service orientation|berorientasi (pada )?pelanggan|orientasi pelayanan,soft,O*NET 31.0 — Skill
+Negotiation,Soft skill,negotiation|negotiating|(?<!di)negosiasi(?!kan),soft,O*NET 31.0 — Skill
+Persuasion,Soft skill,persuasi\w*|persuasive|influenc\w+ (skills?|stakeholders?),soft,O*NET 31.0 — Skill
+Instructing,Soft skill,mentor(ing)? (junior|team|other)|coach(ing)? (junior|team)|membimbing (junior|tim)|train(ing)? (junior|new) (staff|members?),soft,O*NET 31.0 — Skill
+Social Perceptiveness,Soft skill,interpersonal skills?|kemampuan interpersonal|hubungan interpersonal,soft,O*NET 31.0 — Skill
+Cooperation,Soft skill,team[ -]?work|team player|work(ing)? (well )?(in|as|with) a team|collaborat\w*|kolaborasi|kerja ?sama|bekerja (sama )?dalam (sebuah )?tim|bekerja secara tim|kerja tim|cross[- ]functional (teams?|collaboration),soft,O*NET 31.0 — Work Style
+Leadership Orientation,Soft skill,leadership|kepemimpinan|jiwa pemimpin|lead (a|the) team|memimpin tim,soft,O*NET 31.0 — Work Style
+Attention to Detail,Soft skill,attention to details?|detail[- ]oriented|keen eye for detail|teliti|ketelitian|cermat,soft,O*NET 31.0 — Work Style
+Adaptability,Soft skill,adaptab\w*|\badaptif\b|\badaptive\b(?! (design|layout|ui|web|streaming|bitrate|learning))|mudah beradaptasi|mampu beradaptasi|flexib\w+ (to|in|with),soft,O*NET 31.0 — Work Style
+Initiative,Soft skill,proactive|proaktif|self[- ]starter|self[- ]motivated|berinisiatif|inisiatif (tinggi|yang|dan)|take (the )?initiative|(show|showing|with) initiative|motivasi (yang )?tinggi|highly motivated,soft,O*NET 31.0 — Work Style
+Dependability,Soft skill,\bresponsible and (honest|disciplined|reliable|hard)|bertanggung ?jawab(?!\s*(atas|terhadap|untuk|dalam|pada|kepada|penuh atas|mengelola|melakukan|menangani|memastikan|menjaga|membuat))|\bdependable\b|\bdisiplin\b|\bdisciplined\b|\breliable and (honest|responsible|hard[- ]?working|trustworthy|committed|disciplined)|\breliable (person|individual|team),soft,O*NET 31.0 — Work Style
+Integrity,Soft skill,integritas (yang )?tinggi|berintegritas|high(est)? (level of )?integrity|(?<!data )(?<!consistency )\bintegrity and\b(?! (system|security|availability|confidentiality))|(?<!data )(?<!consistency )(?<!security )\band integrity\b|\bjujur\b|\bhonest\b(?! company)|honesty,soft,O*NET 31.0 — Work Style
+Stress Tolerance,Soft skill,under pressure|bawah tekanan|dalam tekanan|stress tolerance|tahan (terhadap )?tekanan,soft,O*NET 31.0 — Work Style
+Achievement Orientation,Soft skill,result[s]?[- ]oriented|target[- ]oriented|goal[- ]oriented|berorientasi (pada )?(target|hasil)|achievement[- ]oriented,soft,O*NET 31.0 — Work Style
+Innovation,Soft skill,(?<!/)\bcreative\b(?!/)(?! (suite|cloud|agency|industry|director|team|studio|multimedia|media))|\bcreativity\b|(?<!PT )\bkreatif\b|kreativitas|innovative (thinking|mind|ideas?)|\binovatif\b,soft,O*NET 31.0 — Work Style
+Intellectual Curiosity,Soft skill,curious|curiosity|rasa ingin tahu|passion for (learning|technology),soft,O*NET 31.0 — Work Style
+Self-Confidence,Soft skill,self[- ]confiden\w*|percaya diri|\bconfident(ly)?\b,soft,O*NET 31.0 — Work Style
+Perseverance,Soft skill,persever\w*|\bpersistent\b(?! (database|storage|volume|data|disk|connection|queue|memory))|pantang menyerah|\bulet\b|\btekun\b|tenacious,soft,O*NET 31.0 — Work Style
+Social Orientation,Soft skill,mudah bergaul|(?<!incoming and )(?<!incoming & )\boutgoing\b(?! (project |the )?(documentation|documents?|calls?|e-?mails?|mail|traffic|goods|shipments?|letters?))|sociable,soft,O*NET 31.0 — Work Style
+Optimism,Soft skill,positive attitude|sikap positif|\boptimis(tic|tik|me)?\b|\boptimist\b,soft,O*NET 31.0 — Work Style
+Empathy,Soft skill,\bempath\w*|\bempati\b,soft,O*NET 31.0 — Work Style

@@ -1,0 +1,24 @@
+{
+  "tanggal": "2026-11-07T12:38:31",
+  "generator": {
+    "penyedia": "groq",
+    "model": "openai/gpt-oss-120b",
+    "suhu": 0,
+    "dipakai_di": [
+      "Tahap 12 (120 penjelasan RAG/non-RAG)",
+      "web: penjelasan AI dan Tanya AI"
+    ]
+  },
+  "penilai_kedua": {
+    "penyedia": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "generator": "openai/gpt-oss-120b",
+    "dipilih": "2026-10-21T17:07:06",
+    "menggantikan": "gemini/gemini-3.8-flash",
+    "hasil_model_lama_dibuang": 13,
+    "alasan_ganti": "kuota harian penyedia lama terlalu kecil"
+  },
+  "cocok_dengan_tahap12_log": true,
+  "model_di_tahap12_log": "openai/gpt-oss-120b",
+  "catatan": "logs/tahap12_model.json (gemini-omni-1.1-flash) dan tahap12_model_gemini.json berasal dari run uji awal 18 Okt dan TIDAK dipakai untuk hasil akhir. Model final dikunci di file ini."
+}

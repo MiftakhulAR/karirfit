@@ -1,0 +1,132 @@
+{
+  "tanggal": "2026-11-07T12:38:28",
+  "versi_kamus_soft": "v2b (20 Okt 2026)",
+  "seed": 42,
+  "ambang_%": 10.0,
+  "soft_skill_onet": 29,
+  "skill_total": 135,
+  "profil_uji": 1766,
+  "R_c_rata2": {
+    "Tahap8": 13.3,
+    "v3": 19.5
+  },
+  "makro": {
+    "v1": {
+      "Hit@1": 0.648,
+      "Hit@3": 0.908,
+      "MRR": 0.784
+    },
+    "v3_teknis": {
+      "Hit@1": 0.672,
+      "Hit@3": 0.915,
+      "MRR": 0.798
+    },
+    "v3_lengkap": {
+      "Hit@1": 0.664,
+      "Hit@3": 0.917,
+      "MRR": 0.793
+    }
+  },
+  "mikro": {
+    "v1": {
+      "Hit@1": 0.618,
+      "Hit@3": 0.913,
+      "MRR": 0.768
+    },
+    "v3_teknis": {
+      "Hit@1": 0.654,
+      "Hit@3": 0.921,
+      "MRR": 0.79
+    },
+    "v3_lengkap": {
+      "Hit@1": 0.639,
+      "Hit@3": 0.914,
+      "MRR": 0.778
+    }
+  },
+  "uji_statistik": {
+    "v3_teknis": {
+      "McNemar_Hit@1": {
+        "baru_benar_v1_salah": 83,
+        "v1_benar_baru_salah": 20,
+        "p": 2.655337324301677e-10
+      },
+      "McNemar_Hit@3": {
+        "baru_benar_v1_salah": 21,
+        "v1_benar_baru_salah": 7,
+        "p": 0.012540951371192932
+      },
+      "Wilcoxon_RR_p": 1.7030233204110578e-14,
+      "selisih_MRR_mikro": 0.022097123965753637,
+      "CI95": [
+        0.016192623635644585,
+        0.028070853740446038
+      ]
+    },
+    "v3_lengkap": {
+      "McNemar_Hit@1": {
+        "baru_benar_v1_salah": 65,
+        "v1_benar_baru_salah": 28,
+        "p": 0.0001575707877910854
+      },
+      "McNemar_Hit@3": {
+        "baru_benar_v1_salah": 28,
+        "v1_benar_baru_salah": 26,
+        "p": 0.8919231511047488
+      },
+      "Wilcoxon_RR_p": 0.0008123102318792634,
+      "selisih_MRR_mikro": 0.010990057507611303,
+      "CI95": [
+        0.0049929975963384785,
+        0.017136925338723186
+      ]
+    }
+  },
+  "kriteria": {
+    "v1": {
+      "Hit@3_makro>=0.80": true
+    },
+    "v3_teknis": {
+      "Hit@3_makro>=0.80": true
+    },
+    "v3_lengkap": {
+      "Hit@3_makro>=0.80": true
+    }
+  },
+  "presisi_pola_softskill": {
+    "total": 0.965,
+    "n": 285,
+    "tanpa_label": 0,
+    "per_skill": {
+      "Achievement Orientation": 0.9,
+      "Active Learning": 1.0,
+      "Active Listening": 1.0,
+      "Adaptability": 0.9,
+      "Attention to Detail": 1.0,
+      "Complex Problem Solving": 1.0,
+      "Cooperation": 1.0,
+      "Coordination": 1.0,
+      "Critical Thinking": 1.0,
+      "Dependability": 1.0,
+      "Empathy": 0.7,
+      "Initiative": 1.0,
+      "Innovation": 0.8,
+      "Instructing": 1.0,
+      "Integrity": 1.0,
+      "Intellectual Curiosity": 1.0,
+      "Leadership Orientation": 0.8,
+      "Negotiation": 1.0,
+      "Optimism": 1.0,
+      "Perseverance": 1.0,
+      "Persuasion": 1.0,
+      "Self-Confidence": 1.0,
+      "Service Orientation": 0.9,
+      "Social Orientation": 1.0,
+      "Social Perceptiveness": 1.0,
+      "Speaking": 1.0,
+      "Stress Tolerance": 1.0,
+      "Time Management": 1.0,
+      "Writing": 1.0
+    }
+  }
+}
