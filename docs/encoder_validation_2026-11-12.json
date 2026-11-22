@@ -1,0 +1,255 @@
+{
+  "scope": "Local Windows CPU, not Render; same fp16 weights and forward pass",
+  "queries": [
+    {
+      "case": 0,
+      "career": "cyber_security",
+      "native_12_seconds": 1.0747,
+      "limited_1_seconds": 0.5084,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 1,
+      "career": "data_analyst_bi",
+      "native_12_seconds": 0.2745,
+      "limited_1_seconds": 0.3208,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 2,
+      "career": "data_engineer",
+      "native_12_seconds": 0.2579,
+      "limited_1_seconds": 0.3461,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 3,
+      "career": "data_scientist_ml_ai_engineer",
+      "native_12_seconds": 0.2778,
+      "limited_1_seconds": 0.3239,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 4,
+      "career": "database_administrator",
+      "native_12_seconds": 0.2684,
+      "limited_1_seconds": 0.3276,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 5,
+      "career": "devops_cloud_engineer",
+      "native_12_seconds": 0.2657,
+      "limited_1_seconds": 0.3316,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 6,
+      "career": "it_project_product_manager",
+      "native_12_seconds": 0.2778,
+      "limited_1_seconds": 0.3262,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 7,
+      "career": "it_support_helpdesk",
+      "native_12_seconds": 0.2705,
+      "limited_1_seconds": 0.3527,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 8,
+      "career": "mobile_developer",
+      "native_12_seconds": 0.2645,
+      "limited_1_seconds": 0.2919,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 9,
+      "career": "network_system_administrator",
+      "native_12_seconds": 0.2777,
+      "limited_1_seconds": 0.3429,
+      "cosine": 0.9999998807907104,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 10,
+      "career": "qa_software_tester",
+      "native_12_seconds": 0.2677,
+      "limited_1_seconds": 0.3339,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 11,
+      "career": "senior_programmer",
+      "native_12_seconds": 0.2658,
+      "limited_1_seconds": 0.32,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 12,
+      "career": "software_developer",
+      "native_12_seconds": 0.2584,
+      "limited_1_seconds": 0.3102,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 13,
+      "career": "system_analyst",
+      "native_12_seconds": 0.2665,
+      "limited_1_seconds": 0.3168,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 14,
+      "career": "ui_ux_designer",
+      "native_12_seconds": 0.2746,
+      "limited_1_seconds": 0.3274,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 15,
+      "career": "data_engineer",
+      "native_12_seconds": 0.2763,
+      "limited_1_seconds": 0.3511,
+      "cosine": 0.9999999403953552,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 16,
+      "career": "data_scientist_ml_ai_engineer",
+      "native_12_seconds": 0.2864,
+      "limited_1_seconds": 0.3656,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 17,
+      "career": "data_analyst_bi",
+      "native_12_seconds": 0.2643,
+      "limited_1_seconds": 0.3237,
+      "cosine": 0.9999998807907104,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 18,
+      "career": "database_administrator",
+      "native_12_seconds": 0.2622,
+      "limited_1_seconds": 0.3142,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    },
+    {
+      "case": 19,
+      "career": "software_developer",
+      "native_12_seconds": 0.2654,
+      "limited_1_seconds": 0.3346,
+      "cosine": 1.0,
+      "max_abs_diff": 0.0,
+      "same_retrieval": true
+    }
+  ],
+  "passages": [
+    {
+      "id": "skkni-02382",
+      "cosine_vs_colab": 1.0,
+      "tokens": 46
+    },
+    {
+      "id": "skkni-00642",
+      "cosine_vs_colab": 1.0000001192092896,
+      "tokens": 130
+    },
+    {
+      "id": "skkni-01309",
+      "cosine_vs_colab": 1.0000001192092896,
+      "tokens": 199
+    },
+    {
+      "id": "profil_karier-06b",
+      "cosine_vs_colab": 1.0,
+      "tokens": 268
+    },
+    {
+      "id": "skkni-01461",
+      "cosine_vs_colab": 1.0,
+      "tokens": 244
+    },
+    {
+      "id": "skkni-02173",
+      "cosine_vs_colab": 1.0,
+      "tokens": 256
+    },
+    {
+      "id": "skkni-02357",
+      "cosine_vs_colab": 1.0,
+      "tokens": 294
+    },
+    {
+      "id": "skkni-02108",
+      "cosine_vs_colab": 1.0,
+      "tokens": 275
+    },
+    {
+      "id": "skkni-01387",
+      "cosine_vs_colab": 1.0000001192092896,
+      "tokens": 333
+    },
+    {
+      "id": "skkni-00627",
+      "cosine_vs_colab": 1.0,
+      "tokens": 307
+    }
+  ],
+  "runtime": {
+    "requested_blas_threads": 1,
+    "blas": [
+      {
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "version": "0.3.30"
+      }
+    ],
+    "last_encode": null
+  },
+  "summary": {
+    "query_count": 20,
+    "passage_count": 10,
+    "native_warm_p50_seconds": 0.2677,
+    "limited_warm_p50_seconds": 0.3274,
+    "min_cosine_vs_colab": 1.0
+  }
+}

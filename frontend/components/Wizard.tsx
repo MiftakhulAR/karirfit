@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { api } from "@/lib/api";
+import { accountKey } from "@/lib/tab-auth";
 import type { CustomCourse, Grade, Interest, Level } from "@/lib/types";
 import { useApp } from "./AppProvider";
 import { ServerError } from "./Header";
@@ -12,7 +13,7 @@ const LEVELS: Level[] = ["beginner", "intermediate", "advanced"];
 const GRADES: Grade[] = ["A", "A-", "B+", "B", "B-", "C+", "C", "D", "E"];
 
 export function Wizard() {
-  const { t, model, answers } = useApp();
+  const { t, model, answers, session } = useApp();
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [warn, setWarn] = useState(false);
@@ -23,7 +24,7 @@ export function Wizard() {
   };
   const LAST = 6;
   const finish = () => {
-    try { sessionStorage.setItem("karirfit:submit", "1"); } catch { /* ignore */ }   // results page saves this test to history
+    try { sessionStorage.setItem(accountKey(session, "submit"), "1"); } catch { /* ignore */ }   // results page saves this test to history
     router.push("/hasil");
   };
   const next = () => (step < LAST ? goto(step + 1) : answers.interests.length ? finish() : setWarn(true));

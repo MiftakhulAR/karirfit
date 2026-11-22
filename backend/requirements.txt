@@ -10,3 +10,5 @@ numpy>=1.26
 tokenizers>=0.19
 pypdf>=4.0                # admin upload: PDF text (imported only on rebuild)
 python-docx>=1.1          # admin upload: DOCX text (imported only on rebuild)
+
+threadpoolctl>=3.6,<4     # respect container CPU quota for NumPy BLAS

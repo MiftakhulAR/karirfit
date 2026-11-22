@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/components/AppProvider";
 import { deleteAssessment, listAssessments } from "@/lib/supabase";
+import { accountKey } from "@/lib/tab-auth";
 import type { Assessment } from "@/lib/types";
 
 export default function HistoryPage() {
@@ -13,20 +14,25 @@ export default function HistoryPage() {
 }
 
 function History() {
-  const { t, lang, update, careerName } = useApp();
+  const { t, lang, update, careerName, user, session } = useApp();
   const router = useRouter();
   const [rows, setRows] = useState<Assessment[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  useEffect(() => { listAssessments().then(setRows).catch(e => setErr((e as Error).message)); }, []);
+  useEffect(() => {
+    if (!user) return;
+    let alive = true;
+    listAssessments(user.id).then(x => { if (alive) setRows(x); }).catch(e => { if (alive) setErr((e as Error).message); });
+    return () => { alive = false; };
+  }, [user?.id]);
 
   const view = (a: Assessment) => {
     update({ ...a.answers });
-    try { sessionStorage.removeItem("karirfit:submit"); } catch { /* ignore */ }   // viewing is not a new test
+    try { sessionStorage.removeItem(accountKey(session, "submit")); } catch { /* ignore */ }   // viewing is not a new test
     router.push("/hasil");
   };
   const remove = async (id: string) => {
-    try { await deleteAssessment(id); setRows(r => (r ?? []).filter(x => x.id !== id)); } catch (e) { setErr((e as Error).message); }
+    try { if (!user) return; await deleteAssessment(id, user.id); setRows(r => (r ?? []).filter(x => x.id !== id)); } catch (e) { setErr((e as Error).message); }
   };
   const fmt = (d: string) => new Date(d).toLocaleString(lang === "id" ? "id-ID" : "en-GB", { dateStyle: "medium", timeStyle: "short" });
 

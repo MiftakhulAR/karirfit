@@ -161,7 +161,8 @@ class Retriever:
                     self._query_cache[key] = (time.monotonic(), vector)
                     while len(self._query_cache) > self._cache_limit:
                         self._query_cache.popitem(last=False)
-        _log(f"query cache_hit={hit} ms={1000 * (time.perf_counter() - started):.1f}")
+        metrics = self.encoder.runtime_status().get("last_encode") if not hit and hasattr(self.encoder, "runtime_status") else None
+        _log(f"query cache_hit={hit} ms={1000 * (time.perf_counter() - started):.1f} encoder={json.dumps(metrics)}")
         return vector
 
     def search(self, career: str, matched: list[str], gaps: list[str], career_name: str) -> list[dict]:
@@ -186,6 +187,7 @@ class Retriever:
         return {"ready": self.ready, "error": self.error, "passages": len(self.chunks), "by_type": kinds,
                 "tau": TAU, "top_k": TOP_K, "embedding_model": EMBED_MODEL, "encoder": "e5_numpy (float16)",
                 "kb_version": CFG.get("kb_versi"), "selftest": self.selftest,
+                "encoder_runtime": self.encoder.runtime_status() if self.encoder else None,
                 "query_cache": {"entries": len(self._query_cache), "limit": self._cache_limit,
                                 "ttl_seconds": self._cache_ttl, "hits": self._cache_hits, "misses": self._cache_misses}}
 

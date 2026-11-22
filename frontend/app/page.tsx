@@ -7,6 +7,7 @@ import { toProfile, useApp } from "@/components/AppProvider";
 import { ServerError } from "@/components/Header";
 import { api } from "@/lib/api";
 import { listAssessments } from "@/lib/supabase";
+import { accountKey } from "@/lib/tab-auth";
 import type { Assessment, CareerGroup, CareerResult } from "@/lib/types";
 import { reqLabel } from "@/lib/reference";
 
@@ -158,7 +159,12 @@ function Dashboard() {
   const [hist, setHist] = useState<Assessment[] | null>(null);
   const [top, setTop] = useState<CareerResult | null>(null);
 
-  useEffect(() => { listAssessments().then(setHist).catch(() => setHist([])); }, []);
+  useEffect(() => {
+    if (!user) return;
+    let alive = true;
+    listAssessments(user.id).then(x => { if (alive) setHist(x); }).catch(() => { if (alive) setHist([]); });
+    return () => { alive = false; };
+  }, [user?.id]);
   const last = hist?.[0];
 
   // recompute the latest result to show the next skills to learn for the top career
@@ -171,7 +177,7 @@ function Dashboard() {
   const viewLast = () => {
     if (!last) return;
     update({ ...last.answers });
-    try { sessionStorage.removeItem("karirfit:submit"); } catch { /* ignore */ }
+    try { sessionStorage.removeItem(accountKey(session, "submit")); } catch { /* ignore */ }
     router.push("/hasil");
   };
   const inProgress = answers.interests.length > 0 && (!last || JSON.stringify(last.answers) !== JSON.stringify(answers));

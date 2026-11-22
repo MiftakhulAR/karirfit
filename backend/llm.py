@@ -171,6 +171,37 @@ def check_citations(text: str, passages: list[dict]) -> dict:
             "supported_ratio": (len(cited & known) / len(cited)) if cited else None}
 
 
+_BRACKET_RE = re.compile(r"\[([^\[\]\n]{1,120})\]")
+
+
+def _looks_like_citation(token: str) -> bool:
+    """Passage ids look like 'skkni-00385'; invented markers look like 'FACT-SQL', 'FACTS', 'P1'.
+    Plain words in brackets (e.g. '[Python]') are left alone."""
+    return bool(re.fullmatch(r"[A-Za-z0-9_\-:.]+", token)) and (
+        any(ch.isdigit() for ch in token) or "-" in token or "_" in token or token.isupper())
+
+
+def strip_unknown_citations(text: str, passages: list[dict]) -> tuple[str, list[str]]:
+    """Remove citation markers that do not point to a retrieved passage (e.g. '[FACT-SQL]').
+    Only the text shown to the user is cleaned; the raw text is still checked and logged,
+    so the evidence-support metric keeps counting these markers as unsupported."""
+    known = {p["id"] for p in passages}
+    removed: list[str] = []
+
+    def repl(m: re.Match) -> str:
+        parts = [x.strip() for x in m.group(1).split(",")]
+        if not all(_looks_like_citation(x) for x in parts):
+            return m.group(0)
+        keep = [x for x in parts if x in known]
+        removed.extend(x for x in parts if x not in known)
+        return f"[{', '.join(keep)}]" if keep else ""
+
+    clean = _BRACKET_RE.sub(repl, text)
+    clean = re.sub(r"[ \t]+([.,;:])", r"\1", clean)
+    clean = re.sub(r"[ \t]{2,}", " ", clean)
+    return clean, sorted(set(removed))
+
+
 # --------------------------------------------------------------------------- career assistant chat
 CHAT_SYSTEM = """You are KarirFit's career assistant. Answer in {language}, briefly and concretely.
 Help the person understand their career test results and plan how to learn the skills they lack.

@@ -15,12 +15,54 @@ from __future__ import annotations
 import json
 import os
 import threading
+import math
+import time
 from pathlib import Path
 
 import numpy as np
 
 E5_DIR = Path(os.getenv("E5_DIR", Path(__file__).resolve().parent / "e5_numpy"))
 MAX_LEN = 512
+
+
+def cpu_quota_threads(root: Path = Path("/sys/fs/cgroup")) -> int | None:
+    """Bound native BLAS threads by the container CPU quota, when present.
+
+    A fractional core still needs one worker. Without a quota, preserve the BLAS
+    library default; a many-core development laptop should not be forced to one.
+    """
+    limits = []
+    for quota_path, period_path in ((root / "cpu.max", None),
+                                    (root / "cpu/cpu.cfs_quota_us", root / "cpu/cpu.cfs_period_us"),
+                                    (root / "cpu.cfs_quota_us", root / "cpu.cfs_period_us")):
+        try:
+            if period_path is None:
+                quota, period = quota_path.read_text().split()[:2]
+                if quota == "max":
+                    continue
+            else:
+                quota, period = quota_path.read_text(), period_path.read_text()
+            quota, period = int(quota), int(period)
+            if quota > 0 and period > 0:
+                limits.append(max(1, math.ceil(quota / period)))
+        except (OSError, ValueError):
+            continue
+    return min(limits) if limits else None
+
+
+def blas_threads() -> int | None:
+    raw = os.getenv("E5_BLAS_THREADS", "auto").strip().lower()
+    if raw == "auto":
+        return cpu_quota_threads()
+    if raw in ("native", "0"):
+        return None
+    try:
+        value = int(raw)
+        if not 1 <= value <= 64:
+            raise ValueError
+        return value
+    except ValueError:
+        raise ValueError("E5_BLAS_THREADS must be auto, native, 0, or an integer from 1 to 64") from None
 
 
 def _erf(x: np.ndarray) -> np.ndarray:
@@ -50,6 +92,15 @@ class E5Numpy:
         self.eps, self.pad = float(cfg["layer_norm_eps"]), int(cfg["pad_token_id"])
         self._w: dict[str, np.ndarray] = {}
         self._lock = threading.Lock()
+        # Native limits are process-wide; configure once during encoder creation,
+        # not with overlapping per-request context managers.
+        from threadpoolctl import threadpool_limits, threadpool_info
+        self.blas_threads = blas_threads()
+        self._blas_limit = (threadpool_limits(limits=self.blas_threads, user_api="blas")
+                            if self.blas_threads is not None else None)
+        self.blas_runtime = [{k: p.get(k) for k in ("internal_api", "num_threads", "version")}
+                             for p in threadpool_info() if p.get("user_api") == "blas"]
+        self.last_metrics = None
         from tokenizers import Tokenizer
         self.tok = Tokenizer.from_file(str(self.dir / "tokenizer.json"))
         self.tok.enable_truncation(MAX_LEN)
@@ -92,12 +143,24 @@ class E5Numpy:
 
     def encode(self, texts: list[str], prefix: str = "query: ") -> np.ndarray:
         out = np.zeros((len(texts), self.h), dtype=np.float32)
+        waiting = time.perf_counter()
         with self._lock:                                             # one forward pass at a time (memory)
+            started, cpu_started = time.perf_counter(), time.process_time()
+            token_counts = []
             for j, t in enumerate(texts):
                 ids = self.tok.encode(prefix + t).ids
+                token_counts.append(len(ids))
                 v = self.forward(ids).mean(0)                         # mean pooling (single sequence, no padding)
                 out[j] = v / max(np.linalg.norm(v), 1e-12)
+            self.last_metrics = {"queue_ms": round((started - waiting) * 1000, 1),
+                                 "compute_ms": round((time.perf_counter() - started) * 1000, 1),
+                                 "cpu_ms": round((time.process_time() - cpu_started) * 1000, 1),
+                                 "tokens": token_counts}
         return out
+
+    def runtime_status(self) -> dict:
+        return {"requested_blas_threads": self.blas_threads, "blas": self.blas_runtime,
+                "last_encode": self.last_metrics}
 
 
 def available(folder: Path | str = E5_DIR) -> bool:

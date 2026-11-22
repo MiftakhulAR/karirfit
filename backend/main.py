@@ -297,13 +297,17 @@ def do_explain(req: ExplainReq, background: BackgroundTasks, x_admin_token: str 
     out["timings"] = {"retrieval_ms": retrieval_ms, "generation_ms": generation_ms,
                       "total_ms": round((time.perf_counter() - started) * 1000, 1)}
     print("[performance] explain " + json.dumps(out["timings"]), flush=True)
-    chk = check_explanation(out["text"], result, MODEL, passages, profile, EXTRACTOR)
+    chk = check_explanation(out["text"], result, MODEL, passages, profile, EXTRACTOR)   # raw text: honest metric
     out["check"] = _check_summary(chk)
+    raw_text = out["text"]
+    out["text"], removed = llm.strip_unknown_citations(raw_text, passages)              # shown text: no invented ids
+    if removed:
+        out["removed_citations"] = removed
     if consent:
         log("explain", session, {"career": req.career, "condition": "rag", "mode": out["mode"],
                                      "model": out["model"], "prompt_version": llm.PROMPT_VERSION,
-                                     "passages": [p["id"] for p in passages], "text": out["text"], "timings": out["timings"],
-                                     "check": out["check"], "claims": chk["claims"]})
+                                     "passages": [p["id"] for p in passages], "text": raw_text, "timings": out["timings"],
+                                     "removed_citations": removed, "check": out["check"], "claims": chk["claims"]})
         if EVAL_MODE and out["mode"] != "template":
             background.add_task(_non_rag_twin, result, profile, req.lang, session, [p["id"] for p in passages])
     return out
@@ -399,12 +403,13 @@ def do_chat(req: ChatReq, user: dict | None = Depends(current_user)):
         reply, model_id = llm.chat([m.model_dump() for m in req.messages], results_text, passages, req.lang)
     except Exception as e:
         raise HTTPException(503, f"assistant unavailable: {str(e)[:150]}")
+    reply, removed = llm.strip_unknown_citations(reply, passages)
     timings = {"retrieval_ms": retrieval_ms, "generation_ms": round((time.perf_counter() - generation_started) * 1000, 1),
                "total_ms": round((time.perf_counter() - started) * 1000, 1)}
     print("[performance] chat " + json.dumps(timings), flush=True)
     if consent:
         log("chat", session, {"career": target["career"], "question": req.messages[-1].content[:1000],
-                              "answer": reply[:3000], "model": model_id, "timings": timings, "passages": [p["id"] for p in passages]})
+                              "answer": reply[:3000], "removed_citations": removed, "model": model_id, "timings": timings, "passages": [p["id"] for p in passages]})
     return {"reply": reply, "model": model_id, "timings": timings, "passages": [{"id": p["id"], "source": p["source"]} for p in passages]}
 
 

@@ -1,8 +1,9 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useRef, Fragment, type ReactNode } from "react";
 import { api, ApiError, API_URL, setAuthToken } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
+import { accountKey } from "@/lib/tab-auth";
 import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { DICTS, type Dict } from "@/lib/i18n";
 import type { Answers, Career, Health, Lang, Model, Profile } from "@/lib/types";
@@ -65,32 +66,50 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [recovery, setRecovery] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatCareer, setChatCareer] = useState<string | null>(null);
+  const accountRef = useRef<string | null | undefined>(undefined);
 
   // Supabase session: keep the access token in the API client so FastAPI can verify the user
   useEffect(() => {
     if (!supabase) { setAuthReady(true); return; }
+    let alive = true;
+    let observed = false;
     const apply = (sess: Session | null) => {
+      if (!alive) return;
+      const owner = sess?.user.id ?? null;
+      if (accountRef.current !== owner) {
+        accountRef.current = owner;
+        let restored: Partial<Answers> = {};
+        if (owner) {
+          try { restored = JSON.parse(localStorage.getItem(accountKey(owner, "answers")) || "{}"); } catch { /* empty */ }
+        }
+        setAnswers({ ...EMPTY, ...restored });
+        setChatOpen(false); setChatCareer(null); setRecovery(false);
+      }
       setAuthToken(sess?.access_token ?? null);
       const m = sess?.user.user_metadata ?? {};
       setUser(sess ? { id: sess.user.id, email: sess.user.email ?? "", name: String(m.name ?? ""), consent: Boolean(m.consent) } : null);
     };
-    supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => { apply(data.session); setAuthReady(true); });
-    const { data: sub } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, sess: Session | null) => {
-      if (event === "PASSWORD_RECOVERY") setRecovery(true);
-      apply(sess);
+    supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
+      if (alive && !observed) { apply(data.session); setAuthReady(true); }
     });
-    return () => sub.subscription.unsubscribe();
+    const { data: sub } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, sess: Session | null) => {
+      observed = true;
+      apply(sess);
+      if (event === "PASSWORD_RECOVERY") setRecovery(true);
+      setAuthReady(true);
+    });
+    return () => { alive = false; sub.subscription.unsubscribe(); };
   }, []);
 
   const signOut = useCallback(async () => {
-    if (supabase) await supabase.auth.signOut();
-    setAuthToken(null); setUser(null);
+    if (supabase) await supabase.auth.signOut({ scope: "local" });
+    accountRef.current = null;
+    setAuthToken(null); setUser(null); setAnswers(EMPTY); setChatOpen(false); setChatCareer(null);
   }, []);
 
   // restore from localStorage after mount (avoids SSR/client mismatch)
   useEffect(() => {
     setLangState(readStore<Lang>("lang", "id"));
-    setAnswers({ ...EMPTY, ...readStore<Partial<Answers>>("answers", {}) });
     let s = readStore<string>("session", "");
     if (!s) { s = Math.random().toString(36).slice(2, 10); writeStore("session", s); }
     setSession(s);
@@ -126,13 +145,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const setLang = useCallback((l: Lang) => { setLangState(l); writeStore("lang", l); }, []);
   const update = useCallback<Ctx["update"]>(patch => {
+    const owner = user?.id;
+    if (!owner || accountRef.current !== owner) return;
     setAnswers(prev => {
+      if (accountRef.current !== owner) return prev;
       const next = { ...prev, ...(typeof patch === "function" ? patch(prev) : patch) };
-      writeStore("answers", next);
+      try { localStorage.setItem(accountKey(owner, "answers"), JSON.stringify(next)); } catch { /* unavailable */ }
       return next;
     });
-  }, []);
-  const reset = useCallback(() => { setAnswers(EMPTY); writeStore("answers", EMPTY); }, []);
+  }, [user?.id]);
+  const reset = useCallback(() => {
+    const owner = user?.id;
+    if (!owner || accountRef.current !== owner) return;
+    setAnswers(EMPTY);
+    try { localStorage.removeItem(accountKey(owner, "answers")); } catch { /* unavailable */ }
+  }, [user?.id]);
 
   const value = useMemo<Ctx>(() => {
     // soft skills and O*NET elements are shown in the selected language
@@ -152,7 +179,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     };
   }, [lang, setLang, model, modelError, loadModel, waking, health, answers, update, reset, hydrated, session, user, authReady, recovery, signOut, chatOpen, chatCareer]);
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={value}><Fragment key={user?.id ?? "signed-out"}>{children}</Fragment></AppContext.Provider>;
 }
 
 export function useApp() {

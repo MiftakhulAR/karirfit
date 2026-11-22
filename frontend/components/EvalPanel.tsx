@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import { accountKey } from "@/lib/tab-auth";
 import type { CareerResult, CompareResponse, ShortRanking } from "@/lib/types";
 import { useApp } from "./AppProvider";
 
-const DONE_KEY = "karirfit:v1:eval";
 
 /** Evaluation tasks for study participants (shown only when the backend runs with EVAL_MODE=1):
  *  relevance ratings of the 7 recommended careers (3.6.4), the blind A/B comparison of the normal
@@ -39,6 +39,8 @@ export function EvalPanel({ recommended, ratings }: { recommended: CareerResult[
 }
 
 function useDone(): [Record<string, boolean>, (k: string) => void] {
+  const { session } = useApp();
+  const DONE_KEY = accountKey(session, "eval");
   const [done, setDone] = useState<Record<string, boolean>>({});
   useEffect(() => { try { setDone(JSON.parse(localStorage.getItem(DONE_KEY) || "{}")); } catch { /* ignore */ } }, []);
   const mark = (k: string) => setDone(d => {

@@ -6,14 +6,16 @@ import { api } from "@/lib/api";
 import { pct } from "@/lib/i18n";
 import { MIN_JOB_ZONE_D4, refNote, reqBar, reqLabel } from "@/lib/reference";
 import { saveAssessment } from "@/lib/supabase";
+import { accountKey } from "@/lib/tab-auth";
 import type { CareerResult, ExplainResponse, RecommendResponse } from "@/lib/types";
 import { useApp } from "./AppProvider";
 import { EvalPanel } from "./EvalPanel";
 
-const RATINGS_KEY = "karirfit:v1:ratings";
 
 export function Results() {
-  const { t, answers, profile, session, model, health, consent, setChatCareer, setChatOpen } = useApp();
+  const { t, answers, profile, session, model, health, consent, user, setChatCareer, setChatOpen } = useApp();
+  const RATINGS_KEY = accountKey(session, "ratings");
+  const SUBMIT_KEY = accountKey(session, "submit");
   const [saved, setSaved] = useState<string | null>(null);
   const [ratings, setRatings] = useState<Record<string, number>>({});
   useEffect(() => { try { setRatings(JSON.parse(localStorage.getItem(RATINGS_KEY) || "{}")); } catch { /* ignore */ } }, []);
@@ -42,8 +44,8 @@ export function Results() {
         setCurrent(c => c ?? (answers.target || r.top[0]?.career || null));
         // a test just finished in the wizard is saved once to the user's history (Supabase)
         let fresh = false;
-        try { fresh = sessionStorage.getItem("karirfit:submit") === "1"; sessionStorage.removeItem("karirfit:submit"); } catch { /* ignore */ }
-        if (fresh) saveAssessment(answers, r).then(() => setSaved(t.h_saved)).catch(e => setSaved(t.h_save_error + (e as Error).message));
+        try { fresh = sessionStorage.getItem(SUBMIT_KEY) === "1"; sessionStorage.removeItem(SUBMIT_KEY); } catch { /* ignore */ }
+        if (fresh && user) saveAssessment(answers, r, user.id).then(() => setSaved(t.h_saved)).catch(e => setSaved(t.h_save_error + (e as Error).message));
       })
       .catch(e => alive && setError(String((e as Error).message)));
     return () => { alive = false; };

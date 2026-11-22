@@ -23,7 +23,8 @@ export default function AdminPage() {
 
   const refresh = useCallback(async (tk = token) => {
     if (!tk) return;
-    try { setKb(await api.kbList(tk)); } catch (e) { setKb(null); setMsg((e as Error).message); }
+    try { setKb(await api.kbList(tk)); setMsg(null); }
+    catch { setKb(null); setMsg("Akses admin belum berhasil. Periksa token ADMIN_TOKEN dan koneksi backend. Kata sandi akun pengguna tidak dapat dipakai sebagai token admin."); }
   }, [token]);
 
   useEffect(() => { if (token) refresh(token); }, [token, refresh]);
@@ -40,7 +41,8 @@ export default function AdminPage() {
 
   const login = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const tk = String(new FormData(e.currentTarget).get("token") || "");
+    const tk = String(new FormData(e.currentTarget).get("token") || "").trim();
+    setMsg(null);
     try { sessionStorage.setItem(TOKEN_KEY, tk); } catch { /* ignore */ }
     setToken(tk);
   };
@@ -88,10 +90,13 @@ export default function AdminPage() {
     } catch (err) { setMsg((err as Error).message); }
   };
 
-  if (!token || (!kb && msg)) {
+  if (!token || !kb) {
     return (
       <section className="admin">
         <h2>Admin KarirFit</h2>
+        <p>Panel ini memakai token administrator, bukan email dan kata sandi akun peserta.</p>
+        <p>Token diatur pada Render → layanan karirfit → Environment → ADMIN_TOKEN. Masukkan nilainya langsung di bawah; jangan bagikan melalui chat.</p>
+        <p className="hint">Sesi admin disimpan pada tab ini. Login akun peserta di tab lain tidak memberikan akses admin.</p>
         <section>
           <form onSubmit={login} style={{ gridTemplateColumns: "1fr auto" }}>
             <label>Admin token (ADMIN_TOKEN di backend)<input name="token" type="password" autoComplete="off" required /></label>

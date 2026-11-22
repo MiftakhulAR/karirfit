@@ -3,16 +3,17 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { api } from "@/lib/api";
+import { accountKey } from "@/lib/tab-auth";
 import type { ChatTurn } from "@/lib/types";
 import { useApp } from "./AppProvider";
 
-const KEY = "karirfit:v1:chat";
 
 /** Career assistant (Groq via FastAPI /api/chat), available on every page once logged in.
  *  It receives the user's answers and, on the results page, the career being viewed, so its answers
  *  are grounded in their computed results. Before the test it answers general career questions. */
 export function ChatWidget() {
   const { t, lang, profile, session, consent, health, user, chatOpen: open, setChatOpen: setOpen, chatCareer, answers } = useApp();
+  const KEY = accountKey(session, "chat");
   const path = usePathname();
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [input, setInput] = useState("");
@@ -20,12 +21,16 @@ export function ChatWidget() {
   const [err, setErr] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const alive = useRef(true);
+  const [restored, setRestored] = useState(false);
+  useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
 
-  useEffect(() => { try { setTurns(JSON.parse(sessionStorage.getItem(KEY) || "[]")); } catch { /* ignore */ } }, []);
+  useEffect(() => { try { setTurns(JSON.parse(sessionStorage.getItem(KEY) || "[]")); } catch { /* ignore */ } setRestored(true); }, [KEY]);
   useEffect(() => {
+    if (!restored) return;
     try { sessionStorage.setItem(KEY, JSON.stringify(turns.slice(-30))); } catch { /* ignore */ }
     endRef.current?.scrollIntoView({ block: "end" });
-  }, [turns, open, busy]);
+  }, [turns, open, busy, restored, KEY]);
   useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
   useEffect(() => {
     if (!open) return;
@@ -46,8 +51,10 @@ export function ChatWidget() {
     setTurns(next); setInput(""); setBusy(true); setErr(null);
     try {
       const r = await api.chat(next, profile, chatCareer, lang, session, consent);
+      if (!alive.current) return;
       setTurns([...next, { role: "assistant", content: r.reply }]);
     } catch (e) {
+      if (!alive.current) return;
       setErr(t.chat_error + (e as Error).message);
     }
     setBusy(false);
