@@ -475,3 +475,7 @@ main { max-width: 1180px; }
   .tile, .btn, .burger i { transition: none; }
   .tile:hover { transform: none; }
 }
+
+/* tables in AI text (RichText) */
+.md-table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 13px; white-space: normal; display: block; overflow-x: auto; }
+.md-table th, .md-table td { border: 1px solid rgba(0,0,0,.12); padding: 4px 6px; text-align: left; vertical-align: top; }

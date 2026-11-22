@@ -16,10 +16,10 @@ export function Wizard() {
   const { t, model, answers, session } = useApp();
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [warn, setWarn] = useState(false);
+  const [warn, setWarn] = useState<false | "interest" | "competence">(false);
 
   const goto = (n: number) => {
-    if (n > 1 && !answers.interests.length) { setWarn(true); return; }
+    if (n > 1 && !answers.interests.length) { setWarn("interest"); return; }
     setWarn(false); setStep(n); window.scrollTo({ top: 0 });
   };
   const LAST = 6;
@@ -27,7 +27,13 @@ export function Wizard() {
     try { sessionStorage.setItem(accountKey(session, "submit"), "1"); } catch { /* ignore */ }   // results page saves this test to history
     router.push("/hasil");
   };
-  const next = () => (step < LAST ? goto(step + 1) : answers.interests.length ? finish() : setWarn(true));
+  // TC2: a test needs at least one piece of competency evidence, otherwise every competency fit is 0
+  const hasEvidence = Object.keys(answers.skills).length > 0 || Object.keys(answers.softSkills).length > 0
+    || answers.expSkills.length > 0 || Object.keys(answers.courses).length > 0 || (answers.customCourses?.length ?? 0) > 0;
+  const next = () => (step < LAST ? goto(step + 1)
+    : !answers.interests.length ? setWarn("interest")
+    : !hasEvidence ? setWarn("competence")
+    : finish());
 
   if (!model) return <ServerError />;
 
@@ -55,7 +61,7 @@ export function Wizard() {
       {step === 5 && <StepCourses />}
       {step === 6 && <StepSummary />}
 
-      {warn && <p className="notice" role="alert">{t.need_interest}</p>}
+      {warn && <p className="notice" role="alert">{warn === "interest" ? t.need_interest : t.need_competence}</p>}
 
       <nav className="wiz-nav">
         <button className="btn ghost" style={{ visibility: step === 1 ? "hidden" : "visible" }} onClick={() => goto(step - 1)}>{t.back}</button>

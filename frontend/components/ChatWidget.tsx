@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { accountKey } from "@/lib/tab-auth";
 import type { ChatTurn } from "@/lib/types";
 import { useApp } from "./AppProvider";
+import { RichText } from "./RichText";
 
 
 /** Career assistant (Groq via FastAPI /api/chat), available on every page once logged in.
@@ -95,7 +96,7 @@ export function ChatWidget() {
               {suggestions.map(sug => <button key={sug} className="chip" onClick={() => send(sug)}>{sug}</button>)}
             </div>
           )}
-          {turns.map((m, i) => <div key={i} className={"msg " + m.role}>{m.content}</div>)}
+          {turns.map((m, i) => <div key={i} className={"msg " + m.role}>{m.role === "assistant" ? <RichText text={m.content} /> : m.content}</div>)}
           {busy && <div className="msg assistant pending"><span className="dots"><i /><i /><i /></span>{t.chat_thinking}</div>}
           {err && <p className="notice error">{err}</p>}
           <div ref={endRef} />

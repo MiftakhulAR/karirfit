@@ -10,6 +10,7 @@ import { accountKey } from "@/lib/tab-auth";
 import type { CareerResult, ExplainResponse, RecommendResponse } from "@/lib/types";
 import { useApp } from "./AppProvider";
 import { EvalPanel } from "./EvalPanel";
+import { RichText } from "./RichText";
 
 
 export function Results() {
@@ -249,7 +250,7 @@ function CareerDetail({ result: r, rating, onRate, onAsk }: {
 
       <h4>{t.explain}</h4>
       {!requested ? <button className="btn" onClick={() => setRequested(true)}>{lang === "id" ? "Buat penjelasan AI" : "Generate AI explanation"}</button> : <>
-        <div className="explain" role="status">{exp ? exp.text : expErr ?? (lang === "id" ? "Mencari bukti dan menyusun penjelasan. Skor Anda sudah tersedia; proses AI dapat memerlukan sekitar satu menit." : "Retrieving evidence and writing the explanation. Your scores are ready; AI processing can take about a minute.")}</div>
+        <div className="explain" role="status">{exp ? <RichText text={exp.text} /> : expErr ?? (lang === "id" ? "Mencari bukti dan menyusun penjelasan. Skor Anda sudah tersedia; proses AI dapat memerlukan sekitar satu menit." : "Retrieving evidence and writing the explanation. Your scores are ready; AI processing can take about a minute.")}</div>
         {expErr && <button className="btn" onClick={() => setAttempt(x => x + 1)}>{lang === "id" ? "Coba lagi" : "Retry"}</button>}
       </>}
       {exp && (
