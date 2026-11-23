@@ -507,8 +507,9 @@ def _rebuild():
                 f.write(json.dumps(c, ensure_ascii=False) + "\n")
         REBUILD["message"] = f"{len(chunks)} chunks; embedding…"
         from rag import build_extra
-        build_extra(str(HERE / "kb" / "chunks.jsonl"))
-        RETRIEVER = Retriever()
+        enc = RETRIEVER.encoder  # reuse the loaded encoder; a second copy exceeds Render's 512 MB
+        build_extra(str(HERE / "kb" / "chunks.jsonl"), enc)
+        RETRIEVER = Retriever(encoder=enc)
         REBUILD.update(state="done", message=f"{len(chunks)} chunks indexed; retrieval ready: {RETRIEVER.ready}")
     except ImportError as e:
         REBUILD.update(state="error", message=f"RAG libraries not installed on this server ({e}); build locally with build_rag.py")

@@ -69,7 +69,7 @@ def _load_layer(name: str, ids: dict[str, str]) -> tuple[list[dict], np.ndarray 
 
 
 class Retriever:
-    def __init__(self, warmup: bool = True):
+    def __init__(self, warmup: bool = True, encoder=None):
         self.ready, self.error, self.encoder, self.selftest = False, None, None, None
         # One bounded cache per retriever instance: rebuilt KBs receive a fresh cache.
         # Hash keys avoid retaining profile-derived query text. Never cache AI replies.
@@ -94,7 +94,7 @@ class Retriever:
             elif not e5_numpy.available():
                 self.error = f"encoder weights missing in {e5_numpy.E5_DIR} (run: python tools/unduh_e5.py)"
             else:
-                self.encoder = e5_numpy.E5Numpy()
+                self.encoder = encoder or e5_numpy.E5Numpy()  # reuse on rebuild: a second copy exceeds 512 MB
                 self.ready = True
                 _log(f"{len(self.chunks)} passages, tau={TAU}, top_k={TOP_K}, encoder=e5_numpy")
                 if warmup:
@@ -192,11 +192,11 @@ class Retriever:
                                 "ttl_seconds": self._cache_ttl, "hits": self._cache_hits, "misses": self._cache_misses}}
 
 
-def build_extra(jsonl_path: str) -> int:
+def build_extra(jsonl_path: str, enc=None) -> int:
     """Embeds admin-uploaded chunks (build_rag.build_chunks format) into kb/extra_* with the NumPy encoder."""
     import e5_numpy
     chunks = [json.loads(line) for line in open(jsonl_path, encoding="utf-8") if line.strip()]
-    enc = e5_numpy.E5Numpy()
+    enc = enc or e5_numpy.E5Numpy()
     vecs = np.vstack([enc.encode([c["text"]], P_PREFIX) for c in chunks]) if chunks else np.zeros((0, 768), np.float32)
     with open(KB_DIR / "extra_chunks.jsonl", "w", encoding="utf-8") as f:
         for c in chunks:
