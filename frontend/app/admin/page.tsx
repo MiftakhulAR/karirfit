@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { useApp } from "@/components/AppProvider";
-import { api, API_URL } from "@/lib/api";
+import { api } from "@/lib/api";
 import type { KbList } from "@/lib/types";
 
 const TOKEN_KEY = "karirfit:admin-token";
@@ -66,7 +66,7 @@ export default function AdminPage() {
   const refresh = useCallback(async (tk = token) => {
     if (!tk) return;
     try { setKb(await api.kbList(tk)); setMsg(null); }
-    catch { setKb(null); setMsg("Akses admin belum berhasil. Periksa token ADMIN_TOKEN dan koneksi backend. Kata sandi akun pengguna tidak dapat dipakai sebagai token admin."); return; }
+    catch { setKb(null); setMsg("Akses admin belum berhasil. Periksa token administrator lalu coba lagi. Kata sandi akun pengguna tidak dapat dipakai sebagai token admin."); return; }
     try { setLogRows(await api.exportLog(tk) as LogRow[]); } catch { setLogRows([]); }
   }, [token]);
 
@@ -161,7 +161,7 @@ export default function AdminPage() {
       <section className="adm-login">
         <div className="adm-brand"><span>K</span> KarirFit <em>Admin</em></div>
         <h2>Masuk sebagai administrator</h2>
-        <p>Panel ini memakai token administrator (ADMIN_TOKEN di Render → layanan karirfit → Environment), bukan email dan kata sandi akun peserta. Jangan bagikan token melalui chat.</p>
+        <p>Panel ini memakai token administrator, bukan email dan kata sandi akun peserta. Jangan bagikan token kepada siapa pun.</p>
         <form onSubmit={login}>
           <label>Token administrator<input name="token" type="password" autoComplete="off" required /></label>
           <button className="btn primary">Masuk</button>
@@ -255,7 +255,6 @@ export default function AdminPage() {
               <div className="row-actions">
                 <button className="btn primary" onClick={rebuild} disabled={kb.rebuild.state === "running"}>Bangun ulang indeks</button>
               </div>
-              <p className="fine">{kb.note}</p>
             </section>
             <section className="adm-card">
               <h3>Dokumen tambahan ({kb.documents.length})</h3>
@@ -265,7 +264,7 @@ export default function AdminPage() {
                   <tbody>
                     {kb.documents.map(d => (
                       <tr key={d.file}>
-                        <td>{d.file}{!d.present && <div className="ev">file tidak ada di server</div>}</td>
+                        <td>{d.file}{!d.present && <div className="ev">berkas tidak tersedia</div>}</td>
                         <td>{d.doc_type}</td>
                         <td className="ev">{d.careers.split("|").map(c => nameOf(c)).join(", ")}</td>
                         <td>{d.access}</td>
@@ -337,12 +336,10 @@ export default function AdminPage() {
             <section className="adm-card">
               <h3>Layanan</h3>
               <dl className="adm-dl">
-                <dt>Backend</dt><dd>{API_URL}</dd>
                 <dt>Status</dt><dd>{health?.ok ? "aktif" : "tidak terjangkau"}</dd>
-                <dt>Penyimpanan log</dt><dd>{health?.storage ?? "—"}</dd>
                 <dt>Asisten (LLM)</dt><dd>{health?.chat ? "siap" : "kunci API belum diisi"}</dd>
                 <dt>Mode publik</dt><dd>{health?.public_mode ? "ya (hanya dokumen publik)" : "tidak"}</dd>
-                <dt>Mode evaluasi</dt><dd>{health?.eval_mode ? "aktif (EVAL_MODE=1)" : "nonaktif"}</dd>
+                <dt>Mode evaluasi</dt><dd>{health?.eval_mode ? "aktif" : "nonaktif"}</dd>
               </dl>
             </section>
             <section className="adm-card">

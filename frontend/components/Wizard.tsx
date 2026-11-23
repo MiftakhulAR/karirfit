@@ -99,7 +99,9 @@ function StepInterests() {
               <button key={i.id} className="chip" aria-pressed={answers.interests.includes(i.id)} onClick={() => toggle(i.id)}>
                 <span className="tick" aria-hidden="true" />
                 <span className="chip-nm">{lang === "id" ? i.name_id : i.name_en}</span>
-                <small>{i.careers.map(c => careerName(careers[c])).join(", ")}</small>
+                {/* general areas map to up to 265 careers: show a short preview, the chip still selects all of them */}
+                <small>{i.careers.slice(0, 3).map(c => careerName(careers[c])).join(", ")}
+                  {i.careers.length > 3 && ` ${t.s1_more(i.careers.length - 3)}`}</small>
               </button>
             ))}
           </div>
@@ -165,7 +167,7 @@ function OwnSkills() {
     setV("");
   };
   return (
-    <div className="group">
+    <div className="group own-skills">
       <h3 className="group-h">{t.own_title}</h3>
       <p className="hint small">{t.own_hint}</p>
       <div className="row">
