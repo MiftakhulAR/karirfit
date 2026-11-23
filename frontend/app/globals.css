@@ -479,3 +479,63 @@ main { max-width: 1180px; }
 /* tables in AI text (RichText) */
 .md-table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 13px; white-space: normal; display: block; overflow-x: auto; }
 .md-table th, .md-table td { border: 1px solid rgba(0,0,0,.12); padding: 4px 6px; text-align: left; vertical-align: top; }
+
+/* ================================================================ admin (layout after CareerAI admin) */
+.adm { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; max-width: 1180px; margin: 0 auto; align-items: start; }
+.adm-side { min-width: 0; position: sticky; top: 84px; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 12px; display: flex; flex-direction: column; gap: 14px; }
+.adm-brand { display: flex; align-items: center; gap: 8px; font: 800 18px var(--display); color: var(--ink); padding: 0 8px; }
+.adm-brand span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--kunyit); color: var(--ink); }
+.adm-brand em { font: 700 10px var(--body); font-style: normal; text-transform: uppercase; letter-spacing: .08em; background: var(--ink); color: #fff; border-radius: 6px; padding: 2px 6px; }
+.adm-side nav { display: flex; flex-direction: column; gap: 2px; }
+.adm-side nav button { display: flex; align-items: center; gap: 10px; border: 0; background: none; text-align: left; padding: 10px 12px; border-radius: 10px; font-weight: 600; font-size: 14px; color: var(--muted); cursor: pointer; }
+.adm-side nav button:hover { background: #eef0f8; color: var(--ink); }
+.adm-side nav button.on { background: var(--kunyit-soft); color: var(--ink); }
+.adm-side-foot { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); padding-top: 12px; }
+.adm-side-foot .btn { padding: 8px 12px; font-size: 13px; }
+.adm-main { min-width: 0; }
+.adm-head .crumb { margin: 0; font-size: 12px; color: var(--muted); }
+.adm-head h2 { font: 800 30px var(--display); color: var(--ink); margin: 2px 0 16px; letter-spacing: -.01em; }
+.adm-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.adm-stat { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.adm-stat p { margin: 0; font-size: 13px; color: var(--muted); }
+.adm-stat strong { font: 800 26px var(--display); color: var(--ink); }
+.adm-stat span { font-size: 12px; color: var(--muted); }
+.adm-stat.good strong { color: var(--teal); }
+.adm-stat.warn strong { color: #a86b00; }
+.adm-card { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; }
+.adm-card h3 { font: 700 17px var(--display); margin: 0 0 10px; color: var(--ink); }
+.adm-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.adm-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.adm-bar { display: inline-block; width: 80px; height: 8px; border-radius: 999px; background: #eef0f6; vertical-align: middle; margin-right: 6px; overflow: hidden; }
+.adm-bar i { display: block; height: 100%; background: var(--kunyit); }
+.adm-list { list-style: none; padding: 0; margin: 0; }
+.adm-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 9px 0; border-bottom: 1px solid #eef0f6; font-size: 14px; }
+.adm-list small { grid-column: 1 / -1; color: var(--muted); font-size: 12px; }
+.adm-list .stars { color: var(--kunyit); letter-spacing: 1px; }
+.adm-list .stars em { color: #dfe2ec; font-style: normal; }
+.adm-tag { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 6px; padding: 1px 7px; background: #eef0f8; color: var(--ink-2); }
+.adm-tag.rating { background: var(--kunyit-soft); }
+.adm-tag.explain, .adm-tag.explain_norag { background: var(--teal-soft); color: var(--teal); }
+.adm-tag.chat { background: #e8e6fb; color: #4b3fb0; }
+.adm-dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; font-size: 14px; }
+.adm-dl dt { color: var(--muted); }
+.adm-dl dd { margin: 0; overflow-wrap: anywhere; }
+.adm-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.adm-form label { display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600; }
+.adm-form input, .adm-form select { border: 1.5px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--card); }
+.adm-form .careers { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.adm-form .careers label { flex-direction: row; align-items: center; font-weight: 400; gap: 6px; border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; }
+.adm-login { max-width: 460px; margin: 32px auto; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 24px; }
+.adm-login h2 { font: 800 26px var(--display); color: var(--ink); margin: 14px 0 6px; }
+.adm-login form { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.adm-login label { display: flex; flex-direction: column; gap: 5px; font-weight: 600; font-size: 14px; }
+.adm-login input { border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 12px; }
+@media (max-width: 960px) {
+  .adm { grid-template-columns: minmax(0, 1fr); }
+  .adm-side { position: static; }
+  .adm-side nav { flex-direction: row; overflow-x: auto; }
+  .adm-side nav button { white-space: nowrap; }
+  .adm-side-foot { flex-direction: row; }
+  .adm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .adm-two, .adm-form { grid-template-columns: 1fr; }
+}
