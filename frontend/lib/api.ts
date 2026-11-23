@@ -44,8 +44,8 @@ export const api = {
     request<RecommendResponse>("/api/recommend", { profile, session, consent, include_all: true }),
   explain: (profile: Profile, career: string, lang: Lang, session: string, consent: boolean) =>
     request<ExplainResponse>("/api/explain", { profile, career, lang, session, consent }),
-  rate: (session: string, career: string, rating: number) =>
-    request<{ ok: boolean }>("/api/rating", { session, career, rating }),
+  rate: (session: string, career: string, rating: number, consent: boolean) =>
+    request<{ ok: boolean }>("/api/rating", { session, career, rating, consent }),
   health: () => request<Health>("/api/health"),
   chat: (messages: ChatTurn[], profile: Profile, career: string | null, lang: Lang, session: string, consent: boolean) =>
     request<ChatResponse>("/api/chat", { messages, profile, career, lang, session, consent }),
@@ -54,9 +54,9 @@ export const api = {
   compare: (profile: Profile, session: string) =>
     request<CompareResponse>("/api/compare", { profile, session, consent: true }),
   compareChoice: (session: string, token: string, choice: "A" | "B" | "same") =>
-    request<{ ok: boolean }>("/api/compare/choice", { session, token, choice }),
+    request<{ ok: boolean }>("/api/compare/choice", { session, token, choice, consent: true }),
   susItems: (lang: Lang) => request<{ items: string[] }>(`/api/sus?lang=${lang}`),
-  susSubmit: (session: string, answers: number[]) => request<{ ok: boolean }>("/api/sus", { session, answers }),
+  susSubmit: (session: string, answers: number[]) => request<{ ok: boolean }>("/api/sus", { session, answers, consent: true }),
 
   // administrator (FR10)
   kbList: (token: string) => request<KbList>("/api/admin/kb", undefined, admin(token)),

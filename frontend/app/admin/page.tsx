@@ -30,7 +30,7 @@ const Ico = ({ d }: { d: string }) => (
 );
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
 const fmt = (x: number | null, d = 2) => (x == null ? "—" : x.toFixed(d).replace(".", ","));
-const when = (ts: number) => new Date(ts * 1000).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" });
+const when = (ts: number) => new Date(ts * 1000).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Jakarta" });
 
 function Stat({ label, value, hint, tone }: { label: string; value: ReactNode; hint?: string; tone?: "good" | "warn" }) {
   return (
@@ -347,7 +347,7 @@ export default function AdminPage() {
               <dl className="adm-dl">
                 <dt>Sumber permintaan</dt><dd>{health?.demand_source ?? "—"}</dd>
                 <dt>Karier</dt><dd>{model?.careers.length ?? "—"}</dd>
-                <dt>Keterampilan</dt><dd>{model?.skills.length ?? "—"}</dd>
+                <dt>Keterampilan</dt><dd>{model ? `${model.skills.length} (${model.skills.filter(s => s.source !== "onet").length} kamus + ${model.skills.filter(s => s.source === "onet").length} O*NET)` : "—"}</dd>
                 <dt>Potongan RAG</dt><dd>{kb.n_chunks}</dd>
               </dl>
             </section>

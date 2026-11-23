@@ -114,7 +114,7 @@ def evidence(profile: dict, model: dict) -> dict[str, dict]:
 
 
 def score(profile: dict, model: dict, alpha: float | None = None, use_interest: bool = True):
-    """Rank all careers. Returns list of dicts sorted by fit (desc), ties broken by career order
+    """Rank all careers. Returns list of dicts sorted by fit (desc), ties broken by K (desc) then English name
     (repeatable: same input -> same ranking, NFR1)."""
     alpha = model["params"]["alpha"] if alpha is None else alpha
     ev_direct = ev = evidence(profile, model)

@@ -33,6 +33,7 @@ import csv
 import io
 import gzip
 import hashlib
+import hmac
 import json
 import os
 import sys
@@ -137,6 +138,7 @@ class RatingReq(BaseModel):
     session: str
     career: str
     rating: int = Field(ge=1, le=5)
+    consent: bool = False
 
 
 class CompareReq(BaseModel):
@@ -149,11 +151,13 @@ class ChoiceReq(BaseModel):
     session: str
     token: str
     choice: str          # "A" | "B" | "same"
+    consent: bool = False
 
 
 class SusReq(BaseModel):
     session: str
     answers: list[int] = Field(min_length=10, max_length=10)
+    consent: bool = False
 
 
 class ChatMessage(BaseModel):
@@ -177,8 +181,12 @@ def who(user: dict | None, session: str, consent: bool) -> tuple[str, bool]:
     return session, consent
 
 
+def is_admin(token: str) -> bool:
+    return bool(ADMIN_TOKEN) and hmac.compare_digest(token.encode(), ADMIN_TOKEN.encode())
+
+
 def require_admin(token: str):
-    if not ADMIN_TOKEN or token != ADMIN_TOKEN:
+    if not is_admin(token):
         raise HTTPException(403, "admin token required")
 
 
@@ -194,7 +202,7 @@ def effective_alpha(requested: float | None, token: str) -> float | None:
     researcher's sensitivity analysis / alpha=1 comparison (Sections 3.6.3-3.6.4)."""
     if requested is None:
         return None
-    if not ADMIN_TOKEN or token != ADMIN_TOKEN:
+    if not is_admin(token):
         raise HTTPException(403, "alpha is fixed; custom alpha requires the admin token")
     return requested
 
@@ -315,8 +323,9 @@ def do_explain(req: ExplainReq, background: BackgroundTasks, x_admin_token: str 
 
 @app.post("/api/rating")
 def rate(req: RatingReq, user: dict | None = Depends(current_user)):
-    session, _ = who(user, req.session, True)
-    log("rating", session, {"career": req.career, "rating": req.rating})
+    session, consent = who(user, req.session, req.consent)
+    if consent:   # FR1 / Section 3.8: nothing is logged without consent
+        log("rating", session, {"career": req.career, "rating": req.rating})
     return {"ok": True}
 
 
@@ -331,8 +340,8 @@ def compare(req: CompareReq, user: dict | None = Depends(current_user)):
 
 @app.post("/api/compare/choice")
 def compare_choice(req: ChoiceReq, user: dict | None = Depends(current_user)):
-    require_eval()
-    session, _ = who(user, req.session, True)
+    session, consent = who(user, req.session, req.consent)
+    require_eval(consent)
     res = evaluation.resolve_choice(req.token, session, req.choice)
     if not res:
         raise HTTPException(400, "invalid comparison token")
@@ -348,8 +357,8 @@ def sus_items(lang: str = "id"):
 
 @app.post("/api/sus")
 def sus_submit(req: SusReq, user: dict | None = Depends(current_user)):
-    require_eval()
-    req.session, _ = who(user, req.session, True)
+    req.session, consent = who(user, req.session, req.consent)
+    require_eval(consent)
     try:
         score = evaluation.sus_score(req.answers)
     except ValueError as e:
@@ -424,6 +433,8 @@ KB_DOCS = HERE / "kb" / "docs"
 MAPPING = KB_DOCS / "mapping.csv"
 MAP_FIELDS = ["file", "doc_type", "careers", "source", "access", "id_prefix"]
 REBUILD = {"state": "idle", "message": "", "finished": None}
+REBUILD_LOCK = threading.Lock()
+MAX_UPLOAD = 5 * 1024 * 1024
 
 
 def _read_mapping() -> tuple[list[str], list[dict]]:
@@ -453,8 +464,7 @@ def kb_list(x_admin_token: str = Header(default="")):
     _, rows = _read_mapping()
     return {"documents": [r | {"present": (KB_DOCS / r["file"]).exists()} for r in rows],
             "index_ready": RETRIEVER.ready, "n_chunks": len(RETRIEVER.chunks), "rag": RETRIEVER.status(),
-            "careers": [c["id"] for c in MODEL["careers"]], "rebuild": REBUILD,
-            "note": "Render free: uploaded files are lost on restart; commit documents to the repo for permanence."}
+            "careers": [c["id"] for c in MODEL["careers"]], "rebuild": REBUILD}
 
 
 @app.post("/api/admin/kb/upload")
@@ -471,8 +481,11 @@ async def kb_upload(file: UploadFile = File(...), doc_type: str = Form("skkni"),
         raise HTTPException(400, f"careers must be one or more of: {sorted(valid)}")
     if access not in ("public", "private") or doc_type not in ("skkni", "occupation_map", "rps", "course", "other"):
         raise HTTPException(400, "invalid access or doc_type")
+    data = await file.read(MAX_UPLOAD + 1)
+    if len(data) > MAX_UPLOAD:   # the 512 MB instance has little headroom while embedding
+        raise HTTPException(413, "file larger than 5 MB")
     KB_DOCS.mkdir(parents=True, exist_ok=True)
-    (KB_DOCS / name).write_bytes(await file.read())
+    (KB_DOCS / name).write_bytes(data)
     comments, rows = _read_mapping()
     rows = [r for r in rows if r["file"] != name] + [{"file": name, "doc_type": doc_type, "careers": "|".join(cs),
                                                       "source": source or Path(name).stem, "access": access,
@@ -497,7 +510,6 @@ def kb_delete(filename: str, x_admin_token: str = Header(default="")):
 
 def _rebuild():
     global RETRIEVER
-    REBUILD.update(state="running", message="chunking documents…", finished=None)
     try:
         import build_rag
         # thesis KB v2 (970 passages incl. career profiles) stays fixed; uploaded documents form the extra layer
@@ -521,8 +533,10 @@ def _rebuild():
 @app.post("/api/admin/kb/rebuild")
 def kb_rebuild(x_admin_token: str = Header(default="")):
     require_admin(x_admin_token)
-    if REBUILD["state"] == "running":
-        raise HTTPException(409, "rebuild already running")
+    with REBUILD_LOCK:   # check and set together: two rebuilds at once exceed 512 MB
+        if REBUILD["state"] == "running":
+            raise HTTPException(409, "rebuild already running")
+        REBUILD.update(state="running", message="chunking documents…", finished=None)
     threading.Thread(target=_rebuild, daemon=True).start()
     log("admin_kb", "admin", {"action": "rebuild"})
     return {"ok": True}

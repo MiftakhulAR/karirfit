@@ -34,7 +34,7 @@ function History() {
   const remove = async (id: string) => {
     try { if (!user) return; await deleteAssessment(id, user.id); setRows(r => (r ?? []).filter(x => x.id !== id)); } catch (e) { setErr((e as Error).message); }
   };
-  const fmt = (d: string) => new Date(d).toLocaleString(lang === "id" ? "id-ID" : "en-GB", { dateStyle: "medium", timeStyle: "short" });
+  const fmt = (d: string) => new Date(d).toLocaleString(lang === "id" ? "id-ID" : "en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Jakarta" });
 
   return (
     <section className="history">

@@ -26,7 +26,7 @@ export function Results() {
       try { localStorage.setItem(RATINGS_KEY, JSON.stringify(next)); } catch { /* ignore */ }
       return next;
     });
-    api.rate(session, career, n).catch(() => {});
+    api.rate(session, career, n, consent).catch(() => {});
   };
   const [data, setData] = useState<RecommendResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
