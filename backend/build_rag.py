@@ -135,6 +135,8 @@ def build_chunks() -> list[dict]:
 
     # 1) derived career profiles (public)
     for c in model["careers"]:
+        if any(r.get("demand") is None for r in c["requirements"]):
+            continue  # O*NET reference careers have importance, not job-ad demand
         reqs = ", ".join(f"{names[r['skill']]} ({r['demand']:.0%})" for r in c["requirements"])
         label = model.get("data_label") or model.get("demand_source")
         chunks.append({"id": f"CP-{c['id']}", "source": f"Profil karier dari data lowongan ({label})",
