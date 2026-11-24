@@ -22,6 +22,7 @@ KarirFit API (FastAPI) – application layer of the thesis architecture (Section
   Administrator (X-Admin-Token, FR10):
   GET /api/admin/kb   POST /api/admin/kb/upload   DELETE /api/admin/kb/{file}
   POST /api/admin/kb/rebuild   GET /api/admin/kb/status
+  GET /api/admin/catalog   PUT|DELETE /api/admin/catalog/{kind}/{id}   POST /api/admin/catalog/{kind}/{id}/reset
 
 The Next.js front end (../frontend) calls these endpoints; set ALLOWED_ORIGINS to its URL.
 
@@ -61,22 +62,25 @@ try:  # load backend/.env before llm/rag read their settings
 except ImportError:
     pass
 
+import catalog  # noqa: E402
 import evaluation  # noqa: E402
 from auth import REQUIRE_AUTH, current_user  # noqa: E402
 import llm  # noqa: E402
 from claims import check_explanation  # noqa: E402
 from storage import Storage  # noqa: E402
-from rag import Retriever  # noqa: E402
+from rag import PUBLIC_MODE, Retriever  # noqa: E402
 
-MODEL = json.load(open(HERE / "model.json", encoding="utf-8"))
-NAMES = {s["id"]: s["name"] for s in MODEL["skills"]}
-SOFT_NAMES = {"id": {s["id"]: s["name_id"] for s in MODEL.get("soft_skills", [])},
-              "en": {s["id"]: s["name_en"] for s in MODEL.get("soft_skills", [])}}
-EXTRACTOR = SkillExtractor(MODEL["skills"])
+BASE_MODEL = json.load(open(HERE / "model.json", encoding="utf-8"))   # evaluated catalogue; admin changes go on top
 RETRIEVER = Retriever()
 ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "")
 EVAL_MODE = os.getenv("EVAL_MODE", "0") == "1"
 STORE = Storage()
+# set by _set_model() below: the catalogue in use and the lookups derived from it
+MODEL: dict = {}
+NAMES: dict = {}
+SOFT_NAMES: dict = {}
+EXTRACTOR: SkillExtractor
+CATALOG_LOCK = threading.Lock()
 
 
 def log(kind: str, session: str, payload: dict):
@@ -97,6 +101,7 @@ class CustomCourse(BaseModel):
     dictionary skills; its grade is evidence for those skills exactly like a listed course."""
     name: str = Field(max_length=120)
     category: str = Field(default="prodi", max_length=20)   # univ | jurusan | prodi | pilihan
+    credits: int | None = Field(default=None, ge=1, le=8)   # SKS (supervisor's review): stored, not scored
     grade: str = Field(max_length=2)
     skills: list[str] = Field(default_factory=list, max_length=15)
 
@@ -207,20 +212,39 @@ def effective_alpha(requested: float | None, token: str) -> float | None:
     return requested
 
 
-def _public_model() -> dict:
+def _public_model(model: dict) -> dict:
     """model.json for the browser. O*NET reference careers keep their 10 heaviest requirements (the catalogue
     shows 10) plus the full count; scoring always uses the complete MODEL on the server."""
     careers = []
-    for c in MODEL["careers"]:
+    for c in model["careers"]:
         if c["group"] == "non_it":
             c = c | {"requirements": c["requirements"][:10], "n_requirements": len(c["requirements"])}
         careers.append(c)
-    return MODEL | {"careers": careers}
+    return model | {"careers": careers}
 
 
-_MODEL_JSON = json.dumps(_public_model(), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-_MODEL_GZ = gzip.compress(_MODEL_JSON, 6)
-_MODEL_ETAG = '"' + hashlib.sha256(_MODEL_JSON).hexdigest()[:16] + '"'
+def _set_model(model: dict):
+    """Installs a catalogue and everything derived from it; /api/model is serialised and compressed once here."""
+    global MODEL, NAMES, SOFT_NAMES, EXTRACTOR, _MODEL_JSON, _MODEL_GZ, _MODEL_ETAG
+    soft = model.get("soft_skills", [])
+    names = {s["id"]: s["name"] for s in model["skills"]}
+    soft_names = {"id": {s["id"]: s["name_id"] for s in soft}, "en": {s["id"]: s["name_en"] for s in soft}}
+    extractor = SkillExtractor(model["skills"])
+    body = json.dumps(_public_model(model), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    MODEL, NAMES, SOFT_NAMES, EXTRACTOR = model, names, soft_names, extractor
+    _MODEL_JSON, _MODEL_GZ, _MODEL_ETAG = body, gzip.compress(body, 6), '"' + hashlib.sha256(body).hexdigest()[:16] + '"'
+
+
+def _load_catalog():
+    try:
+        rows = STORE.catalog_rows()
+    except Exception as e:   # a database problem must not take the API down: serve the evaluated catalogue
+        print("[catalog] changes not loaded:", e, flush=True)
+        rows = []
+    _set_model(catalog.apply(BASE_MODEL, rows))
+
+
+_load_catalog()
 
 
 @app.get("/api/model")
@@ -252,7 +276,7 @@ def do_recommend(req: RecommendReq, x_admin_token: str = Header(default=""), use
     # with the skill lists cut to the 10 heaviest; /api/explain recomputes the full result for one career.
     res["non_it"] = [r | {"matched": r["matched"][:10], "gaps": r["gaps"][:10], "trimmed": True} for r in res["non_it"]]
     if consent:
-        log("recommend", session, {"profile": req.profile.model_dump(),
+        log("recommend", session, {"profile": req.profile.model_dump(), "catalog_changes": MODEL.get("catalog_changes", 0),
                                    "ranking": [r["career"] for r in res["primary"] + res["alternative"]],
                                    "top": [r["career"] for r in res["top"]]})
     return res | {"ms": round((time.time() - t0) * 1000, 1)}
@@ -481,6 +505,8 @@ async def kb_upload(file: UploadFile = File(...), doc_type: str = Form("skkni"),
         raise HTTPException(400, f"careers must be one or more of: {sorted(valid)}")
     if access not in ("public", "private") or doc_type not in ("skkni", "occupation_map", "rps", "course", "other"):
         raise HTTPException(400, "invalid access or doc_type")
+    if access == "private" and PUBLIC_MODE:   # would be indexed but never retrieved in public mode
+        raise HTTPException(400, "private documents are not used while public mode is on")
     data = await file.read(MAX_UPLOAD + 1)
     if len(data) > MAX_UPLOAD:   # the 512 MB instance has little headroom while embedding
         raise HTTPException(413, "file larger than 5 MB")
@@ -548,10 +574,72 @@ def kb_status(x_admin_token: str = Header(default="")):
     return REBUILD | {"index_ready": RETRIEVER.ready}
 
 
+# ----------------------------------------------------------------------------- admin: catalogue (FR10)
+def _catalog_kind(kind: str):
+    if kind not in catalog.KINDS:
+        raise HTTPException(404, "unknown catalogue kind")
+
+
+@app.get("/api/admin/catalog")
+def catalog_list(x_admin_token: str = Header(default="")):
+    require_admin(x_admin_token)
+    rows = STORE.catalog_rows()
+    base = {k: {x["id"] for x in BASE_MODEL[k]} for k in catalog.KINDS}
+    return {"changes": [{"kind": k, "id": i, "action": "delete" if p is None else ("edit" if i in base[k] else "add"), "ts": t}
+                        for k, i, p, t in rows],
+            "careers": [c if c["group"] != "non_it" else {x: c.get(x) for x in ("id", "name_id", "name_en", "group", "onet_soc", "job_zone")}
+                        for c in MODEL["careers"]],
+            "skills": MODEL["skills"], "interests": MODEL["interests"], "courses": MODEL["courses"],
+            "course_categories": MODEL.get("course_categories", [])}
+
+
+@app.put("/api/admin/catalog/{kind}/{item_id}")
+def catalog_save(kind: str, item_id: str, data: dict, x_admin_token: str = Header(default="")):
+    require_admin(x_admin_token)
+    _catalog_kind(kind)
+    with CATALOG_LOCK:
+        try:
+            payload = catalog.validate(kind, item_id, data, MODEL)
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+        STORE.catalog_put(kind, item_id, payload)
+        _load_catalog()
+    log("admin_catalog", "admin", {"action": "save", "kind": kind, "id": item_id})
+    return {"ok": True, "item": payload}
+
+
+@app.delete("/api/admin/catalog/{kind}/{item_id}")
+def catalog_delete(kind: str, item_id: str, x_admin_token: str = Header(default="")):
+    require_admin(x_admin_token)
+    _catalog_kind(kind)
+    with CATALOG_LOCK:
+        if not any(x["id"] == item_id for x in MODEL[kind]):
+            raise HTTPException(404, "not in the catalogue")
+        if item_id in {x["id"] for x in BASE_MODEL[kind]}:
+            STORE.catalog_put(kind, item_id, None)     # hide an original item; "reset" brings it back
+        else:
+            STORE.catalog_reset(kind, item_id)         # an item added by the admin is simply removed
+        _load_catalog()
+    log("admin_catalog", "admin", {"action": "delete", "kind": kind, "id": item_id})
+    return {"ok": True}
+
+
+@app.post("/api/admin/catalog/{kind}/{item_id}/reset")
+def catalog_reset(kind: str, item_id: str, x_admin_token: str = Header(default="")):
+    require_admin(x_admin_token)
+    _catalog_kind(kind)
+    with CATALOG_LOCK:
+        STORE.catalog_reset(kind, item_id)
+        _load_catalog()
+    log("admin_catalog", "admin", {"action": "reset", "kind": kind, "id": item_id})
+    return {"ok": True}
+
+
 @app.get("/api/health")
 def health():
     return {"ok": True, "rag": RETRIEVER.ready, "rag_status": RETRIEVER.status(), "public_mode": os.getenv("PUBLIC_MODE", "1") == "1",
             "eval_mode": EVAL_MODE, "auth_required": REQUIRE_AUTH, "chat": bool(os.getenv("GROQ_API_KEY") or os.getenv("GEMINI_API_KEY")),
             "llm_keys": {"gemini": bool(os.getenv("GEMINI_API_KEY")), "groq": bool(os.getenv("GROQ_API_KEY"))},
             "demand_source": MODEL.get("demand_source"), "data_label": MODEL.get("data_label"),
+            "catalog_changes": MODEL.get("catalog_changes", 0),
             "storage": STORE.kind, "storage_error": STORE.error}

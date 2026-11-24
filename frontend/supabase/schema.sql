@@ -37,3 +37,15 @@ revoke all on public.log from anon, authenticated;
 revoke all on sequence public.log_id_seq from anon, authenticated;
 revoke all on public.assessments from anon, authenticated;
 grant select, insert, delete on public.assessments to authenticated;
+
+-- 3) Catalogue changes made in the administrator panel (FR10), applied on top of model.json by the backend
+--    (created automatically on first start). payload NULL = item deleted. Not exposed to the browser.
+create table if not exists public.catalog (
+  kind     text not null,                -- careers | skills | interests | courses
+  item_id  text not null,
+  payload  text,
+  ts       double precision,
+  primary key (kind, item_id)
+);
+alter table public.catalog enable row level security;
+revoke all on public.catalog from anon, authenticated;

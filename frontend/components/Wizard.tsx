@@ -78,6 +78,8 @@ function StepHead({ title, hint }: { title: string; hint: string }) {
 function StepInterests() {
   const { t, model, answers, update, careerName, lang } = useApp();
   const careers = Object.fromEntries(model!.careers.map(c => [c.id, c]));
+  const [open, setOpen] = useState<string[]>([]);   // areas whose full career list is shown
+  const flip = (id: string) => setOpen(o => (o.includes(id) ? o.filter(x => x !== id) : [...o, id]));
   const toggle = (id: string) => update(a => ({
     interests: a.interests.includes(id) ? a.interests.filter(x => x !== id) : [...a.interests, id],
   }));
@@ -95,15 +97,25 @@ function StepInterests() {
         <div key={label} className="group">
           <h3 className="group-h">{label}</h3>
           <div className="chips interests">
-            {items.map(i => (
-              <button key={i.id} className="chip" aria-pressed={answers.interests.includes(i.id)} onClick={() => toggle(i.id)}>
-                <span className="tick" aria-hidden="true" />
-                <span className="chip-nm">{lang === "id" ? i.name_id : i.name_en}</span>
-                {/* general areas map to up to 265 careers: show a short preview, the chip still selects all of them */}
-                <small>{i.careers.slice(0, 3).map(c => careerName(careers[c])).join(" · ")}
-                  {i.careers.length > 3 && ` ${t.s1_more(i.careers.length - 3)}`}</small>
-              </button>
-            ))}
+            {items.map(i => {
+              const all = open.includes(i.id);
+              return (
+                <div key={i.id} className="chip-wrap">
+                  <button className="chip" aria-pressed={answers.interests.includes(i.id)} onClick={() => toggle(i.id)}>
+                    <span className="tick" aria-hidden="true" />
+                    <span className="chip-nm">{lang === "id" ? i.name_id : i.name_en}</span>
+                    {/* general areas map to up to 265 careers: show a short preview, the chip still selects all of them */}
+                    <small id={`careers-${i.id}`} className={all ? "all" : undefined}>
+                      {(all ? i.careers : i.careers.slice(0, 3)).map(c => careerName(careers[c])).join(" · ")}
+                      {!all && i.careers.length > 3 && ` ${t.s1_more(i.careers.length - 3)}`}</small>
+                  </button>
+                  {i.careers.length > 3 && (
+                    <button type="button" className="more-toggle" aria-expanded={all} aria-controls={`careers-${i.id}`}
+                            onClick={() => flip(i.id)}>{all ? t.s1_show_less : t.s1_show_more}</button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}
@@ -312,7 +324,7 @@ function StepCourses() {
         })}
         {ownHere.map(([c, i]) => (
           <div key={`own-${i}`} className="course on">
-            <span>{c.name} <small className="hint">({t.cc_own})</small></span>
+            <span>{c.name} <small className="hint">({t.cc_own}{c.credits ? ` · ${c.credits} SKS` : ""})</small></span>
             <span>{c.grade}</span>
             <button className="btn ghost small" onClick={() => update({ customCourses: custom.filter((_, j) => j !== i) })}>{t.remove}</button>
           </div>
@@ -329,14 +341,14 @@ function StepCourses() {
 function AddCourse({ defaultCat }: { defaultCat: string }) {
   const { t, model, answers, update, lang, skillName } = useApp();
   const cats = model!.course_categories ?? [];
-  const blank = (): CustomCourse => ({ name: "", category: defaultCat, grade: "B", skills: [] });
+  const blank = (): CustomCourse => ({ name: "", category: defaultCat, credits: 2, grade: "B", skills: [] });
   const [open, setOpen] = useState(false);
   const [c, setC] = useState<CustomCourse>(blank);
   const [q, setQ] = useState("");
   const hits = q.trim().length < 2 ? [] : model!.skills
     .filter(s => !c.skills.includes(s.id) && `${skillName(s.id)} ${s.name} ${s.name_en ?? ""}`.toLowerCase().includes(q.toLowerCase()))
     .slice(0, 8);
-  const ok = c.name.trim().length > 1 && c.skills.length > 0;
+  const ok = c.name.trim().length > 1 && c.skills.length > 0 && Number.isInteger(c.credits) && c.credits! >= 1 && c.credits! <= 8;
   const save = () => {
     if (!ok) return;
     update(a => ({ customCourses: [...(a.customCourses ?? []), { ...c, name: c.name.trim().slice(0, 120) }] }));
@@ -354,6 +366,9 @@ function AddCourse({ defaultCat }: { defaultCat: string }) {
           <select value={c.category} onChange={e => setC({ ...c, category: e.target.value })}>
             {cats.map(x => <option key={x.id} value={x.id}>{lang === "id" ? x.name_id : x.name_en}</option>)}
           </select></label>
+        <label className="field"><span>{t.cc_credits}</span>
+          <input type="number" min={1} max={8} step={1} inputMode="numeric" value={c.credits ?? ""}
+                 onChange={e => setC({ ...c, credits: e.target.value === "" ? undefined : Number(e.target.value) })} /></label>
         <label className="field"><span>{t.cc_grade}</span>
           <select value={c.grade} onChange={e => setC({ ...c, grade: e.target.value as Grade })}>
             {GRADES.map(x => <option key={x} value={x}>{x}</option>)}
@@ -386,7 +401,7 @@ function StepSummary() {
   const interests = model!.interests.filter(i => answers.interests.includes(i.id)).map(i => (lang === "id" ? i.name_id : i.name_en));
   const courses = [
     ...model!.courses.filter(c => answers.courses[c.id]).map(c => `${lang === "id" ? c.name_id : c.name_en} (${answers.courses[c.id]})`),
-    ...(answers.customCourses ?? []).map(c => `${c.name} (${c.grade})`),
+    ...(answers.customCourses ?? []).map(c => `${c.name} (${c.credits ? `${c.credits} SKS, ` : ""}${c.grade})`),
   ];
   return (
     <div className="step">

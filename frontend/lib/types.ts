@@ -9,8 +9,8 @@ export interface SoftRequirement { skill: string; demand: number }
 export interface RefInfo { onet_soc?: string; job_zone?: number | null; field_id?: string; field_en?: string }
 export interface Career extends RefInfo { n_requirements?: number; id: string; name_en: string; name_id: string; group: CareerGroup; requirements: Requirement[]; soft_skills?: SoftRequirement[] }
 export interface Interest { id: string; name_en: string; name_id: string; careers: string[] }
-export interface Skill { id: string; name: string; name_en?: string; category: string; kind?: "hard" | "soft"; patterns: string[]; source?: "onet" }
-export interface Course { id: string; name_id: string; name_en: string; skills: string[]; category?: string }
+export interface Skill { id: string; name: string; name_id?: string; name_en?: string; category: string; kind?: "hard" | "soft"; patterns: string[]; source?: "onet" }
+export interface Course { id: string; name_id: string; name_en: string; skills: string[]; category?: string; semester?: number; credits?: number | null }
 export interface CourseCategory { id: string; name_id: string; name_en: string }
 export interface SoftSkill { id: string; name_id: string; name_en: string }
 
@@ -68,8 +68,13 @@ export interface ExplainResponse {
 
 export interface Health {
   ok: boolean; rag: boolean; eval_mode: boolean; public_mode: boolean; auth_required?: boolean; chat?: boolean;
-  demand_source?: string; data_label?: string | null; storage?: string;
+  demand_source?: string; data_label?: string | null; storage?: string; catalog_changes?: number;
 }
+
+/** Administrator catalogue (FR10, GET /api/admin/catalog). */
+export type CatalogKind = "careers" | "skills" | "interests" | "courses";
+export interface CatalogChange { kind: CatalogKind; id: string; action: "add" | "edit" | "delete"; ts: number }
+export interface Catalog { changes: CatalogChange[]; careers: Career[]; skills: Skill[]; interests: Interest[]; courses: Course[]; course_categories: CourseCategory[] }
 
 export interface ChatTurn { role: "user" | "assistant"; content: string }
 export interface ChatResponse { reply: string; model: string; passages: { id: string; source: string }[] }
@@ -90,10 +95,11 @@ export interface KbList { documents: KbDocument[]; index_ready: boolean; n_chunk
 
 /** Answers kept in the browser while the user fills the test. */
 /** FR2: a course not in the list; its grade is evidence for the dictionary skills the user links to it. */
-export interface CustomCourse { name: string; category: string; grade: Grade; skills: string[] }
+export interface CustomCourse { name: string; category: string; credits?: number; grade: Grade; skills: string[] }   // credits (SKS): stored, not scored
 
 export interface Answers {
   interests: string[];
+  eduZone?: number;   // minimum O*NET Job Zone of reference careers (education level, FR5/FR6)
   skills: Record<string, Level>;
   softSkills: Record<string, Level>;
   major: string;

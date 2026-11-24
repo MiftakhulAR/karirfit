@@ -172,14 +172,6 @@ class Retriever:
         q = self._query_vector(self.career_query(career_name, matched, gaps))
         return self._rank(q, [i for i, s in enumerate(self.careers) if career in s and self._allowed(i)], TOP_K)
 
-    def search_question(self, question: str, careers: list[str] | None = None, k: int = 4) -> list[dict]:
-        """Passages for a free question (assistant); same tau. Not part of the Tahap 12 evaluation."""
-        if not self.ready:
-            return []
-        q = self._query_vector(question)
-        want = set(careers or [])
-        return self._rank(q, [i for i, s in enumerate(self.careers) if (not want or s & want) and self._allowed(i)], k)
-
     def status(self) -> dict:
         kinds: dict[str, int] = {}
         for c in self.chunks:

@@ -1,11 +1,13 @@
 """
-LLM tasks (thesis Section 3.5.3, Table 3.11). The LLM never computes or changes a score.
+LLM tasks (thesis Section 3.5.3). The LLM never computes or changes a score, and experience-skill
+suggestions come from the dictionary (career_model/extract.py), not from the LLM.
 
-  Task 1  extract_skills(text)          -> [{"skill", "phrase"}]   (dictionary skills only)
-  Task 2  explain(career, ..., passages) -> four-part explanation citing passage ids
+  explain(career, ..., passages) -> four-part explanation citing passage ids (temperature 0, versioned prompt)
+  chat(messages, results, passages) -> answer of the career assistant
 
-Primary: Gemini Flash (GEMINI_API_KEY), temperature 0, versioned prompt.
-Fallback: Groq open-weight model (GROQ_API_KEY) – keeps the app available, not used for evaluation.
+Provider order for explanations: Gemini (GEMINI_API_KEY) first, then Groq (GROQ_API_KEY); the assistant uses Groq
+first. The thesis deployment sets only GROQ_API_KEY (openai/gpt-oss-120b, thesis Table 3.17), so both tasks use
+Groq. Setting GEMINI_API_KEY changes the explanation model; every log row records the model used.
 No name / e-mail / student number is ever sent (NFR5): only experience text, scores, skill
 lists and retrieved passages.
 Uses only the standard library (urllib) so no SDK is required.
@@ -55,12 +57,12 @@ def _gemini(prompt: str, json_mode: bool) -> str:
     key = os.getenv("GEMINI_API_KEY")
     if not key:
         raise LLMUnavailable("GEMINI_API_KEY not set")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
     cfg = {"temperature": 0}
     if json_mode:
         cfg["responseMimeType"] = "application/json"
     out = _post(url, {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": cfg},
-                {"Content-Type": "application/json"})
+                {"Content-Type": "application/json", "x-goog-api-key": key})   # header, not URL: keeps the key out of logs
     return out["candidates"][0]["content"]["parts"][0]["text"]
 
 
@@ -85,32 +87,6 @@ def complete(prompt: str, json_mode=False) -> tuple[str, str]:
         except Exception as e:  # network, quota, missing key
             errors.append(f"{name}: {e}")
     raise LLMUnavailable("; ".join(errors))
-
-
-# --------------------------------------------------------------------------- task 1
-EXTRACT_PROMPT = """You extract technical skills from a person's description of their experience
-(projects, internships, jobs, certificates). Use ONLY skill ids from this dictionary:
-{dictionary}
-
-Return JSON: {{"skills": [{{"skill": "<id>", "phrase": "<exact words from the text that show it>"}}]}}
-Include a skill only if the text clearly shows the person used it. Do not guess.
-
-Text:
-\"\"\"{text}\"\"\""""
-
-
-def extract_skills(text: str, skills: list[dict]) -> tuple[list[dict], str]:
-    dictionary = ", ".join(f"{s['id']} ({s['name']})" for s in skills)
-    raw, model_id = complete(EXTRACT_PROMPT.format(dictionary=dictionary, text=text[:1500]), json_mode=True)
-    valid = {s["id"] for s in skills}
-    data = json.loads(re.sub(r"^```(?:json)?|```$", "", raw.strip(), flags=re.M))
-    out, seen = [], set()
-    for item in data.get("skills", []):
-        sid = item.get("skill")
-        if sid in valid and sid not in seen:  # safeguard: dictionary skills only
-            seen.add(sid)
-            out.append({"skill": sid, "phrase": str(item.get("phrase", ""))[:200]})
-    return out, model_id
 
 
 # --------------------------------------------------------------------------- task 2
@@ -161,14 +137,6 @@ def explain(result: dict, names: dict, passages: list[dict], lang="id", soft_nam
                        if result.get("group") == "non_it" else "Indonesian IT job ads (demand = share of job ads)"),
         matched=matched, gaps=gaps, soft=soft, context=context, h1=h[0], h2=h[1], h3=h[2], h4=h[3])
     return complete(prompt)
-
-
-def check_citations(text: str, passages: list[dict]) -> dict:
-    """Lightweight automatic check: every cited id must exist among retrieved passages."""
-    cited = set(re.findall(r"\[([A-Za-z0-9_\-:.]+)\]", text))
-    known = {p["id"] for p in passages}
-    return {"cited": sorted(cited), "unknown_citations": sorted(cited - known),
-            "supported_ratio": (len(cited & known) / len(cited)) if cited else None}
 
 
 _BRACKET_RE = re.compile(r"\[([^\[\]\n]{1,120})\]")

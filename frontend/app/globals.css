@@ -65,6 +65,10 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) 64px
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .chip small { display: block; font-size: 12px; opacity: .7; font-weight: 400; }
 .chips.interests .chip { border-radius: 14px; text-align: left; min-width: 220px; flex: 1 1 220px; }
+.chips.interests .chip-wrap { display: flex; flex-direction: column; min-width: 220px; flex: 1 1 220px; }
+.chips.interests .chip-wrap .chip { flex: 1 1 auto; min-width: 0; }
+.chip small.all { max-height: 180px; overflow-y: auto; }
+.more-toggle { align-self: flex-start; background: none; border: 0; padding: 6px 4px 0; font-size: 13px; color: var(--ink); text-decoration: underline; cursor: pointer; }
 
 .skill-tools { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
 input[type="search"], textarea, select { width: 100%; border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 12px 14px; }
@@ -448,7 +452,7 @@ main { max-width: 1180px; }
   .ring { width: 76px; height: 76px; }
   .ring b { font-size: 24px; }
   .sample li { grid-template-columns: 1fr 56px auto; font-size: 13px; }
-  .chips.interests .chip { min-width: 0; flex: 1 1 100%; }
+  .chips.interests .chip, .chips.interests .chip-wrap { min-width: 0; flex: 1 1 100%; }
   .skill-list, .courses { grid-template-columns: 1fr; }
   .course { flex-wrap: wrap; }
   .cats { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
@@ -546,3 +550,11 @@ main { max-width: 1180px; }
 .own-skills .row input { flex: 1; min-width: 0; border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px; }
 .own-skills .chips { gap: 8px; }
 .own-skills .chip { padding: 6px 12px; font-size: 14px; }
+.edu-zone { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: -8px 0 20px; font-size: 14px; }
+.edu-zone select { border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 8px 10px; }
+.picker { display: grid; gap: 8px; }
+.picker input { border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 9px 11px; }
+.adm-form textarea { border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 11px; font: inherit; }
+.reqs { display: grid; gap: 6px; }
+.req-row { display: grid; grid-template-columns: 1fr 90px auto auto; gap: 8px; align-items: center; }
+.req-row input { width: 100%; }

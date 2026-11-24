@@ -1,5 +1,5 @@
 import type {
-  ChatResponse, ChatTurn, CompareResponse, ExplainResponse, ExtractResponse, Health, KbList, KbStatus, Lang, Model,
+  Catalog, CatalogKind, ChatResponse, ChatTurn, CompareResponse, ExplainResponse, ExtractResponse, Health, KbList, KbStatus, Lang, Model,
   Profile, RecommendResponse,
 } from "./types";
 
@@ -66,4 +66,11 @@ export const api = {
   kbRebuild: (token: string) => request<{ ok: boolean }>("/api/admin/kb/rebuild", {}, admin(token)),
   kbStatus: (token: string) => request<KbStatus>("/api/admin/kb/status", undefined, admin(token)),
   exportLog: (token: string) => request<unknown[]>("/api/export", undefined, admin(token)),
+  catalog: (token: string) => request<Catalog>("/api/admin/catalog", undefined, admin(token)),
+  catalogSave: (token: string, kind: CatalogKind, id: string, data: object) =>
+    request<{ ok: boolean }>(`/api/admin/catalog/${kind}/${encodeURIComponent(id)}`, data, { ...admin(token), method: "PUT" }),
+  catalogDelete: (token: string, kind: CatalogKind, id: string) =>
+    request<{ ok: boolean }>(`/api/admin/catalog/${kind}/${encodeURIComponent(id)}`, undefined, { ...admin(token), method: "DELETE" }),
+  catalogReset: (token: string, kind: CatalogKind, id: string) =>
+    request<{ ok: boolean }>(`/api/admin/catalog/${kind}/${encodeURIComponent(id)}/reset`, {}, admin(token)),
 };

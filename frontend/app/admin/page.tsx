@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { AdminCatalog } from "@/components/AdminCatalog";
 import { useApp } from "@/components/AppProvider";
 import { api } from "@/lib/api";
 import type { KbList } from "@/lib/types";
 
 const TOKEN_KEY = "karirfit:admin-token";
 const DOC_TYPES = ["skkni", "occupation_map", "rps", "course", "other"];
-type Tab = "overview" | "feedback" | "kb" | "log" | "system";
+type Tab = "overview" | "feedback" | "kb" | "catalog" | "log" | "system";
 
 /** One row of the evaluation log (GET /api/export). Only the fields used here are typed. */
 interface LogRow {
@@ -20,10 +21,11 @@ const ICONS: Record<Tab, string> = {
   overview: "M3 12l9-9 9 9M5 10v10h14V10",
   feedback: "M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z",
   kb: "M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3",
+  catalog: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
   log: "M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01",
   system: "M12 15a3 3 0 100-6 3 3 0 000 6zM19 12h2M3 12h2M12 3v2M12 19v2",
 };
-const LABEL: Record<Tab, string> = { overview: "Ringkasan", feedback: "Umpan balik", kb: "Basis pengetahuan", log: "Log aktivitas", system: "Status sistem" };
+const LABEL: Record<Tab, string> = { overview: "Ringkasan", feedback: "Umpan balik", kb: "Basis pengetahuan", catalog: "Katalog", log: "Log aktivitas", system: "Status sistem" };
 
 const Ico = ({ d }: { d: string }) => (
   <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d={d} /></svg>
@@ -289,7 +291,7 @@ export default function AdminPage() {
                 <label>Akses
                   <select value={form.access} onChange={e => setForm({ ...form, access: e.target.value })}>
                     <option value="public">public</option>
-                    <option value="private">private (RPS/kurikulum PNJ)</option>
+                    <option value="private" disabled={health?.public_mode}>private (RPS/kurikulum PNJ){health?.public_mode ? " – tidak dipakai di mode publik" : ""}</option>
                   </select>
                 </label>
                 <div className="careers">
@@ -306,6 +308,8 @@ export default function AdminPage() {
             </section>
           </>
         )}
+
+        {tab === "catalog" && <AdminCatalog token={token} setMsg={setMsg} />}
 
         {tab === "log" && (
           <section className="adm-card">

@@ -102,6 +102,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    const owner = accountRef.current;
+    // shared devices (e.g. the pilot laptop): the next person must not find this account's answers in the browser
+    if (owner) for (const k of ["answers", "ratings", "eval", "chat"]) {
+      try { localStorage.removeItem(accountKey(owner, k)); sessionStorage.removeItem(accountKey(owner, k)); } catch { /* unavailable */ }
+    }
     if (supabase) await supabase.auth.signOut({ scope: "local" });
     accountRef.current = null;
     setAuthToken(null); setUser(null); setAnswers(EMPTY); setChatOpen(false); setChatCareer(null);

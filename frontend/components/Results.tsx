@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { pct } from "@/lib/i18n";
-import { MIN_JOB_ZONE_D4, refNote, reqBar, reqLabel } from "@/lib/reference";
+import { EDU_ZONES, MIN_JOB_ZONE_D4, refNote, reqBar, reqLabel, zoneAllows } from "@/lib/reference";
 import { saveAssessment } from "@/lib/supabase";
 import { accountKey } from "@/lib/tab-auth";
 import type { CareerResult, ExplainResponse, RecommendResponse } from "@/lib/types";
@@ -14,7 +14,7 @@ import { RichText } from "./RichText";
 
 
 export function Results() {
-  const { t, answers, profile, session, model, health, consent, user, setChatCareer, setChatOpen } = useApp();
+  const { t, lang, answers, update, profile, session, model, health, consent, user, setChatCareer, setChatOpen } = useApp();
   const RATINGS_KEY = accountKey(session, "ratings");
   const SUBMIT_KEY = accountKey(session, "submit");
   const [saved, setSaved] = useState<string | null>(null);
@@ -74,7 +74,9 @@ export function Results() {
   if (!data) return <p className="loading">{t.r_loading}</p>;
 
   const all = data.all ?? [...data.top, ...data.primary, ...data.alternative, ...data.non_it];
-  const selected = all.find(r => r.career === current) ?? data.top[0];
+  const zone = answers.eduZone ?? MIN_JOB_ZONE_D4;
+  const top = data.all ? all.filter(r => zoneAllows(r, zone)).slice(0, 5) : data.top;   // all is already ranked
+  const selected = all.find(r => r.career === current) ?? top[0];
 
   return (
     <section className="results">
@@ -85,6 +87,12 @@ export function Results() {
           <button className="btn ghost" onClick={() => setShowAll(v => !v)}>{showAll ? t.r_less : t.r_all_n(all.length)}</button>
         </div>
       </div>
+      <label className="edu-zone">
+        <span>{lang === "id" ? "Jenjang pendidikan (menyaring profil acuan O*NET)" : "Education level (filters O*NET reference profiles)"}</span>
+        <select value={zone} onChange={e => update(() => ({ eduZone: Number(e.target.value) }))}>
+          {EDU_ZONES.map(z => <option key={z.zone} value={z.zone}>{lang === "id" ? z.id : z.en}</option>)}
+        </select>
+      </label>
 
       <div className="res-grid">
         <div className="ranking">
@@ -92,12 +100,12 @@ export function Results() {
             <RankList title={t.r_all_title} items={all} current={selected.career} onPick={pick} />
           ) : (
             <>
-              <RankList title={t.r_top} hint={t.r_top_hint} items={data.top} current={selected.career} onPick={pick} />
+              <RankList title={t.r_top} hint={t.r_top_hint} items={top} current={selected.career} onPick={pick} />
               <details className="groups">
                 <summary>{t.r_groups}</summary>
                 <RankList title={t.r_primary} hint={t.r_primary_hint} items={data.primary} current={selected.career} onPick={pick} />
                 <RankList title={t.r_alt} hint={t.r_alt_hint} items={data.alternative} current={selected.career} onPick={pick} />
-                {(data.non_it?.length ?? 0) > 0 && <NonItList items={data.non_it} current={selected.career} onPick={pick} />}
+                {(data.non_it?.length ?? 0) > 0 && <NonItList items={data.non_it} zone={zone} current={selected.career} onPick={pick} />}
               </details>
             </>
           )}
@@ -122,20 +130,21 @@ export function Results() {
   );
 }
 
-/** 896 O*NET reference careers: 5 shown (Job Zone >= 4 for D4/S1), the rest behind a toggle so the page stays light. */
-function NonItList({ items, current, onPick }: { items: CareerResult[]; current: string; onPick: (id: string) => void }) {
+/** 896 O*NET reference careers: top 5 for the chosen education level (Job Zone), the rest behind a toggle so the page stays light. */
+function NonItList({ items, zone, current, onPick }: { items: CareerResult[]; zone: number; current: string; onPick: (id: string) => void }) {
   const { t, lang } = useApp();
   const [open, setOpen] = useState(false);
-  const fitting = items.filter(r => (r.job_zone ?? 0) >= MIN_JOB_ZONE_D4);
-  const shown = open ? items : (fitting.length ? fitting : items).slice(0, 5);
+  const fitting = items.filter(r => zoneAllows(r, zone));
+  const shown = open ? fitting : fitting.slice(0, 5);
+  const level = EDU_ZONES.find(z => z.zone === zone);
   const hint = lang === "id"
-    ? (open ? `Semua ${items.length} okupasi O*NET (semua Job Zone).` : `Profil acuan O*NET 31.0 (AS), belum divalidasi untuk Indonesia; 5 teratas untuk jenjang D4/S1 (Job Zone ≥ ${MIN_JOB_ZONE_D4}).`)
-    : (open ? `All ${items.length} O*NET occupations (all Job Zones).` : `O*NET 31.0 reference profiles (US), not validated for Indonesia; top 5 for D4/bachelor level (Job Zone ≥ ${MIN_JOB_ZONE_D4}).`);
+    ? `Profil acuan O*NET 31.0 (AS), belum divalidasi untuk Indonesia; ${open ? `semua ${fitting.length}` : "5 teratas"} untuk jenjang ${level?.id ?? "terpilih"}.`
+    : `O*NET 31.0 reference profiles (US), not validated for Indonesia; ${open ? `all ${fitting.length}` : "top 5"} for ${level?.en ?? "the chosen level"}.`;
   return (
     <>
       <RankList title={t.r_nonit} hint={hint} items={shown} current={current} onPick={onPick} />
       <button className="btn ghost small" aria-expanded={open} onClick={() => setOpen(v => !v)}>
-        {open ? (lang === "id" ? "Sembunyikan" : "Hide") : (lang === "id" ? `Tampilkan semua (${items.length})` : `Show all (${items.length})`)}
+        {open ? (lang === "id" ? "Sembunyikan" : "Hide") : (lang === "id" ? `Tampilkan semua (${fitting.length})` : `Show all (${fitting.length})`)}
       </button>
     </>
   );

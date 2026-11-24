@@ -57,7 +57,7 @@ const id = {
   h_title: "Riwayat tes", h_empty: "Belum ada riwayat. Selesaikan tes untuk menyimpannya.", h_view: "Lihat hasil", h_delete: "Hapus",
   h_saved: "Hasil tersimpan ke riwayat.", h_save_error: "Hasil belum tersimpan ke riwayat: ", h_new: "Mulai tes baru",
   s_soft_title: "Keterampilan nonteknis apa yang Anda miliki?", s_soft_hint: "Keterampilan nonteknis yang dibutuhkan suatu karier ikut dihitung sesuai bobotnya. Pilih tingkat penguasaan Anda.",
-  s1_it: "Bidang IT", s1_general: "Bidang umum", s1_more: (n: number) => `dan ${n} karier lainnya`, search_course: "Cari mata kuliah", f_major_wiz: "Jurusan / latar pendidikan (opsional)",
+  s1_it: "Bidang IT", s1_general: "Bidang umum", s1_more: (n: number) => `dan ${n} karier lainnya`, s1_show_more: "Lihat lebih banyak", s1_show_less: "Lihat lebih sedikit", search_course: "Cari mata kuliah", f_major_wiz: "Jurusan / latar pendidikan (opsional)",
   f_major_ph: "Contoh: Akuntansi, Teknik Sipil, SMA IPS", sum_soft: "Keterampilan nonteknis", sum_major: "Jurusan",
   consent_note: "Persetujuan penyimpanan data sudah Anda berikan saat membuat akun.",
   r_top: "Paling cocok untuk Anda", r_top_hint: "Lima karier dengan skor tertinggi dari semua bidang.",
@@ -133,7 +133,7 @@ const id = {
   waking: "Server sedang dinyalakan. Ini bisa memakan waktu sampai 1 menit, halaman akan lanjut sendiri.",
   own_title: "Keterampilan lain (di luar daftar)", own_hint: "Tulis keterampilan yang tidak ada di daftar. Disimpan di profil Anda, tetapi tidak dihitung dalam skor karena belum ada data permintaannya.", own_ph: "Misalnya Akuntansi biaya", add: "Tambah",
   cc_own: "ditambahkan sendiri", cc_empty: "Belum ada mata kuliah di kelompok ini. Tambahkan sendiri di bawah.", remove: "Hapus", cancel: "Batal",
-  cc_add: "+ Tambah mata kuliah sendiri", cc_hint: "Untuk mata kuliah yang tidak ada di daftar, misalnya dari jurusan lain. Pilih keterampilan yang diajarkan; nilainya dihitung seperti mata kuliah di daftar.", cc_name: "Nama mata kuliah", cc_name_ph: "Misalnya Akuntansi Keuangan", cc_cat: "Kelompok", cc_grade: "Nilai", cc_skills: "Keterampilan yang diajarkan (minimal 1)", cc_skills_ph: "Cari keterampilan, misalnya Excel atau akuntansi", cc_save: "Simpan mata kuliah", cc_max: "Maksimal 40 mata kuliah tambahan.",
+  cc_add: "+ Tambah mata kuliah sendiri", cc_hint: "Untuk mata kuliah yang tidak ada di daftar, misalnya dari jurusan lain. Pilih keterampilan yang diajarkan; nilainya dihitung seperti mata kuliah di daftar.", cc_name: "Nama mata kuliah", cc_name_ph: "Misalnya Akuntansi Keuangan", cc_cat: "Kelompok", cc_credits: "SKS", cc_grade: "Nilai", cc_skills: "Keterampilan yang diajarkan (minimal 1)", cc_skills_ph: "Cari keterampilan, misalnya Excel atau akuntansi", cc_save: "Simpan mata kuliah", cc_max: "Maksimal 40 mata kuliah tambahan.",
   footer: "KarirFit · prototipe sistem rekomendasi karier berbasis kompetensi dan permintaan industri. Pendamping, bukan pengganti, bimbingan karier.",
 };
 
@@ -196,7 +196,7 @@ const en: Dict = {
   h_title: "Test history", h_empty: "No history yet. Finish a test to save it.", h_view: "View results", h_delete: "Delete",
   h_saved: "Results saved to your history.", h_save_error: "Results were not saved to your history: ", h_new: "Start a new test",
   s_soft_title: "Which soft skills do you have?", s_soft_hint: "Soft skills required by a career contribute to its score according to their weights. Select your proficiency level.",
-  s1_it: "IT areas", s1_general: "General areas", s1_more: (n: number) => `and ${n} more careers`, search_course: "Search courses", f_major_wiz: "Major / educational background (optional)",
+  s1_it: "IT areas", s1_general: "General areas", s1_more: (n: number) => `and ${n} more careers`, s1_show_more: "Show more", s1_show_less: "Show less", search_course: "Search courses", f_major_wiz: "Major / educational background (optional)",
   f_major_ph: "E.g. Accounting, Civil Engineering, Social Sciences", sum_soft: "Soft skills", sum_major: "Major",
   consent_note: "You gave consent for storing your data when you created your account.",
   r_top: "Best matches for you", r_top_hint: "The five careers with the highest scores across all fields.",
@@ -272,7 +272,7 @@ const en: Dict = {
   waking: "The server is starting up. This can take up to a minute; the page will continue on its own.",
   own_title: "Other skills (not in the list)", own_hint: "Add skills that are not in the list. They are saved in your profile but not scored, because there is no demand data for them.", own_ph: "e.g. Cost accounting", add: "Add",
   cc_own: "added by you", cc_empty: "No courses in this group yet. Add your own below.", remove: "Remove", cancel: "Cancel",
-  cc_add: "+ Add your own course", cc_hint: "For courses that are not in the list, e.g. from another programme. Pick the skills it teaches; its grade counts like a listed course.", cc_name: "Course name", cc_name_ph: "e.g. Financial Accounting", cc_cat: "Group", cc_grade: "Grade", cc_skills: "Skills taught (at least 1)", cc_skills_ph: "Search skills, e.g. Excel or accounting", cc_save: "Save course", cc_max: "At most 40 added courses.",
+  cc_add: "+ Add your own course", cc_hint: "For courses that are not in the list, e.g. from another programme. Pick the skills it teaches; its grade counts like a listed course.", cc_name: "Course name", cc_name_ph: "e.g. Financial Accounting", cc_cat: "Group", cc_credits: "Credits (SKS)", cc_grade: "Grade", cc_skills: "Skills taught (at least 1)", cc_skills_ph: "Search skills, e.g. Excel or accounting", cc_save: "Save course", cc_max: "At most 40 added courses.",
   footer: "KarirFit · prototype career recommender based on competencies and industry demand. Supports, not replaces, career guidance.",
 };
 
