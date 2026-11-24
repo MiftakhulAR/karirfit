@@ -250,7 +250,7 @@ _load_catalog()
 @app.get("/api/model")
 def get_model(request: Request):
     """Serialised and compressed once at start-up (Render Free has little CPU; 911 careers)."""
-    headers = {"ETag": _MODEL_ETAG, "Cache-Control": "public, max-age=600", "Vary": "Accept-Encoding"}
+    headers = {"ETag": _MODEL_ETAG, "Cache-Control": "public, max-age=60", "Vary": "Accept-Encoding"}
     if request.headers.get("if-none-match") == _MODEL_ETAG:
         return Response(status_code=304, headers=headers)
     if "gzip" in request.headers.get("accept-encoding", ""):

@@ -421,7 +421,7 @@ function StepSummary() {
           <option value="">{t.none}</option>
           {targets.map(c => <option key={c.id} value={c.id}>{careerName(c)}</option>)}
         </select>
-        <small className="hint">{t.s5_target_hint(found.length, Boolean(words))}{found.length > 100 ? " (100)" : ""}</small>
+        <small className="hint">{t.s5_target_hint(found.length, Boolean(words))}</small>
       </div>
       <div className="summary">
         <dl>
