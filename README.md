@@ -1,68 +1,68 @@
-# KarirFit — Rekomendasi Karier IT Berbasis Kompetensi
+# KarirFit — Competency-Based IT Career Recommendation
 
-KarirFit membantu mahasiswa D4 Teknik Informatika PNJ melihat karier IT yang paling cocok dengan **mata kuliah, keterampilan, pengalaman, dan minat** mereka. Bobot setiap keterampilan diambil dari iklan lowongan kerja di Indonesia. Penjelasan AI mengutip sumber dari basis pengetahuan (RAG).
+KarirFit helps D4 Informatics Engineering students at Politeknik Negeri Jakarta (PNJ) find the IT careers that best fit their **courses, skills, experience and interests**. The weight of each skill comes from Indonesian job advertisements. An AI explanation cites its sources from a knowledge base, using retrieval-augmented generation (RAG).
 
-> ⚠️ **Bukan keputusan final.** Hasil adalah bahan pertimbangan karier, bukan penilaian resmi. Profil O*NET adalah rujukan dari Amerika Serikat dan belum divalidasi untuk Indonesia.
+> ⚠️ **Not a final decision.** Results are input for career planning, not an official assessment. O*NET careers are United States reference profiles and have not been validated for Indonesia.
 
-- Web: https://karirfit.vercel.app
-- API: https://karirfit.onrender.com (cek status: `/api/health`)
+- Web app: https://karirfit.vercel.app
+- API: https://karirfit.onrender.com (status: `/api/health`)
 
-Proyek ini dibuat sebagai skripsi (Bachelor in Computer Science, MSU – PNJ).
+This app was developed as a final-year project for the Bachelor in Computer Science (MSU–PNJ).
 
 ---
 
-## Fitur
+## Features
 
-- **Akun dan persetujuan data.** Daftar dengan e-mail, baca cara data diproses, lalu beri persetujuan. Setiap tab browser punya sesi sendiri.
-- **Tes bertahap:**
-  - minat (bisa memilih lebih dari satu bidang);
-  - keterampilan teknis dan soft skill dengan tingkat kemampuan;
-  - teks pengalaman dengan **saran keterampilan** dari kamus, yang hanya ditambahkan setelah kamu konfirmasi;
-  - mata kuliah dan nilai, atau mata kuliah sendiri dengan kategori dan SKS (1–8);
-  - target karier (bisa dicari di seluruh katalog).
-- **Hasil:**
-  - skor kecocokan kompetensi dan minat untuk 15 karier IT;
-  - filter jenjang pendidikan (SMA/SMK sampai S2) untuk karier rujukan O*NET;
-  - setiap kebutuhan ditampilkan dengan persentase iklan yang memintanya, sumber bukti, dan statusnya;
-  - keterampilan yang perlu ditingkatkan beserta saran.
-- **Penjelasan AI dengan sumber.** Jika tidak ada sumber yang cukup relevan, sistem menyatakan bukti tidak cukup dan tidak mengarang.
-- **Asisten karier.** Tanya jawab bebas tentang karier; jawabannya tidak mengubah peringkat.
-- **Riwayat** tes sebelumnya dan **penilaian relevansi** (1–5) untuk setiap karier.
-- **Panel admin:** ringkasan evaluasi, katalog (karier, keterampilan, minat, mata kuliah), dokumen basis pengetahuan dan indeks ulang, log aktivitas, serta status sistem.
-- **Dua bahasa:** Indonesia dan Inggris.
+- **Account and consent.** Register with an e-mail address, read how your data are processed, then give consent. Each browser tab has its own session.
+- **Step-by-step test:**
+  - interests (more than one area can be chosen);
+  - technical and soft skills with a level;
+  - an experience text with **skill suggestions** from the dictionary, which are added only after you confirm them;
+  - courses and grades, or your own courses with their category and credits (1–8 SKS);
+  - a target career, searchable across the whole catalogue.
+- **Results:**
+  - competency and interest fit for the 15 IT careers;
+  - an education-level filter (SMA/SMK to S2) for the O*NET reference careers;
+  - every requirement with the share of advertisements that ask for it, its evidence source and its status;
+  - the skills to improve, with advice.
+- **AI explanation with sources.** When no source is relevant enough, the system says the evidence is insufficient instead of making something up.
+- **Career assistant.** Free questions about careers; answers never change the ranking.
+- **History** of earlier tests and a **relevance rating** (1–5) for each career.
+- **Admin panel:** evaluation overview, catalogue management (careers, skills, interest areas, courses), knowledge-base documents and re-indexing, activity log and system status.
+- **Two languages:** Indonesian and English.
 
-## Cara Pakai
+## How to Use
 
-1. Buka https://karirfit.vercel.app, lalu **daftar** atau **masuk**.
-2. Tekan **Mulai tes** dan isi setiap langkah. Langkah yang belum lengkap akan diberi tahu.
-3. Di ringkasan, periksa kembali isianmu, lalu tekan **Lihat hasil**.
-4. Di halaman hasil:
-   - pilih jenjang pendidikanmu;
-   - buka sebuah karier untuk melihat rincian dan penjelasan AI;
-   - beri nilai relevansi.
-5. Buka **Riwayat** untuk melihat tes sebelumnya.
+1. Open https://karirfit.vercel.app, then **register** or **sign in**.
+2. Tap **Start the test** and complete each step. You are told if a step is incomplete.
+3. In the summary, check your answers, then tap **See results**.
+4. On the results page:
+   - choose your education level;
+   - open a career to see its details and the AI explanation;
+   - rate its relevance.
+5. Open **History** to see earlier tests.
 
-**Permintaan pertama bisa memakan waktu sekitar 1 menit.** Server gratis akan "tidur" kalau lama tidak dipakai. Setelah aktif, penjelasan muncul dalam sekitar 4 detik.
+**The first request can take about one minute.** The free server goes to sleep after a period without use. Once it is awake, an explanation appears in about 4 seconds.
 
-## Masalah Umum
+## Common Problems
 
-| Masalah | Solusi |
+| Problem | Solution |
 |---|---|
-| Hasil lama muncul atau ada pesan server sibuk | Tunggu sekitar 1 menit (server sedang bangun), lalu muat ulang halaman. |
-| Penjelasan berbunyi "bukti tidak cukup" | Normal untuk karier tanpa dokumen di basis pengetahuan, misalnya karier O*NET atau karier baru dari admin. |
-| Ingin keluar di satu tab saja | Sesi berlaku per tab; tab lain tidak ikut keluar. |
+| "The server is starting up" appears | Wait up to one minute; the page continues on its own once the server is awake. |
+| The explanation says "Insufficient evidence in the knowledge base" | Expected for careers without documents in the knowledge base, such as O*NET careers or careers newly added by the administrator. |
+| Signing out in one tab only | Sessions are per tab; other tabs are not signed out. |
 
-## Struktur
+## Structure
 
 ```
 KarirFit_Web/
-├─ backend/        FastAPI: skor, LLM, RAG, cek klaim, katalog, evaluasi (tes: backend/tests)
-├─ frontend/       Next.js: tes bertahap, hasil, riwayat, admin
-├─ pipeline-data/  Notebook Colab dan modul sumber model.json, demand, basis pengetahuan
-└─ docs/           Panduan lokal, hosting, penggantian data, catatan perbaikan
+├─ backend/        FastAPI: scoring, LLM, RAG, claim checks, catalogue, evaluation (tests: backend/tests)
+├─ frontend/       Next.js: step-by-step test, results, history, admin
+├─ pipeline-data/  Colab notebooks and modules that produce model.json, demand and the knowledge base
+└─ docs/           Local setup, hosting, replacing data, change notes (in Indonesian)
 ```
 
-## Menjalankan Secara Lokal
+## Running Locally
 
 Backend (Python 3.12):
 
@@ -73,7 +73,7 @@ copy .env.example .env
 uvicorn main:app --reload --port 8000
 ```
 
-Instal `requirements-rag.txt` untuk mengaktifkan RAG. Butuh lebih dari 512 MB RAM.
+To enable RAG, install `requirements-rag.txt`; it needs more than 512 MB of RAM.
 
 Frontend (Node.js):
 
@@ -84,9 +84,9 @@ npm install
 npm run dev
 ```
 
-Buka http://localhost:3000. Daftar variabel lingkungan dan cara hosting ada di [docs/PANDUAN.md](docs/PANDUAN.md). Jangan pernah meng-commit `.env`.
+Open http://localhost:3000. Environment variables and hosting are described in [docs/PANDUAN.md](docs/PANDUAN.md). Never commit `.env` files.
 
-Unit test backend:
+Backend unit tests:
 
 ```
 cd backend
