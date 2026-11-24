@@ -30,7 +30,11 @@ export default function LoginPage() {
 
   const run = async (fn: () => Promise<void>) => {
     setBusy(true); setMsg(null);
-    try { await fn(); } catch (e) { setMsg({ text: (e as Error).message, error: true }); }
+    try { await fn(); } catch (e) {
+      // Supabase Auth messages are English only; show the active language by error code.
+      const code = (e as { code?: string }).code;
+      setMsg({ text: (code && t.auth_errors[code]) || t.auth_error_other, error: true });
+    }
     setBusy(false);
   };
 

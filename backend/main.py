@@ -53,7 +53,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "model"))
 sys.path.insert(0, str(HERE))
 from career_model.explain import template_explanation  # noqa: E402
-from career_model.extract import SkillExtractor  # noqa: E402
+from career_model.extract import SkillExtractor, with_experience_patterns  # noqa: E402
 from career_model.scoring import recommend  # noqa: E402
 
 try:  # load backend/.env before llm/rag read their settings
@@ -80,6 +80,7 @@ MODEL: dict = {}
 NAMES: dict = {}
 SOFT_NAMES: dict = {}
 EXTRACTOR: SkillExtractor
+EXP_EXTRACTOR: SkillExtractor   # experience text: dictionary + Indonesian soft-skill phrases
 CATALOG_LOCK = threading.Lock()
 
 
@@ -226,13 +227,14 @@ def _public_model(model: dict) -> dict:
 
 def _set_model(model: dict):
     """Installs a catalogue and everything derived from it; /api/model is serialised and compressed once here."""
-    global MODEL, NAMES, SOFT_NAMES, EXTRACTOR, _MODEL_JSON, _MODEL_GZ, _MODEL_ETAG
+    global MODEL, NAMES, SOFT_NAMES, EXTRACTOR, EXP_EXTRACTOR, _MODEL_JSON, _MODEL_GZ, _MODEL_ETAG
     soft = model.get("soft_skills", [])
     names = {s["id"]: s["name"] for s in model["skills"]}
     soft_names = {"id": {s["id"]: s["name_id"] for s in soft}, "en": {s["id"]: s["name_en"] for s in soft}}
     extractor = SkillExtractor(model["skills"])
+    exp_extractor = SkillExtractor(with_experience_patterns(model["skills"]))
     body = json.dumps(_public_model(model), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-    MODEL, NAMES, SOFT_NAMES, EXTRACTOR = model, names, soft_names, extractor
+    MODEL, NAMES, SOFT_NAMES, EXTRACTOR, EXP_EXTRACTOR = model, names, soft_names, extractor, exp_extractor
     _MODEL_JSON, _MODEL_GZ, _MODEL_ETAG = body, gzip.compress(body, 6), '"' + hashlib.sha256(body).hexdigest()[:16] + '"'
 
 
@@ -263,7 +265,7 @@ def get_model(request: Request):
 def extract_skills(req: ExtractReq, user: dict | None = Depends(current_user)):
     # FR4 (thesis v8.2): suggestions come from the same dictionary patterns used on the job ads (kamus v4),
     # without an LLM; the student confirms or removes each suggestion.
-    return {"skills": EXTRACTOR.extract(req.text), "model": "kamus skill v4 (tanpa LLM)"}
+    return {"skills": EXP_EXTRACTOR.extract(req.text), "model": "kamus skill v4 + frasa pengalaman (tanpa LLM)"}
 
 
 @app.post("/api/recommend")

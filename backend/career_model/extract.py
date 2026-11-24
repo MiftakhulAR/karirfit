@@ -31,6 +31,20 @@ class SkillExtractor:
         return {f["skill"] for f in self.extract(text)}
 
 
+# Indonesian phrases with which students describe soft skills in the experience text (peer test PT6).
+# Used only for the experience text: the job-ad dictionary (kamus v4) of the evaluated model is unchanged.
+EXPERIENCE_PATTERNS = {
+    "leadership_orientation": [r"\bmemimpin\b", r"\bketua\b", r"\bpemimpin\b"],
+    "time_management": [r"\b(mengatur|menyusun|mengelola) (jadwal|waktu)\b", r"\btepat waktu\b"],
+    "coordination": [r"\bkoordinator\b", r"\bmeng(k|)oordinasi(kan)?\b", r"\bmeng(k|)oordinir\b"],
+    "speaking": [r"\bpresentasi\b", r"\bmoderator\b", r"\bpembicara\b"],
+    "instructing": [r"\bmengajar\b", r"\bmembimbing\b", r"\basisten (dosen|praktikum|laboratorium)\b"],
+}
+
+
+def with_experience_patterns(skills: list[dict]) -> list[dict]:
+    return [s | {"patterns": s["patterns"] + EXPERIENCE_PATTERNS.get(s["id"], [])} for s in skills]
+
 class CareerClassifier:
     """Classifies a job-ad title into one of the careers by title patterns (Section 3.2.2).
     IT careers are checked first (specific roles before generic ones, Senior Programmer before
