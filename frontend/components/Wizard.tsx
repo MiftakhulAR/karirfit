@@ -419,7 +419,7 @@ function StepSummary() {
         <input id="target-q" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={t.s5_target_search} />
         <select value={answers.target} onChange={e => update({ target: e.target.value })} aria-label={t.s5_target}>
           <option value="">{t.none}</option>
-          {targets.map(c => <option key={c.id} value={c.id}>{careerName(c)}</option>)}
+          {targets.map(c => <option key={c.id} value={c.id}>{careerName(c)}{c.group === "non_it" ? " (O*NET)" : ""}</option>)}
         </select>
         <small className="hint">{t.s5_target_hint(found.length, Boolean(words))}</small>
       </div>

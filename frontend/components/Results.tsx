@@ -37,7 +37,7 @@ export function Results() {
     if (!answers.interests.length) return;
     let alive = true;
     setError(null);
-    api.recommend(profile, session, consent)
+    api.recommend(profile, session, consent, answers.eduZone ?? MIN_JOB_ZONE_D4)
       .then(r => {
         if (!alive) return;
         setData(r);
@@ -50,7 +50,7 @@ export function Results() {
       .catch(e => alive && setError(String((e as Error).message)));
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileKey, session]);
+  }, [profileKey, session, answers.eduZone]);
 
   // the assistant focuses on the career being viewed
   useEffect(() => { setChatCareer(current); return () => setChatCareer(null); }, [current, setChatCareer]);

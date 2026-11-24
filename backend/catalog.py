@@ -17,22 +17,27 @@ KINDS = ("careers", "skills", "interests", "courses")
 ID_RE = re.compile(r"^[a-z0-9_]{2,60}$")
 
 
+# messages are shown in the (Indonesian-only) admin panel
+LABELS = {"name": "Nama", "category": "Kategori", "name_id": "Nama (ID)", "name_en": "Nama (EN)",
+          "skills": "keterampilan", "careers": "karier"}
+
+
 def _text(data: dict, key: str, max_len: int, required: bool = True) -> str:
     v = str(data.get(key) or "").strip()
     if required and not v:
-        raise ValueError(f"{key} is required")
+        raise ValueError(f"{LABELS.get(key, key)} wajib diisi")
     if len(v) > max_len:
-        raise ValueError(f"{key} is longer than {max_len} characters")
+        raise ValueError(f"{LABELS.get(key, key)} lebih dari {max_len} karakter")
     return v
 
 
 def _ids(values, valid: set[str], what: str, max_n: int) -> list[str]:
     out = list(dict.fromkeys(str(v) for v in (values or [])))
     if len(out) > max_n:
-        raise ValueError(f"at most {max_n} {what}")
+        raise ValueError(f"maksimal {max_n} {LABELS.get(what, what)}")
     unknown = [v for v in out if v not in valid]
     if unknown:
-        raise ValueError(f"unknown {what}: {', '.join(unknown[:5])}")
+        raise ValueError(f"{LABELS.get(what, what)} tidak dikenal: {', '.join(unknown[:5])}")
     return out
 
 
@@ -50,22 +55,22 @@ def _weights(model: dict, career_id: str, reqs: list[dict]) -> list[dict]:
 
 def validate(kind: str, item_id: str, data: dict, model: dict) -> dict:
     if kind not in KINDS:
-        raise ValueError("unknown catalogue kind")
+        raise ValueError("jenis katalog tidak dikenal")
     existing = next((x for x in model[kind] if x["id"] == item_id), None)
     if existing is None and not ID_RE.match(item_id):
-        raise ValueError("id must be 2-60 lowercase letters, digits or _")
+        raise ValueError("ID harus 2-60 karakter: huruf kecil, angka atau _")
     skills = {s["id"] for s in model["skills"]}
 
     if kind == "skills":
         kind_ = data.get("kind") or "hard"
         if kind_ not in ("hard", "soft"):
-            raise ValueError("kind must be hard or soft")
+            raise ValueError("jenis harus hard atau soft")
         patterns = [str(p) for p in (data.get("patterns") or []) if str(p).strip()][:10]
         for p in patterns:
             try:
                 re.compile(p, re.I)
             except re.error as e:
-                raise ValueError(f"invalid pattern {p!r}: {e}") from None
+                raise ValueError(f"pola regex tidak valid {p!r}: {e}") from None
         name = _text(data, "name", 80)
         out = {"id": item_id, "name": name, "category": _text(data, "category", 60), "kind": kind_, "patterns": patterns,
                "name_id": _text(data, "name_id", 80, False) or name, "name_en": _text(data, "name_en", 80, False) or name}
@@ -74,21 +79,21 @@ def validate(kind: str, item_id: str, data: dict, model: dict) -> dict:
     if kind == "careers":
         group = data.get("group") or (existing or {}).get("group") or "alternative"
         if group not in ("primary", "alternative", "non_it"):
-            raise ValueError("group must be primary, alternative or non_it")
+            raise ValueError("kelompok harus primary, alternative atau non_it")
         out = (existing or {}) | {"id": item_id, "name_id": _text(data, "name_id", 120), "name_en": _text(data, "name_en", 120),
                                   "group": group}
         if group == "non_it":
             if existing is None or existing["group"] != "non_it":
-                raise ValueError("new careers must be IT careers (primary or alternative); O*NET profiles come from O*NET")
+                raise ValueError("karier baru harus karier TI (primary atau alternative); profil O*NET hanya berasal dari O*NET")
             return out   # O*NET requirements are importance ratings from O*NET; only the names can be edited
         reqs = []
         for r in data.get("requirements") or []:
             d = float(r.get("demand", 0))
             if not 0 < d <= 1:
-                raise ValueError("demand must be between 0 and 1 (share of job ads)")
+                raise ValueError("permintaan harus antara 0 dan 1 (proporsi iklan lowongan)")
             reqs.append({"skill": str(r.get("skill")), "demand": round(d, 4)})
         if not reqs:
-            raise ValueError("an IT career needs at least one required skill")
+            raise ValueError("karier TI membutuhkan minimal satu keterampilan")
         _ids([r["skill"] for r in reqs], skills, "skills", 80)
         soft = {s["id"] for s in model["skills"] if s.get("kind") == "soft"}
         out["requirements"] = _weights(model, item_id, reqs)
@@ -106,14 +111,14 @@ def validate(kind: str, item_id: str, data: dict, model: dict) -> dict:
     cats = {c["id"] for c in model.get("course_categories", [])} or {"prodi"}
     category = data.get("category") or "prodi"
     if category not in cats:
-        raise ValueError(f"category must be one of: {', '.join(sorted(cats))}")
+        raise ValueError(f"kelompok mata kuliah harus salah satu dari: {', '.join(sorted(cats))}")
     try:
         semester = int(data.get("semester") or 1)
         credits = int(data["credits"]) if data.get("credits") not in (None, "") else None
     except (TypeError, ValueError):
-        raise ValueError("semester and credits must be whole numbers") from None
+        raise ValueError("semester dan SKS harus bilangan bulat") from None
     if not 1 <= semester <= 8 or (credits is not None and not 1 <= credits <= 8):
-        raise ValueError("semester and credits must be between 1 and 8")
+        raise ValueError("semester dan SKS harus antara 1 dan 8")
     return (existing or {}) | {"id": item_id, "name_id": _text(data, "name_id", 160), "name_en": _text(data, "name_en", 160, False)
                                or _text(data, "name_id", 160), "semester": semester, "credits": credits, "category": category,
                                "skills": _ids(data.get("skills"), skills, "skills", 30)}

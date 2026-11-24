@@ -29,7 +29,8 @@ async function request<T>(path: string, body?: unknown, init: RequestInit = {}):
   if (!res.ok) {
     let detail = "";
     try { detail = (await res.json()).detail ?? ""; } catch { /* not JSON */ }
-    throw new ApiError(res.status, `${path} returned ${res.status}${detail ? `: ${detail}` : ""}`);
+    // show the server's reason to the user; the path stays only for unexpected errors without one
+    throw new ApiError(res.status, typeof detail === "string" && detail ? `${detail} (HTTP ${res.status})` : `${path} returned ${res.status}`);
   }
   return res.json() as Promise<T>;
 }
@@ -40,8 +41,8 @@ export const api = {
   model: () => request<Model>("/api/model"),
   extractSkills: (text: string) => request<ExtractResponse>("/api/extract-skills", { text }),
   // α is fixed by the backend (0.5, thesis Section 3.5.2); users cannot change it.
-  recommend: (profile: Profile, session: string, consent: boolean) =>
-    request<RecommendResponse>("/api/recommend", { profile, session, consent, include_all: true }),
+  recommend: (profile: Profile, session: string, consent: boolean, eduZone?: number) =>
+    request<RecommendResponse>("/api/recommend", { profile, session, consent, include_all: true, edu_zone: eduZone }),
   explain: (profile: Profile, career: string, lang: Lang, session: string, consent: boolean) =>
     request<ExplainResponse>("/api/explain", { profile, career, lang, session, consent }),
   rate: (session: string, career: string, rating: number, consent: boolean) =>

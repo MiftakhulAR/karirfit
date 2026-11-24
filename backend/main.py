@@ -124,6 +124,7 @@ class RecommendReq(BaseModel):
     include_all: bool = False                                # also return all 15 careers
     session: str = "anon"
     consent: bool = False   # only logged when the user consents (FR1 / Section 3.8)
+    edu_zone: int | None = Field(default=None, ge=0, le=5)   # education level chosen on the results page (log only)
 
 
 class ExtractReq(BaseModel):
@@ -270,6 +271,10 @@ def do_recommend(req: RecommendReq, x_admin_token: str = Header(default=""), use
     t0 = time.time()
     session, consent = who(user, req.session, req.consent)
     res = recommend(req.profile.model_dump(), MODEL, alpha=effective_alpha(req.alpha, x_admin_token))
+    z = req.edu_zone
+    # same rule as zoneAllows() in the front end, so the log holds the five careers the user actually saw
+    shown = [r["career"] for r in res["all"]
+             if r.get("group") != "non_it" or not z or r.get("job_zone") is None or r["job_zone"] <= z][:5]
     if not req.include_all:
         res.pop("all")
     # 896 O*NET reference careers: all are returned (front end shows 5, "show all" for the rest),
@@ -278,7 +283,7 @@ def do_recommend(req: RecommendReq, x_admin_token: str = Header(default=""), use
     if consent:
         log("recommend", session, {"profile": req.profile.model_dump(), "catalog_changes": MODEL.get("catalog_changes", 0),
                                    "ranking": [r["career"] for r in res["primary"] + res["alternative"]],
-                                   "top": [r["career"] for r in res["top"]]})
+                                   "top": [r["career"] for r in res["top"]], "edu_zone": z, "top_shown": shown})
     return res | {"ms": round((time.time() - t0) * 1000, 1)}
 
 
