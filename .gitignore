@@ -10,3 +10,5 @@ __pycache__/
 
 # Original Colab index includes the private layer; public runtime embeddings are in backend/kb/.
 pipeline-data/colab_2026-11-07/kb_v2_index.faiss
+
+.claude/
