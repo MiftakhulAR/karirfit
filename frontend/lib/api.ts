@@ -1,5 +1,5 @@
 import type {
-  Catalog, CatalogKind, ChatResponse, ChatTurn, CompareResponse, ExplainResponse, ExtractResponse, Health, KbList, KbStatus, Lang, Model,
+  Catalog, CatalogKind, ChatResponse, ChatTurn, ExplainResponse, ExtractResponse, Health, KbList, KbStatus, Lang, Model,
   Profile, RecommendResponse,
 } from "./types";
 
@@ -49,14 +49,6 @@ export const api = {
   health: () => request<Health>("/api/health"),
   chat: (messages: ChatTurn[], profile: Profile, career: string | null, lang: Lang, session: string, consent: boolean) =>
     request<ChatResponse>("/api/chat", { messages, profile, career, lang, session, consent }),
-
-  // user evaluation (backend EVAL_MODE=1, thesis Sections 3.6.4-3.6.6)
-  compare: (profile: Profile, session: string) =>
-    request<CompareResponse>("/api/compare", { profile, session, consent: true }),
-  compareChoice: (session: string, token: string, choice: "A" | "B" | "same") =>
-    request<{ ok: boolean }>("/api/compare/choice", { session, token, choice, consent: true }),
-  susItems: (lang: Lang) => request<{ items: string[] }>(`/api/sus?lang=${lang}`),
-  susSubmit: (session: string, answers: number[]) => request<{ ok: boolean }>("/api/sus", { session, answers, consent: true }),
 
   // administrator (FR10)
   kbList: (token: string) => request<KbList>("/api/admin/kb", undefined, admin(token)),

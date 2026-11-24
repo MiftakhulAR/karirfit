@@ -85,9 +85,6 @@ export interface Assessment {
   top: { career: string; name_id: string; name_en: string; fit: number }[];
 }
 
-export interface ShortCareer { career: string; name_id: string; name_en: string }
-export interface ShortRanking { primary: ShortCareer[]; alternative: ShortCareer[] }
-export interface CompareResponse { A: ShortRanking; B: ShortRanking; token: string; same: boolean }
 
 export interface KbDocument { file: string; doc_type: string; careers: string; source: string; access: string; id_prefix: string; present: boolean }
 export interface KbStatus { state: "idle" | "running" | "done" | "error"; message: string; finished: number | null; index_ready?: boolean }

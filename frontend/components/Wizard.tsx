@@ -99,9 +99,10 @@ function StepInterests() {
           <div className="chips interests">
             {items.map(i => {
               const all = open.includes(i.id);
+              const on = answers.interests.includes(i.id);
               return (
-                <div key={i.id} className="chip-wrap">
-                  <button className="chip" aria-pressed={answers.interests.includes(i.id)} onClick={() => toggle(i.id)}>
+                <div key={i.id} className={"chip-wrap" + (on ? " on" : "")}>
+                  <button className="chip" aria-pressed={on} onClick={() => toggle(i.id)}>
                     <span className="tick" aria-hidden="true" />
                     <span className="chip-nm">{lang === "id" ? i.name_id : i.name_en}</span>
                     {/* general areas map to up to 265 careers: show a short preview, the chip still selects all of them */}
@@ -397,6 +398,13 @@ function AddCourse({ defaultCat }: { defaultCat: string }) {
 
 function StepSummary() {
   const { t, model, answers, update, careerName, skillName, softName, lang } = useApp();
+  const [q, setQ] = useState("");
+  // 911 careers are too many to scroll: IT careers by default, search for the rest; the chosen one always stays listed
+  const words = q.trim().toLowerCase();
+  const found = words
+    ? model!.careers.filter(c => `${c.name_id} ${c.name_en} ${c.id} ${c.field_id ?? ""} ${c.field_en ?? ""}`.toLowerCase().includes(words))
+    : model!.careers.filter(c => c.group !== "non_it");
+  const targets = [...model!.careers.filter(c => c.id === answers.target && !found.includes(c)), ...found.slice(0, 100)];
   const join = (a: string[]) => (a.length ? a.join(", ") : t.empty);
   const interests = model!.interests.filter(i => answers.interests.includes(i.id)).map(i => (lang === "id" ? i.name_id : i.name_en));
   const courses = [
@@ -406,13 +414,15 @@ function StepSummary() {
   return (
     <div className="step">
       <StepHead title={t.s5_title} hint={t.s5_hint} />
-      <label className="field">
-        <span>{t.s5_target}</span>
-        <select value={answers.target} onChange={e => update({ target: e.target.value })}>
+      <div className="field target-field">
+        <label htmlFor="target-q">{t.s5_target}</label>
+        <input id="target-q" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={t.s5_target_search} />
+        <select value={answers.target} onChange={e => update({ target: e.target.value })} aria-label={t.s5_target}>
           <option value="">{t.none}</option>
-          {model!.careers.map(c => <option key={c.id} value={c.id}>{careerName(c)}</option>)}
+          {targets.map(c => <option key={c.id} value={c.id}>{careerName(c)}</option>)}
         </select>
-      </label>
+        <small className="hint">{t.s5_target_hint(found.length, Boolean(words))}{found.length > 100 ? " (100)" : ""}</small>
+      </div>
       <div className="summary">
         <dl>
           <dt>{t.sum_interests}</dt><dd>{join(interests)}</dd>

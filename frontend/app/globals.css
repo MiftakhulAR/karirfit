@@ -65,10 +65,14 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) 64px
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .chip small { display: block; font-size: 12px; opacity: .7; font-weight: 400; }
 .chips.interests .chip { border-radius: 14px; text-align: left; min-width: 220px; flex: 1 1 220px; }
-.chips.interests .chip-wrap { display: flex; flex-direction: column; min-width: 220px; flex: 1 1 220px; }
-.chips.interests .chip-wrap .chip { flex: 1 1 auto; min-width: 0; }
+/* an interest card: the select button and the "show more" toggle sit inside one bordered box */
+.chips.interests .chip-wrap { display: flex; flex-direction: column; min-width: 220px; flex: 1 1 220px;
+  border: 1.5px solid var(--line); background: var(--card); border-radius: 14px; }
+.chips.interests .chip-wrap.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chips.interests .chip-wrap .chip { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; color: inherit; }
 .chip small.all { max-height: 180px; overflow-y: auto; }
-.more-toggle { align-self: flex-start; background: none; border: 0; padding: 6px 4px 0; font-size: 13px; color: var(--ink); text-decoration: underline; cursor: pointer; }
+.more-toggle { align-self: flex-start; background: none; border: 0; margin: -4px 0 0 50px; padding: 0 4px 12px; font-size: 13px; color: inherit; opacity: .85; text-decoration: underline; cursor: pointer; }
+.more-toggle:hover { opacity: 1; }
 
 .skill-tools { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
 input[type="search"], textarea, select { width: 100%; border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 12px 14px; }
@@ -558,3 +562,5 @@ main { max-width: 1180px; }
 .reqs { display: grid; gap: 6px; }
 .req-row { display: grid; grid-template-columns: 1fr 90px auto auto; gap: 8px; align-items: center; }
 .req-row input { width: 100%; }
+.target-field input[type="search"] { border: 1.5px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 12px; font-weight: 400; }
+.target-field small { font-weight: 400; }

@@ -9,12 +9,11 @@ import { saveAssessment } from "@/lib/supabase";
 import { accountKey } from "@/lib/tab-auth";
 import type { CareerResult, ExplainResponse, RecommendResponse } from "@/lib/types";
 import { useApp } from "./AppProvider";
-import { EvalPanel } from "./EvalPanel";
 import { RichText } from "./RichText";
 
 
 export function Results() {
-  const { t, lang, answers, update, profile, session, model, health, consent, user, setChatCareer, setChatOpen } = useApp();
+  const { t, lang, answers, update, profile, session, model, consent, user, setChatCareer, setChatOpen } = useApp();
   const RATINGS_KEY = accountKey(session, "ratings");
   const SUBMIT_KEY = accountKey(session, "submit");
   const [saved, setSaved] = useState<string | null>(null);
@@ -115,8 +114,6 @@ export function Results() {
       </div>
 
       {saved && <p className="notice" role="status">{saved}</p>}
-
-      {health?.eval_mode && <EvalPanel recommended={[...data.primary, ...data.alternative]} ratings={ratings} />}
 
       <details className="how">
         <summary>{t.how_title}</summary>
