@@ -35,6 +35,12 @@ class Fit(unittest.TestCase):
         self.assertEqual([x["career"] for x in ranked], ["a", "b"])
         self.assertEqual(ranked[0]["gaps"][0]["skill"], "sql")
 
+    def test_soft_skill_from_experience_is_owned(self):
+        # peer test PT6: a soft skill confirmed from experience must not be listed as "to develop"
+        m = MODEL | {"careers": [c | {"soft_skills": [{"skill": "lead"}]} for c in MODEL["careers"]]}
+        self.assertTrue(score({"experience_skills": ["lead"]}, m)[0]["soft"][0]["have"])
+        self.assertFalse(score({}, m)[0]["soft"][0]["have"])
+
 
 if __name__ == "__main__":
     unittest.main()

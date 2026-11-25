@@ -279,6 +279,7 @@ export default function AdminPage() {
             </section>
             <section className="adm-card">
               <h3>Tambah dokumen</h3>
+              <p className="hint">Dokumen dan indeks tambahan disimpan di disk server, sehingga hilang saat server di-restart atau tidur (Render gratis). Simpan berkas aslinya dan unggah ulang bila perlu.</p>
               <form onSubmit={upload} className="adm-form">
                 <label>Berkas (PDF, DOCX, TXT)<input type="file" accept=".pdf,.docx,.txt,.md" onChange={e => setFile(e.target.files?.[0] ?? null)} /></label>
                 <label>Jenis

@@ -138,7 +138,9 @@ def score(profile: dict, model: dict, alpha: float | None = None, use_interest: 
         matched = [r | {"evidence": ev[r["skill"]]} for r in reqs if ev.get(r["skill"], {"value": 0})["value"] > 0]
         gaps = [r for r in reqs if ev.get(r["skill"], {"value": 0})["value"] == 0]
         own_soft = profile.get("soft_skills") or {}
-        soft = [r | {"have": SELF_LEVEL.get(own_soft.get(r["skill"]), 0) >= SELF_LEVEL["intermediate"]}
+        from_exp = set(profile.get("experience_skills") or [])   # same evidence as K, so the page does not contradict itself
+        soft = [r | {"have": SELF_LEVEL.get(own_soft.get(r["skill"]), 0) >= SELF_LEVEL["intermediate"]
+                     or r["skill"] in from_exp}
                 for r in c.get("soft_skills", [])]
         results.append({
             "career": c["id"], "name_en": c["name_en"], "name_id": c["name_id"], "group": c["group"],

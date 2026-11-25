@@ -143,7 +143,7 @@ class ExplainReq(BaseModel):
 
 class RatingReq(BaseModel):
     session: str
-    career: str
+    career: str = Field(max_length=80)
     rating: int = Field(ge=1, le=5)
     consent: bool = False
 
@@ -354,6 +354,8 @@ def do_explain(req: ExplainReq, background: BackgroundTasks, x_admin_token: str 
 
 @app.post("/api/rating")
 def rate(req: RatingReq, user: dict | None = Depends(current_user)):
+    if req.career not in {c["id"] for c in MODEL["careers"]}:   # keeps the admin ratings-per-career clean
+        raise HTTPException(422, "unknown career")
     session, consent = who(user, req.session, req.consent)
     if consent:   # FR1 / Section 3.8: nothing is logged without consent
         log("rating", session, {"career": req.career, "rating": req.rating})

@@ -38,8 +38,9 @@ class Storage:
                     con.execute(CATALOG_DDL.replace("REAL", "DOUBLE PRECISION"))
                     # Supabase exposes new public tables to the browser roles: lock them to the backend
                     con.execute("ALTER TABLE catalog ENABLE ROW LEVEL SECURITY")
+                    con.execute("ALTER TABLE log ENABLE ROW LEVEL SECURITY")   # profiles, chat questions
                     try:
-                        con.execute("REVOKE ALL ON catalog FROM anon, authenticated")
+                        con.execute("REVOKE ALL ON catalog, log FROM anon, authenticated")
                     except Exception:   # plain PostgreSQL without Supabase roles
                         pass
                 return
