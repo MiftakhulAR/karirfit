@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 import urllib.error
 import urllib.request
 
@@ -200,15 +201,18 @@ def chat(messages: list[dict], results_text: str, passages: list[dict], lang: st
                for m in messages[-12:] if m.get("role") in ("user", "assistant")]
     key = os.getenv("GROQ_API_KEY")
     if key:
-        try:
-            out = _post(GROQ_URL, _groq_body([{"role": "system", "content": system}] + history, 0.3, 2500),
-                        {"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
-            text = (out["choices"][0]["message"].get("content") or "").strip()
-            if not text:
-                raise LLMUnavailable("empty reply (reasoning used all tokens)")
-            return text, f"groq:{GROQ_MODEL}"
-        except Exception as e:
-            err = e
+        for attempt in range(2):   # one retry: free-tier 429s and empty gpt-oss replies are usually transient
+            try:
+                out = _post(GROQ_URL, _groq_body([{"role": "system", "content": system}] + history, 0.3, 2500),
+                            {"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+                text = (out["choices"][0]["message"].get("content") or "").strip()
+                if not text:
+                    raise LLMUnavailable("empty reply (reasoning used all tokens)")
+                return text, f"groq:{GROQ_MODEL}"
+            except Exception as e:
+                err = e
+                if attempt == 0:
+                    time.sleep(2)
     else:
         err = LLMUnavailable("GROQ_API_KEY not set")
     transcript = "\n".join(f"{m['role'].upper()}: {m['content']}" for m in history)

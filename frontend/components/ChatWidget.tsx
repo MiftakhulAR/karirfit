@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { api } from "@/lib/api";
+import { api, type ApiError } from "@/lib/api";
 import { accountKey } from "@/lib/tab-auth";
 import type { ChatTurn } from "@/lib/types";
 import { useApp } from "./AppProvider";
@@ -51,7 +51,13 @@ export function ChatWidget() {
     const next: ChatTurn[] = [...turns, { role: "user", content: q }];
     setTurns(next); setInput(""); setBusy(true); setErr(null);
     try {
-      const r = await api.chat(next, profile, chatCareer, lang, session, consent);
+      const ask = () => api.chat(next, profile, chatCareer, lang, session, consent);
+      // one retry after a pause: a sleeping free server (cold start) or a busy LLM fails the first request
+      const r = await ask().catch(async (e: ApiError) => {
+        if (![0, 502, 503, 504].includes(e.status)) throw e;
+        await new Promise((ok) => setTimeout(ok, 4000));
+        return ask();
+      });
       if (!alive.current) return;
       setTurns([...next, { role: "assistant", content: r.reply }]);
     } catch (e) {
